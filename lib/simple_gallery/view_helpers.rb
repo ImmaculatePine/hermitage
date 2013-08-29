@@ -8,14 +8,13 @@ module SimpleGallery
     # * options   Hash of options
     #
     # There are next options available:
-    # * attribute
-    # TODO: Use the attribute option.
+    # * attribute   Model's attribute (or method) where path to image is stored
     # TODO: Think about other available options.
     def render_gallery(objects, options = default_options)
       items = []
       objects.each do |object|
-        full_image = object.send('image')
-        thumbnail_image = object.send('image', 'thumb')
+        full_image = object.send(options[:attribute].to_s)
+        thumbnail_image = object.send(options[:attribute].to_s, :thumb)
         items << link_to(image_tag(thumbnail_image), full_image)
       end
       
@@ -30,7 +29,7 @@ module SimpleGallery
     # TODO: Maybe it would be better to move this somewhere else
     def default_options
       {
-        attribute: 'image'
+        attribute: :image
       }
     end
   end
