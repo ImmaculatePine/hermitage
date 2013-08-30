@@ -8,6 +8,7 @@ require "sprockets/railtie"
 # require "rails/test_unit/railtie"
 
 require "jquery-rails"
+require "coffee-rails"
 
 Bundler.require(*Rails.groups)
 require "simple_gallery"
