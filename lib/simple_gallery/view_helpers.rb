@@ -15,7 +15,7 @@ module SimpleGallery
       objects.each do |object|
         full_image = object.send(options[:attribute].to_s)
         thumbnail_image = object.send(options[:attribute].to_s, :thumb)
-        items << link_to(image_tag(thumbnail_image), full_image, rel: 'simple-gallery')
+        items << link_to(image_tag(thumbnail_image), full_image, rel: 'simple_gallery')
       end
       
       content_tag :ul do
