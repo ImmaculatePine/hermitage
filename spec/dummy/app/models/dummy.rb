@@ -7,7 +7,7 @@ class DummyBase
   
   # This method MAGICALLY returns name of image according to given options
   def magic(options = nil)
-    options == nil ? "#{@name}-full.png" : "#{@name}-#{options}.png"
+    options == nil ? "/assets/#{@name}-full.png" : "/assets/#{@name}-#{options}.png"
   end
 end
 
