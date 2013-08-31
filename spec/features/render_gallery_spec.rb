@@ -21,6 +21,10 @@ describe 'render gallery', type: :feature do
       page.should have_css('div#simple_gallery', visible: false)
     end
 
+    it 'fills images array' do
+      evaluate_script("images").should == ['/assets/0-full.png', '/assets/1-full.png']
+    end
+
     describe 'visitor clicks on image' do
       before(:each) { page.first('a[rel=simple_gallery]').click }
 
@@ -46,6 +50,22 @@ describe 'render gallery', type: :feature do
           page.should_not have_css('div#simple_gallery')
           page.find('div#simple_gallery', visible: false).all('*').length.should == 0
         end
+      end
+
+      describe 'visitor clicks on image' do
+        before(:each) { page.find('div#simple_gallery').find('img.current').click }
+
+        it 'shows next image' do
+          page.should_not have_css('img[src="/assets/0-full.png"]')
+          page.should have_css('img[src="/assets/1-full.png"]')
+        end
+
+        it 'shows the first image after end of the gallery' do
+          page.find('div#simple_gallery').find('img.current').click
+          page.should_not have_css('img[src="/assets/1-full.png"]')
+          page.should have_css('img[src="/assets/0-full.png"]')
+        end
+
       end
     end
 
