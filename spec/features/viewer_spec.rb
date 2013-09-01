@@ -19,6 +19,14 @@ describe 'viewer', type: :feature, js: true do
     page.should have_css("div#simple_gallery img[src='/assets/0-full.png']") 
   end
 
+  it 'has left navigation button' do
+    page.should have_css("div#simple_gallery div#navigation-left")
+  end
+
+  it 'has right navigation button' do
+    page.should have_css("div#simple_gallery div#navigation-right")
+  end
+
   describe 'visitor clicks on shadow in the viewer' do
     # Workaround for clicking at the shadow div
     before(:each) { evaluate_script "$('#overlay').click()" }

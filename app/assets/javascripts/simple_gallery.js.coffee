@@ -4,7 +4,11 @@ root = exports ? this
 # Data
 #
 
+# Array of images of current gallery
 root.images = []
+
+# Distance between navigation buttons and image
+root.navigation_button_margin = 10
 
 # Initializes the gallery on this page
 root.init_simple_gallery = ->
@@ -34,7 +38,7 @@ root.init_simple_gallery = ->
 
 # Place element at the center of screen
 jQuery.fn.center = () ->
-  this.css("position", "absolute")
+  this.css("position", "fixed")
   this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) + $(window).scrollTop()) + "px")
   this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) + $(window).scrollLeft()) + "px")
   this
@@ -46,23 +50,76 @@ jQuery.fn.center = () ->
 
 # Creates overlay layer, shows it and sets its click handler
 create_overlay = () ->
-  $("#simple_gallery").append($('<div id="overlay"></div>'))
+  overlay = $("<div>", {id: "overlay"})
+  $("#simple_gallery").append(overlay)
 
-  $("#overlay").css("position", "fixed")
-  $("#overlay").css("top", "0")
-  $("#overlay").css("left", "0")
-  $("#overlay").css("background", "black")
-  $("#overlay").css("display", "block")
-  $("#overlay").css("opacity", "0.75")
-  $("#overlay").css("filter", "alpha(opacity=75)")
-  $("#overlay").css("width", "100%")
-  $("#overlay").css("height", "100%")
+  overlay.css("position", "fixed")
+  overlay.css("top", "0")
+  overlay.css("left", "0")
+  overlay.css("background", "black")
+  overlay.css("display", "block")
+  overlay.css("opacity", "0.75")
+  overlay.css("filter", "alpha(opacity=75)")
+  overlay.css("width", "100%")
+  overlay.css("height", "100%")
 
-  $("#overlay").hide()
-  $("#overlay").fadeIn()
+  overlay.hide()
+  overlay.fadeIn()
 
-  $("#overlay").click (event) ->
+  overlay.click (event) ->
     close_gallery()
+
+  overlay
+
+
+# Creates base navigation button and returns it
+create_navigation_button = () ->
+  button = $("<div>")
+  $("#simple_gallery").append(button)
+
+  button.css("position", "fixed")
+  button.css("width", "50px")
+  button.css("display", "block")
+  button.css("cursor", "pointer")
+
+  button.css("background", "#777")
+  button.css("display", "block")
+  button.css("opacity", "0.6")
+  button.css("filter", "alpha(opacity=60)")
+  button.css("border-radius", "7px")
+  button.css("-webkit-border-radius", "7px")
+  button.css("-moz-border-radius", "7px")
+
+  button.css("color", "#FFF")
+  button.css("text-align", "center")
+  button.css("vertical-align", "middle")
+  button.css("font", "30px Tahoma,Arial,Helvetica,sans-serif")
+
+  button.hide()
+
+  button
+
+# Creates right navigation button and returns it
+create_right_navigation_button = () ->
+  button = create_navigation_button()
+  button.attr("id", "navigation-right")
+  button.append(">")
+
+  button.click (event) ->
+    show_next_image()
+
+  button
+
+# Create left navigation button and returns it
+create_left_navigation_button = () ->
+  button = create_navigation_button()
+  button.attr("id", "navigation-left")
+  button.append("<")
+
+  button.click (event) ->
+    show_previous_image()
+
+  button
 
 
 # Shows full size image of the chosen one
@@ -70,6 +127,8 @@ open_gallery = (image) ->
   $("#simple_gallery").empty()
   $("#simple_gallery").show()
   create_overlay()
+  create_right_navigation_button()
+  create_left_navigation_button()
 
   show_image(images.indexOf($(image).attr("href")))
   
@@ -83,6 +142,9 @@ show_image = (index) ->
   img.css("cursor", "pointer")
   img.hide()
   
+  $("#navigation-left").fadeOut()
+  $("#navigation-right").fadeOut()
+
   $("#simple_gallery").append(img)
   
   img.click (event) ->
@@ -98,6 +160,7 @@ show_image = (index) ->
     img.height(this.height)
     img.center()
     img.fadeIn()
+    adjust_navigation_buttons()
 
 # Shows next image
 show_next_image = ->
@@ -136,5 +199,26 @@ close_gallery = () ->
     $("#simple_gallery").empty()
 
 
+# Moves navigation buttons to proper positions
+adjust_navigation_buttons = () ->
+  left = $("#navigation-left")
+  right = $("#navigation-right")
+
+  current = $(".current")
+
+  left.css("height", current.outerHeight() + "px")
+  left.css("line-height", current.outerHeight() + "px")
+  left.css("left", (current.position().left - left.outerWidth() - navigation_button_margin) + "px")
+  left.css("top", current.position().top + "px")
+  
+  right.css("height", current.outerHeight() + "px")
+  right.css("line-height", current.outerHeight() + "px")
+  right.css("left", (current.position().left + current.outerWidth() + navigation_button_margin) + "px")
+  right.css("top", current.position().top + "px")
+
+  left.fadeIn()
+  right.fadeIn()
+
+# Initialize gallery on page load
 $(document).ready(init_simple_gallery)
 $(document).on('page:load', init_simple_gallery)
