@@ -86,7 +86,10 @@ show_image = (index) ->
   $("#simple_gallery").append(img)
   
   img.click (event) ->
-    show_next_image()
+    if (event.pageX >= $(window).width() / 2)
+      show_next_image()
+    else
+      show_previous_image()
 
   # When image will be loaded set correct size,
   # center element and show it
