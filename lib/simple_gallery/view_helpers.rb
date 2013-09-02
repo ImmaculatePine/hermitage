@@ -12,13 +12,14 @@ module SimpleGallery
       
       items = []
       objects.each do |object|
-        full_image = object.instance_eval(options[:attribute_full_size])
-        thumbnail_image = object.instance_eval(options[:attribute_thumbnail])
-        items << link_to(image_tag(thumbnail_image), full_image, rel: 'simple_gallery')
+        full_image_path = object.instance_eval(options[:attribute_full_size])
+        thumbnail_image_path = object.instance_eval(options[:attribute_thumbnail])
+        image = image_tag(thumbnail_image_path, class: options[:image_class])
+        items << link_to(image, full_image_path, rel: 'simple_gallery', class: options[:link_class])
       end
       
-      content_tag :ul do
-        items.collect { |item| concat(content_tag(:li, item)) }
+      content_tag options[:list_tag], class: options[:list_class] do
+        items.collect { |item| concat(content_tag(options[:item_tag], item, class: options[:item_class])) }
       end
     end
 
