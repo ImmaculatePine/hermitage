@@ -10,7 +10,7 @@ module SimpleGallery
     # There are next options available:
     # * attribute   Model's attribute (or method) where path to image is stored
     # TODO: Think about other available options.
-    def render_gallery(objects, options = default_options)
+    def render_gallery_for(objects, options = default_options)
       items = []
       objects.each do |object|
         full_image = object.send(options[:attribute].to_s)
