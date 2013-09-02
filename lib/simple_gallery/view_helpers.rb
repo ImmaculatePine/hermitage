@@ -8,7 +8,7 @@ module SimpleGallery
     # * options   Hash of options. There is list of available options in Defaults module.
     # 
     def render_gallery_for(objects, options = {})
-      options = SimpleGallery.setups[:default].merge(options)
+      options = SimpleGallery.configs[:default].merge(options)
       
       items = []
       objects.each do |object|

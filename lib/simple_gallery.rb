@@ -4,10 +4,10 @@ require 'simple_gallery/railtie' if defined? Rails
 
 module SimpleGallery
 
-  mattr_accessor :setups
+  mattr_accessor :configs
 
-  # Hash of options for rendering
-  self.setups = { default: SimpleGallery::Defaults.to_hash() }
+  # Hash of configs presets
+  self.configs = { default: SimpleGallery::Defaults.to_hash() }
 
 
   module Rails
