@@ -1,4 +1,4 @@
-module SimpleGallery
+module Hermitage
   
   module ViewHelpers
 
@@ -8,14 +8,14 @@ module SimpleGallery
     # * options   Hash of options. There is list of available options in Defaults module.
     # 
     def render_gallery_for(objects, options = {})
-      options = SimpleGallery.configs[:default].merge(options)
+      options = Hermitage.configs[:default].merge(options)
       
       items = []
       objects.each do |object|
         full_image_path = object.instance_eval(options[:attribute_full_size])
         thumbnail_image_path = object.instance_eval(options[:attribute_thumbnail])
         image = image_tag(thumbnail_image_path, class: options[:image_class])
-        items << link_to(image, full_image_path, rel: 'simple_gallery', class: options[:link_class])
+        items << link_to(image, full_image_path, rel: 'hermitage', class: options[:link_class])
       end
       
       content_tag options[:list_tag], class: options[:list_class] do

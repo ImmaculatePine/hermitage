@@ -11,7 +11,7 @@ require "jquery-rails"
 require "coffee-rails"
 
 Bundler.require(*Rails.groups)
-require "simple_gallery"
+require "hermitage"
 
 module Dummy
   class Application < Rails::Application

@@ -1,11 +1,11 @@
-module SimpleGallery
+module Hermitage
   module Generators
     class InstallGenerator < ::Rails::Generators::Base
-      desc 'Creates configuration file for simple_gallery at config/initializers'
+      desc 'Creates configuration file for hermitage at config/initializers'
       source_root File.expand_path('../templates', __FILE__)
 
       def copy_initializer
-        template 'simple_gallery.rb', 'config/initializers/simple_gallery.rb'
+        template 'hermitage.rb', 'config/initializers/hermitage.rb'
       end
     end
   end

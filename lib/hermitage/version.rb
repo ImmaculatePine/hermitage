@@ -1,3 +1,3 @@
-module SimpleGallery
+module Hermitage
   VERSION = '0.0.1'
 end

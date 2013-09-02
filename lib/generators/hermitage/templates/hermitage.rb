@@ -1,9 +1,9 @@
-# Configuration file for simple_gallery gem
+# Configuration file for hermitage gem
 
 # Default config is used as base options hash for every gallery.
 # You can configure any of its options and they will be applied for every rendering.
 #
-# SimpleGallery.configs[:default].merge!({
+# Hermitage.configs[:default].merge!({
 #   attribute_full_size: 'file.url',
 #   attribute_thumbnail: 'file.url(:thumbnail)',
 #   list_tag: :ul,
@@ -24,6 +24,6 @@
 #
 # All available options are listed in default config above.
 #
-# SimpleGallery.configs[:images] = {
+# Hermitage.configs[:images] = {
 
 # }

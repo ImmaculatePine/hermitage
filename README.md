@@ -1,4 +1,4 @@
-# SimpleGallery
+# Hermitage
 
 Ruby library for generation of image galleries (thumbnails and full-size images viewer).
 
@@ -8,7 +8,7 @@ When it will be released on RubyGems... :)
 
 Add this line to your application's Gemfile:
 
-    gem 'simple_gallery'
+    gem 'hermitage'
 
 And then execute:
 
@@ -16,7 +16,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install simple_gallery
+    $ gem install hermitage
 
 ## Usage
 

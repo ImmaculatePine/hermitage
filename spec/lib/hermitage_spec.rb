@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe SimpleGallery do
+describe Hermitage do
   it 'should has a version' do
-    SimpleGallery::VERSION.should_not be_nil
+    Hermitage::VERSION.should_not be_nil
   end
 
   it { should respond_to(:configs) }

@@ -11,24 +11,24 @@ root.images = []
 root.navigation_button_margin = 10
 
 # Initializes the gallery on this page
-root.init_simple_gallery = ->
+root.init_hermitage = ->
   # Create simple gallery layer if it doesn't exist
-  if ($("#simple_gallery").length == 0)
-    simpleGallery = $("<div>", {id: "simple_gallery"})
-    $("body").append(simpleGallery)
-    simpleGallery.css("z-index", 10)
-    simpleGallery.hide()
+  if ($("#hermitage").length == 0)
+    Hermitage = $("<div>", {id: "hermitage"})
+    $("body").append(Hermitage)
+    Hermitage.css("z-index", 10)
+    Hermitage.hide()
 
   # Clear old images array
   images.length = 0
 
   # Create new images array
-  $.each $('a[rel="simple_gallery"]'), ->
+  $.each $('a[rel="hermitage"]'), ->
     images.push($(this).attr('href'))
 
   # Set on click handlers to all elements that
-  # have 'simple_gallery' rel attribute
-  $('a[rel="simple_gallery"]').click (event) ->
+  # have 'hermitage' rel attribute
+  $('a[rel="hermitage"]').click (event) ->
     open_gallery(this)
     event.preventDefault()
 
@@ -51,7 +51,7 @@ jQuery.fn.center = () ->
 # Creates overlay layer, shows it and sets its click handler
 create_overlay = () ->
   overlay = $("<div>", {id: "overlay"})
-  $("#simple_gallery").append(overlay)
+  $("#hermitage").append(overlay)
 
   overlay.css("position", "fixed")
   overlay.css("top", "0")
@@ -75,7 +75,7 @@ create_overlay = () ->
 # Creates base navigation button and returns it
 create_navigation_button = () ->
   button = $("<div>")
-  $("#simple_gallery").append(button)
+  $("#hermitage").append(button)
 
   button.css("position", "fixed")
   button.css("width", "50px")
@@ -124,8 +124,8 @@ create_left_navigation_button = () ->
 
 # Shows full size image of the chosen one
 open_gallery = (image) ->
-  $("#simple_gallery").empty()
-  $("#simple_gallery").show()
+  $("#hermitage").empty()
+  $("#hermitage").show()
   create_overlay()
   create_right_navigation_button()
   create_left_navigation_button()
@@ -145,7 +145,7 @@ show_image = (index) ->
   $("#navigation-left").fadeOut()
   $("#navigation-right").fadeOut()
 
-  $("#simple_gallery").append(img)
+  $("#hermitage").append(img)
   
   img.click (event) ->
     if (event.pageX >= $(window).width() / 2)
@@ -193,10 +193,10 @@ hide_current_image = ->
 
 # Starts fade out animation and clears simple gallery at the end of animation
 close_gallery = () ->
-  $("#simple_gallery :not(#overlay)").fadeOut()
+  $("#hermitage :not(#overlay)").fadeOut()
   $("#overlay").fadeOut 400, ->
-    $("#simple_gallery").hide()
-    $("#simple_gallery").empty()
+    $("#hermitage").hide()
+    $("#hermitage").empty()
 
 
 # Moves navigation buttons to proper positions
@@ -220,5 +220,5 @@ adjust_navigation_buttons = () ->
   right.fadeIn()
 
 # Initialize gallery on page load
-$(document).ready(init_simple_gallery)
-$(document).on('page:load', init_simple_gallery)
+$(document).ready(init_hermitage)
+$(document).on('page:load', init_hermitage)

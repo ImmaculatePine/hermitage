@@ -11,5 +11,5 @@
 // about supported directives.
 //
 //= require jquery
-//= require simple_gallery
+//= require hermitage
 //= require_tree .
