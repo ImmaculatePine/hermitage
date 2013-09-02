@@ -5,16 +5,15 @@ module SimpleGallery
     # Renders gallery markup as unordered list of links to full-size images.
     # Parameters:
     # * objects   Array of objects that should be rendered
-    # * options   Hash of options
-    #
-    # There are next options available:
-    # * attribute   Model's attribute (or method) where path to image is stored
-    # TODO: Think about other available options.
-    def render_gallery_for(objects, options = default_options)
+    # * options   Hash of options. There is list of available options in Defaults module.
+    # 
+    def render_gallery_for(objects, options = {})
+      options = SimpleGallery.setups[:default].merge(options)
+      
       items = []
       objects.each do |object|
-        full_image = object.send(options[:attribute].to_s)
-        thumbnail_image = object.send(options[:attribute].to_s, :thumb)
+        full_image = object.instance_eval(options[:attribute_full_size])
+        thumbnail_image = object.instance_eval(options[:attribute_thumbnail])
         items << link_to(image_tag(thumbnail_image), full_image, rel: 'simple_gallery')
       end
       
@@ -23,15 +22,6 @@ module SimpleGallery
       end
     end
 
-    private
-
-    # Get default options hash
-    # TODO: Maybe it would be better to move this somewhere else
-    def default_options
-      {
-        attribute: :image
-      }
-    end
   end
   
 end

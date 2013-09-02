@@ -11,14 +11,22 @@ class DummyBase
   end
 end
 
-class DummyImage < DummyBase
-  def image(options = nil)
+class DummyFile < DummyBase
+  def url(options = nil)
     magic(options)
   end
 end
 
-class DummyFile < DummyBase
-  def file(options = nil)
+class DummyImage
+  attr_accessor :file
+  def initialize(name)
+    @file = DummyFile.new(name)
+  end
+end
+
+class DummyPhoto < DummyBase
+  def photo(options = nil)
     magic(options)
   end
 end
+
