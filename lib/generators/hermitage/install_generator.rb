@@ -1,7 +1,7 @@
 module Hermitage
   module Generators
     class InstallGenerator < ::Rails::Generators::Base
-      desc 'Creates configuration file for hermitage at config/initializers'
+      desc 'Creates Hermitage configuration file at config/initializers and adds require statement to application.js file.'
       source_root File.expand_path('../templates', __FILE__)
 
       def copy_initializer
