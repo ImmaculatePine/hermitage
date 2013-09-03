@@ -2,13 +2,27 @@ module Hermitage
   
   module ViewHelpers
 
-    # Renders gallery markup as unordered list of links to full-size images.
-    # Parameters:
-    # * objects   Array of objects that should be rendered
-    # * options   Hash of options. There is list of available options in Defaults module.
+    # Renders gallery markup.
+    #
+    # Arguments:
+    # * +objects+   Array of objects that should be rendered.
+    # * +options+   Hash of options. There is list of available options in Defaults module.
     # 
+    # Examples:
+    #
+    #   render_gallery_for @images      # @images here is array of Image instances
+    #   render_gallery_for album.photos # album.photos is array of Photo instances
+    #
+    # it will render the objects contained in array and will use :images (or :photos) as config name.
+    # Config names are formed by the class name of the first element in array.
+    #
     def render_gallery_for(objects, options = {})
-      options = Hermitage.configs[:default].merge(options)
+      raise(ArgumentError, 'First argument in render_gallery_for method can be string, symbol or array only.') unless objects.is_a? Array
+  
+      config_name = objects.first.class.to_s.pluralize.underscore.to_sym if defined?(Rails) && !objects.empty?
+      config = Hermitage.configs.include?(config_name) ? config_name : :default
+      
+      options = Hermitage.configs[:default].merge(Hermitage.configs[config]).merge(options)
       
       items = []
       objects.each do |object|
