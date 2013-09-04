@@ -10,14 +10,25 @@ root.images = []
 # Distance between navigation buttons and image
 root.navigation_button_margin = 10
 
+# Color of navigation button's border and symbols
+root.navigation_button_color = "#777"
+
+# Minimum distance between window borders and image
+root.window_padding_x = 50
+root.window_padding_y = 50
+
+# Minimum size of scaled image
+root.minimum_scaled_width = 100
+root.minimum_scaled_height = 100
+
 # Initializes the gallery on this page
 root.init_hermitage = ->
   # Create simple gallery layer if it doesn't exist
   if ($("#hermitage").length == 0)
-    Hermitage = $("<div>", {id: "hermitage"})
-    $("body").append(Hermitage)
-    Hermitage.css("z-index", 10)
-    Hermitage.hide()
+    hermitage = $("<div>", {id: "hermitage"})
+    $("body").append(hermitage)
+    hermitage.css("z-index", 10)
+    hermitage.hide()
 
   # Clear old images array
   images.length = 0
@@ -56,7 +67,7 @@ create_overlay = () ->
   overlay.css("position", "fixed")
   overlay.css("top", "0")
   overlay.css("left", "0")
-  overlay.css("background", "black")
+  overlay.css("background", "#000")
   overlay.css("display", "block")
   overlay.css("opacity", "0.75")
   overlay.css("filter", "alpha(opacity=75)")
@@ -82,15 +93,15 @@ create_navigation_button = () ->
   button.css("display", "block")
   button.css("cursor", "pointer")
 
-  button.css("background", "#EEE")
+  button.css("border-width", "1px")
+  button.css("border-style", "solid")
+  button.css("border-color", navigation_button_color)
   button.css("display", "block")
-  button.css("opacity", "0.7")
-  button.css("filter", "alpha(opacity=70)")
   button.css("border-radius", "7px")
   button.css("-webkit-border-radius", "7px")
   button.css("-moz-border-radius", "7px")
 
-  button.css("color", "#000")
+  button.css("color", navigation_button_color)
   button.css("text-align", "center")
   button.css("vertical-align", "middle")
   button.css("font", "30px Tahoma,Arial,Helvetica,sans-serif")
@@ -103,6 +114,12 @@ create_navigation_button = () ->
 create_right_navigation_button = () ->
   button = create_navigation_button()
   button.attr("id", "navigation-right")
+  button.css("border-top-left-radius", "0")
+  button.css("-webkit-border-top-left-radius", "0")
+  button.css("-moz-border-top-left-radius", "0")
+  button.css("border-bottom-left-radius", "0")
+  button.css("-webkit-border-bottom-left-radius", "0")
+  button.css("-moz-border-bottom-left-radius", "0")
   button.append(">")
 
   button.click (event) ->
@@ -114,6 +131,12 @@ create_right_navigation_button = () ->
 create_left_navigation_button = () ->
   button = create_navigation_button()
   button.attr("id", "navigation-left")
+  button.css("border-top-right-radius", "0")
+  button.css("-webkit-border-top-right-radius", "0")
+  button.css("-moz-border-top-right-radius", "0")
+  button.css("border-bottom-right-radius", "0")
+  button.css("-webkit-border-bottom-right-radius", "0")
+  button.css("-moz-border-bottom-right-radius", "0")
   button.append("<")
 
   button.click (event) ->
@@ -142,9 +165,6 @@ show_image = (index) ->
   img.css("cursor", "pointer")
   img.hide()
   
-  $("#navigation-left").fadeOut()
-  $("#navigation-right").fadeOut()
-
   $("#hermitage").append(img)
   
   img.click (event) ->
@@ -156,8 +176,25 @@ show_image = (index) ->
   # When image will be loaded set correct size,
   # center element and show it
   $("<img />").attr("src", images[index]).load ->
-    img.width(this.width)
-    img.height(this.height)
+    max_width = $(window).width() - (window_padding_x + $("#navigation-left").outerWidth() + navigation_button_margin) * 2
+    max_height = $(window).height() - window_padding_y * 2
+
+    scale = 1.0
+
+    if (max_width <= minimum_scaled_width || max_height <= minimum_scaled_height)
+      if (max_width < max_height)
+        max_width = minimum_scaled_width
+        max_height = max_width * (this.height / this.width)
+      else
+        max_height = minimum_scaled_height
+        max_width = max_height * (this.width / this.height)
+
+    if (this.width > max_width || this.height > max_height)
+      scale = Math.min(max_width / this.width, max_height / this.height)
+
+    img.width(this.width * scale)
+    img.height(this.height * scale)
+
     img.center()
     img.fadeIn()
     adjust_navigation_buttons()
@@ -188,6 +225,7 @@ show_previous_image = ->
 hide_current_image = ->
   current = $("img.current")
   if (current.length == 1)
+    current.attr("class", "")
     current.fadeOut 400, ->
       current.remove()
 
@@ -206,18 +244,19 @@ adjust_navigation_buttons = () ->
 
   current = $(".current")
 
-  left.css("height", current.outerHeight() + "px")
-  left.css("line-height", current.outerHeight() + "px")
-  left.css("left", (current.position().left - left.outerWidth() - navigation_button_margin) + "px")
-  left.css("top", current.position().top + "px")
-  
-  right.css("height", current.outerHeight() + "px")
-  right.css("line-height", current.outerHeight() + "px")
-  right.css("left", (current.position().left + current.outerWidth() + navigation_button_margin) + "px")
-  right.css("top", current.position().top + "px")
+  left_new_height = current.outerHeight() + "px"
+  left_new_left = (current.position().left - left.outerWidth() - navigation_button_margin) + "px"
+  left_new_top = current.position().top + "px"
 
-  left.fadeIn()
-  right.fadeIn()
+  right_new_height = current.outerHeight() + "px"
+  right_new_left = (current.position().left + current.outerWidth() + navigation_button_margin) + "px"
+  right_new_top = current.position().top + "px"
+
+  left.animate({ height: left_new_height, 'line-height': left_new_height, left: left_new_left, top: left_new_top}, 400)
+  right.animate({ height: right_new_height, 'line-height': right_new_height, left: right_new_left, top: right_new_top}, 400)
+
+  left.fadeIn() if (left.css("display") == "none")
+  right.fadeIn() if (right.css("display") == "none")
 
 # Initialize gallery on page load
 $(document).ready(init_hermitage)
