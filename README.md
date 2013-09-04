@@ -1,5 +1,7 @@
 # Hermitage
 
+[![Build Status](https://travis-ci.org/ImmaculatePine/hermitage.png?branch=master)](https://travis-ci.org/ImmaculatePine/hermitage)
+
 Ruby library for generation of image galleries (thumbnails and full size images viewer).
 
 ## Requirements
@@ -94,6 +96,17 @@ will render the following markup:
       </p>
     </div>
 
+#### Slicing
+
+If you are using Twitter Bootstrap framework and your gallery is inside `.row-fluid` block the markup above will not look awesome.
+Or maybe you have any other reasons to split the gallery into several separate galleries.
+Then pass `each_slice` options to `render_gallery_for` method:
+
+    @images = Array.new(5, Image.new) # weird, but it's just an example
+    render_gallery_for @images, each_slice: 3
+
+This code will render 2 `ul` tags with 3 and 2 items in each, respectively. Nevertheless they both will be available in navigation flow when you open the image viewer.
+
 ### Configuration
 
 It is more handy to use configs to customize Hermitage behavior.
@@ -104,7 +117,7 @@ If there is no proper config :default config is used.
 
 Hermitage configs are described in config/initializers/hermitage.rb file.
 
-#### Overwrite Defaults
+#### Overwriting Defaults
 
 You can overwrite :default config. These changes will be applied to all the galleries in your application.
 

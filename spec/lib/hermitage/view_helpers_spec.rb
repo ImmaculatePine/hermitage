@@ -36,6 +36,12 @@ describe Hermitage::ViewHelpers, type: :helper do
         let(:expected) { '<ul><li><a class="thumb link" href="/assets/0-full.png" rel="hermitage"><img alt="0 thumbnail" class="thumb" src="/assets/0-thumbnail.png" /></a></li><li><a class="thumb link" href="/assets/1-full.png" rel="hermitage"><img alt="1 thumbnail" class="thumb" src="/assets/1-thumbnail.png" /></a></li></ul>' }
         it { should == expected }
       end
+
+      context 'each_slice' do
+        subject { template.render_gallery_for images, each_slice: 1 }
+        let(:expected) { '<ul class="thumbnails"><li class="span4"><a class="thumbnail" href="/assets/0-full.png" rel="hermitage"><img alt="0 thumbnail" src="/assets/0-thumbnail.png" /></a></li></ul><ul class="thumbnails"><li class="span4"><a class="thumbnail" href="/assets/1-full.png" rel="hermitage"><img alt="1 thumbnail" src="/assets/1-thumbnail.png" /></a></li></ul>' }
+        it { should == expected }
+      end
     end
 
     context 'with configs' do

@@ -19,6 +19,11 @@ module Hermitage
     LINK_CLASS = 'thumbnail'
     IMAGE_CLASS = nil
 
+    # Slices each N images into the separate gallery.
+    # It is helpful e.g. when using Twitter Bootstrap framework
+    # and your gallery is inside `.row-fluid` block.
+    EACH_SLICE = nil
+
     # Returns hash of default options
     def self.to_hash
       hash = {}

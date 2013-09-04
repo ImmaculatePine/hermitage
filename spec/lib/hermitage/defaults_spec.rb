@@ -11,7 +11,8 @@ describe Hermitage::Defaults do
         list_class: 'thumbnails',
         item_class: 'span4',
         link_class: 'thumbnail',
-        image_class: nil
+        image_class: nil,
+        each_slice: nil
       }
     end
   end

@@ -19,22 +19,40 @@ module Hermitage
     def render_gallery_for(objects, options = {})
       raise(ArgumentError, 'First argument in render_gallery_for method can be string, symbol or array only.') unless objects.is_a? Array
   
+      # Choose config accoring to class name of objects in passed array
       config_name = objects.first.class.to_s.pluralize.underscore.to_sym if defined?(Rails) && !objects.empty?
       config = Hermitage.configs.include?(config_name) ? config_name : :default
       
+      # Merge default options with the chosen config and with passed options
       options = Hermitage.configs[:default].merge(Hermitage.configs[config]).merge(options)
       
-      items = []
-      objects.each do |object|
-        full_image_path = object.instance_eval(options[:attribute_full_size])
-        thumbnail_image_path = object.instance_eval(options[:attribute_thumbnail])
-        image = image_tag(thumbnail_image_path, class: options[:image_class])
-        items << link_to(image, full_image_path, rel: 'hermitage', class: options[:link_class])
+      # Create array of all list tags
+      lists = unless options[:each_slice]
+        [objects]
+      else
+        objects.each_slice(options[:each_slice]).to_a
       end
-      
-      content_tag options[:list_tag], class: options[:list_class] do
-        items.collect { |item| concat(content_tag(options[:item_tag], item, class: options[:item_class])) }
+
+      # The resulting tag
+      tag = ''
+
+      # Render each list into `tag` variable
+      lists.each do |list|
+        # Array of items in current list
+        items = list.collect do |item|
+          full_image_path = item.instance_eval(options[:attribute_full_size])
+          thumbnail_image_path = item.instance_eval(options[:attribute_thumbnail])
+          image = image_tag(thumbnail_image_path, class: options[:image_class])
+          link_to(image, full_image_path, rel: 'hermitage', class: options[:link_class])
+        end
+        
+        # Convert these items into content tag string
+        tag << content_tag(options[:list_tag], class: options[:list_class]) do
+          items.collect { |item| concat(content_tag(options[:item_tag], item, class: options[:item_class])) }
+        end
       end
+
+      tag.html_safe
     end
 
   end

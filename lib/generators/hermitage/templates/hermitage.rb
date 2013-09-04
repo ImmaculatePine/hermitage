@@ -11,7 +11,8 @@
 #   list_class: 'thumbnails',
 #   item_class: 'span4',
 #   link_class: 'thumbnail',
-#   image_class: nil
+#   image_class: nil,
+#   each_slice: nil
 # })
 
 # Also you can create your own configs that will be merged with default config to overwrite default options.
