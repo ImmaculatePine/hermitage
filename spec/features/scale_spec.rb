@@ -1,14 +1,7 @@
 require 'spec_helper'
+require 'features_helper'
 
 describe 'scale', type: :feature, js: true do
-
-  def width(selector)
-    evaluate_script("$('#{selector}').outerWidth()")
-  end
-
-  def height(selector)
-    evaluate_script("$('#{selector}').outerHeight()")
-  end
 
   before(:each) do
     visit images_path

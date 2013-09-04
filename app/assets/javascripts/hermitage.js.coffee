@@ -4,31 +4,42 @@ root = exports ? this
 # Data
 #
 
+# Hermitage options
+root.hermitage =
+  # Image viewer z-index property
+  z_index: 10
+
+  # Darkening properties
+  darkening_opacity: 0.75 # 0 if you don't want darkening
+  darkening_color: "#000"
+
+  # Navigation buttons' properties
+  navigation_button_color: "#777"
+  navigation_button_width: 50 # px
+  navigation_button_border_radius: 7 #px
+  navigation_button_margin: 10 # Distance between navigation buttons and image, px
+
+  # Minimum distance between window borders and image, px
+  window_padding_x: 50
+  window_padding_y: 50
+
+  # Minimum size of scaled image, px
+  minimum_scaled_width: 100
+  minimum_scaled_height: 100
+
+
 # Array of images of current gallery
 root.images = []
 
-# Distance between navigation buttons and image
-root.navigation_button_margin = 10
-
-# Color of navigation button's border and symbols
-root.navigation_button_color = "#777"
-
-# Minimum distance between window borders and image
-root.window_padding_x = 50
-root.window_padding_y = 50
-
-# Minimum size of scaled image
-root.minimum_scaled_width = 100
-root.minimum_scaled_height = 100
 
 # Initializes the gallery on this page
 root.init_hermitage = ->
   # Create simple gallery layer if it doesn't exist
   if ($("#hermitage").length == 0)
-    hermitage = $("<div>", {id: "hermitage"})
-    $("body").append(hermitage)
-    hermitage.css("z-index", 10)
-    hermitage.hide()
+    layer = $("<div>", {id: "hermitage"})
+    $("body").append(layer)
+    layer.css("position", "fixed")
+    layer.hide()
 
   # Clear old images array
   images.length = 0
@@ -67,10 +78,10 @@ create_overlay = () ->
   overlay.css("position", "fixed")
   overlay.css("top", "0")
   overlay.css("left", "0")
-  overlay.css("background", "#000")
+  overlay.css("background", hermitage.darkening_color)
   overlay.css("display", "block")
-  overlay.css("opacity", "0.75")
-  overlay.css("filter", "alpha(opacity=75)")
+  overlay.css("opacity", hermitage.darkening_opacity)
+  overlay.css("filter", "alpha(opacity=" + hermitage.darkening_opacity * 100 + ")")
   overlay.css("width", "100%")
   overlay.css("height", "100%")
 
@@ -89,19 +100,19 @@ create_navigation_button = () ->
   $("#hermitage").append(button)
 
   button.css("position", "fixed")
-  button.css("width", "50px")
+  button.css("width", hermitage.navigation_button_width + "px")
   button.css("display", "block")
   button.css("cursor", "pointer")
 
   button.css("border-width", "1px")
   button.css("border-style", "solid")
-  button.css("border-color", navigation_button_color)
+  button.css("border-color", hermitage.navigation_button_color)
   button.css("display", "block")
-  button.css("border-radius", "7px")
-  button.css("-webkit-border-radius", "7px")
-  button.css("-moz-border-radius", "7px")
+  button.css("border-radius", hermitage.navigation_button_border_radius + "px")
+  button.css("-webkit-border-radius", hermitage.navigation_button_border_radius + "px")
+  button.css("-moz-border-radius", hermitage.navigation_button_border_radius + "px")
 
-  button.css("color", navigation_button_color)
+  button.css("color", hermitage.navigation_button_color)
   button.css("text-align", "center")
   button.css("vertical-align", "middle")
   button.css("font", "30px Tahoma,Arial,Helvetica,sans-serif")
@@ -147,8 +158,10 @@ create_left_navigation_button = () ->
 
 # Shows full size image of the chosen one
 open_gallery = (image) ->
+  $("#hermitage").css("z-index", hermitage.z_index)
   $("#hermitage").empty()
   $("#hermitage").show()
+  
   create_overlay()
   create_right_navigation_button()
   create_left_navigation_button()
@@ -176,17 +189,17 @@ show_image = (index) ->
   # When image will be loaded set correct size,
   # center element and show it
   $("<img />").attr("src", images[index]).load ->
-    max_width = $(window).width() - (window_padding_x + $("#navigation-left").outerWidth() + navigation_button_margin) * 2
-    max_height = $(window).height() - window_padding_y * 2
+    max_width = $(window).width() - (hermitage.window_padding_x + $("#navigation-left").outerWidth() + hermitage.navigation_button_margin) * 2
+    max_height = $(window).height() - hermitage.window_padding_y * 2
 
     scale = 1.0
 
-    if (max_width <= minimum_scaled_width || max_height <= minimum_scaled_height)
+    if (max_width <= hermitage.minimum_scaled_width || max_height <= hermitage.minimum_scaled_height)
       if (max_width < max_height)
-        max_width = minimum_scaled_width
+        max_width = hermitage.minimum_scaled_width
         max_height = max_width * (this.height / this.width)
       else
-        max_height = minimum_scaled_height
+        max_height = hermitage.minimum_scaled_height
         max_width = max_height * (this.width / this.height)
 
     if (this.width > max_width || this.height > max_height)
@@ -245,11 +258,11 @@ adjust_navigation_buttons = () ->
   current = $(".current")
 
   left_new_height = current.outerHeight() + "px"
-  left_new_left = (current.position().left - left.outerWidth() - navigation_button_margin) + "px"
+  left_new_left = (current.position().left - left.outerWidth() - hermitage.navigation_button_margin) + "px"
   left_new_top = current.position().top + "px"
 
   right_new_height = current.outerHeight() + "px"
-  right_new_left = (current.position().left + current.outerWidth() + navigation_button_margin) + "px"
+  right_new_left = (current.position().left + current.outerWidth() + hermitage.navigation_button_margin) + "px"
   right_new_top = current.position().top + "px"
 
   left.animate({ height: left_new_height, 'line-height': left_new_height, left: left_new_left, top: left_new_top}, 400)

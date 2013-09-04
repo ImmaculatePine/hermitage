@@ -179,6 +179,29 @@ So, Hermitage looks for parameters with the following priority:
 * Then it overwrites some of them by custom config's parameters if they were specified;
 * Finally it overwrites both of them by the values from options hash passed to `render_gallery_for` method (if there are such values, of course).
 
+### Viewer Customization
+
+You can customize appearance of Hermitage image viewer. All you need is add to any of your .js or .coffee files lines like this:
+
+    hermitage.darkening_opacity = 0
+    hermitage.navigation_button_color = "#faeedd"
+
+In the example above the darkening will be disabled and navigation buttons will change their color.
+
+You can customize the following parameters:
+
+* `z_index` - image viewer's z-index property
+* `darkening_opacity` - opacity of darkening layer (0 if it should be disabled)
+* `darkening_color` - color of darkening layer
+* `navigation_button_color` - color of navigation buttons
+* `navigation_button_width` - width of navigation buttons, px
+* `navigation_button_border_radius` - border radius of outer corners of navigation buttons, px
+* `navigation_button_margin` - distance between navigation buttons and the image, px
+* `window_padding_x` - minimum distance between window borders and the image by x axis, px
+* `window_padding_y` - minimum distance between window borders and the image by y axis, px
+* `minimum_scaled_width` - minimum width of scaled image, px
+* `minimum_scaled_height` - minimum height of scaled image, px
+
 ## Contributing
 
 1. Fork it
