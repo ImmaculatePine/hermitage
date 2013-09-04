@@ -1,22 +1,7 @@
 require 'spec_helper'
+require 'features_helper'
 
 describe 'navigation', type: :feature, js: true do
-
-  # Workaround for clicking exactly on the specified position of the element
-  def click_at(selector, offset_x, offset_y)
-    x = evaluate_script("$('#{selector}').position().left + $('#{selector}').outerWidth() * #{offset_x}")
-    y = evaluate_script("$('#{selector}').position().top + $('#{selector}').outerHeight() * #{offset_y}")
-    page.driver.click(x, y)
-  end
-
-  def click_at_left(selector)
-    click_at(selector, 0.25, 0.5)
-  end
-
-  def click_at_right(selector)
-    click_at(selector, 0.75, 0.5)
-  end
-
 
   shared_examples 'navigation to next' do
     before(:each) { click_action.call() }
