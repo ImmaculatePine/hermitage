@@ -16,19 +16,25 @@ describe 'viewer_customization', type: :feature, js: true do
     it { css('#hermitage', 'z-index').should == '5' }
   end
 
-  context 'darkening_opacity' do
-    let(:js) { 'hermitage.darkening_opacity = 0.5'}
+  context 'darkening.opacity' do
+    let(:js) { 'hermitage.darkening.opacity = 0.5'}
     before(:each) { sleep(1) }
     it { css('#overlay', 'opacity').should == '0.5' }
   end
 
-  context 'darkening_color' do
-    let(:js) { 'hermitage.darkening_color = "#FAFAFA"' }
+  context 'darkening.color' do
+    let(:js) { 'hermitage.darkening.color = "#FAFAFA"' }
     it { css('#overlay', 'background-color').should == 'rgb(250, 250, 250)' }
   end
 
-  context 'navigation_button_color' do
-    let(:js) { 'hermitage.navigation_button_color = "#000"'}
+  context 'navigation_button.enabled' do
+    let(:js) { 'hermitage.navigation_button.enabled = false' }
+    it { should_not have_css('#navigation-left') }
+    it { should_not have_css('#navigation-right') }
+  end
+
+  context 'navigation_button.color' do
+    let(:js) { 'hermitage.navigation_button.color = "#000"'}
 
     shared_examples 'navigation button' do
       it 'sets border color' do
@@ -50,14 +56,14 @@ describe 'viewer_customization', type: :feature, js: true do
     end
   end
 
-  context 'navigation_button_color' do
-    let(:js) { 'hermitage.navigation_button_width = 100' }
+  context 'navigation_button.width' do
+    let(:js) { 'hermitage.navigation_button.width = 100' }
     it { css('#navigation-left', 'width').should == '100px' }
     it { css('#navigation-right', 'width').should == '100px' }
   end
 
-  context 'navigation_button_border_radius' do
-    let(:js) { 'hermitage.navigation_button_border_radius = 5' }
+  context 'navigation_button.border_radius' do
+    let(:js) { 'hermitage.navigation_button.border_radius = 5' }
 
     it 'sets border radiuses for left button' do
       css('#navigation-left', 'border-top-left-radius').should == '5px'
@@ -74,11 +80,31 @@ describe 'viewer_customization', type: :feature, js: true do
     end
   end
   
-  context 'navigation_button_margin' do
-    let(:js) { 'hermitage.navigation_button_margin = 30' }
+  context 'navigation_button.margin' do
+    let(:js) { 'hermitage.navigation_button.margin = 30' }
     before(:each) { sleep(1) }
     it { css('#navigation-left', 'left').should == "#{left('.current') - 30 - width('#navigation-left')}px" }
     it { css('#navigation-right', 'left').should == "#{left('.current') + width('.current') + 30}px" }
   end
-    
+
+  context 'close_button.enabled' do
+    let(:js) { 'hermitage.close_button.enabled = false' }
+    it { should_not have_css('#close_button') }
+  end
+  
+  context 'close_button.text' do
+    let(:js) { 'hermitage.close_button.text = "Close"' }
+    it { text('#close_button').should == 'Close' }
+  end
+
+  context 'close_button.color' do
+    let(:js) { 'hermitage.close_button.color = "#777"' }
+    it { css('#close_button', 'color').should == 'rgb(119, 119, 119)' }
+  end
+
+  context 'close_button.font_size' do
+    let(:js) { 'hermitage.close_button.font_size = "10"' }
+    it { css('#close_button', 'font-size').should == '10px' }
+  end
+
 end

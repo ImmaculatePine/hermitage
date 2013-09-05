@@ -183,25 +183,31 @@ So, Hermitage looks for parameters with the following priority:
 
 You can customize appearance of Hermitage image viewer. All you need is add to any of your .js or .coffee files lines like this:
 
-    hermitage.darkening_opacity = 0
-    hermitage.navigation_button_color = "#faeedd"
+    hermitage.darkening.opacity = 0
+    hermitage.navigation_button.color = "#faeedd"
 
 In the example above the darkening will be disabled and navigation buttons will change their color.
 
 You can customize the following parameters:
 
 * `z_index` - image viewer's z-index property
-* `darkening_opacity` - opacity of darkening layer (0 if it should be disabled)
-* `darkening_color` - color of darkening layer
-* `navigation_button_color` - color of navigation buttons
-* `navigation_button_width` - width of navigation buttons, px
-* `navigation_button_border_radius` - border radius of outer corners of navigation buttons, px
-* `navigation_button_margin` - distance between navigation buttons and the image, px
+* `darkening.opacity` - opacity of darkening layer (0 if it should be disabled)
+* `darkening.color` - color of darkening layer
+* `navigation_button.enabled` - are there navigation buttons
+* `navigation_button.color` - color of navigation buttons
+* `navigation_button.width` - width of navigation buttons, px
+* `navigation_button.border_radius` - border radius of outer corners of navigation buttons, px
+* `navigation_button.margin` - distance between navigation buttons and the image, px
+* `close_button.enabled` - is there close button
+* `close_button.text` - close button's text
+* `close_button.color` - close button's color
+* `close_button.font_size` - close button's font size
 * `window_padding_x` - minimum distance between window borders and the image by x axis, px
 * `window_padding_y` - minimum distance between window borders and the image by y axis, px
 * `minimum_scaled_width` - minimum width of scaled image, px
 * `minimum_scaled_height` - minimum height of scaled image, px
-
+* `animation_duration` - duration of UI animations, ms
+  
 ## Contributing
 
 1. Fork it

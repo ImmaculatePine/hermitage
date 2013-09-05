@@ -27,14 +27,26 @@ describe 'viewer', type: :feature, js: true do
     page.should have_css("div#hermitage div#navigation-right")
   end
 
-  describe 'visitor clicks on shadow in the viewer' do
-    # Workaround for clicking at the shadow div
-    before(:each) { evaluate_script "$('#overlay').click()" }
+  it 'has close button' do
+    page.should have_css('div#hermitage div#close_button')
+  end
 
+  shared_examples 'close button' do
     it 'hides hermitage layer and removes everything from it' do
       page.should_not have_css('div#hermitage')
       page.find('div#hermitage', visible: false).all('*').length.should == 0
     end
+  end
+
+  describe 'click on the close button' do
+    before(:each) { page.find('#close_button').click }
+    it_behaves_like 'close button'
+  end
+
+  describe 'click on shadow in the viewer' do
+    # Workaround for clicking at the shadow div
+    before(:each) { evaluate_script "$('#overlay').click()" }
+    it_behaves_like 'close button'
   end
 
 end
