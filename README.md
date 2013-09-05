@@ -159,7 +159,7 @@ Then your config/initializers/hermitage.rb could looks like this:
       attribute_thumbnail: 'image_path(:small)'
     }
 
-    Hermitage.configs[:pictures] = {
+    Hermitage.configs[:posts] = {
       attribute_full_size: 'attachment',
       attribute_thumbnail: 'attachment(:tiny)',
       list_tag: :div,
