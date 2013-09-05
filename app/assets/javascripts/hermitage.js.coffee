@@ -42,6 +42,9 @@ root.hermitage =
   # Duration of all animations, ms
   animationDuration: 400
 
+  # Array of images of current gallery
+  images: []
+
   # Initializes the gallery on this page
   init: ->
     # Create Hermitage layer if it doesn't exist
@@ -52,20 +55,17 @@ root.hermitage =
       $('body').append(layer)
 
     # Clear old images array
-    images.length = 0
+    hermitage.images.length = 0
 
     # Create new images array
     $.each $('a[rel="hermitage"]'), ->
-      images.push($(this).attr('href'))
+      hermitage.images.push($(this).attr('href'))
 
     # Set on click handlers to all elements that
     # have 'hermitage' rel attribute
     $('a[rel="hermitage"]').click (event) ->
       openGallery(this)
       event.preventDefault()
-
-# Array of images of current gallery
-root.images = []
 
 #
 # Helpers
@@ -192,14 +192,14 @@ openGallery = (image) ->
   createLeftNavigationButton()
   createCloseButton()
 
-  showImage(images.indexOf($(image).attr('href')))
+  showImage(hermitage.images.indexOf($(image).attr('href')))
   
 
 # Shows image with specified index from images array
 showImage = (index) ->
   # Create full size image at the center of screen
   img = $('<img />')
-  img.attr('src', images[index])
+  img.attr('src', hermitage.images[index])
   img.attr('class', 'current')
   img.css('cursor', 'pointer')
   img.hide()
@@ -214,7 +214,7 @@ showImage = (index) ->
 
   # When image will be loaded set correct size,
   # center element and show it
-  $('<img />').attr('src', images[index]).load ->
+  $('<img />').attr('src', hermitage.images[index]).load ->
     maxWidth = $(window).width() - (hermitage.windowPadding.x + $('#navigation-left').outerWidth() + hermitage.navigationButton.margin) * 2
     maxHeight = $(window).height() - hermitage.windowPadding.y * 2
 
@@ -243,9 +243,9 @@ showImage = (index) ->
 showNextImage = ->
   current = $('img.current')
   if current.length is 1
-    index = images.indexOf(current.attr('src'))
+    index = hermitage.images.indexOf(current.attr('src'))
     hideCurrentImage()
-    if index < images.length - 1
+    if index < hermitage.images.length - 1
       showImage(index + 1)
     else
       showImage(0)
@@ -254,12 +254,12 @@ showNextImage = ->
 showPreviousImage = ->
   current = $('img.current')
   if current.length is 1
-    index = images.indexOf(current.attr('src'))
+    index = hermitage.images.indexOf(current.attr('src'))
     hideCurrentImage()
     if index > 0
       showImage(index - 1)
     else
-      showImage(images.length - 1)
+      showImage(hermitage.images.length - 1)
 
 # Hides current image
 hideCurrentImage = ->
