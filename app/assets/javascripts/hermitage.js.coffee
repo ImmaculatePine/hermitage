@@ -202,6 +202,7 @@ showImage = (index) ->
   img.attr('src', hermitage.images[index])
   img.attr('class', 'current')
   img.css('cursor', 'pointer')
+  img.css('max-width', 'none') # fix the conflict with Twitter Bootstrap
   img.hide()
   
   $('#hermitage').append(img)

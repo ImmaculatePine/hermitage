@@ -1,3 +1,7 @@
+### 0.0.2.1 ###
+
+* Fixed conflict with Twitter Bootstrap in Firefox and Opera.
+
 ### 0.0.2 ###
 
 * Added ability to split the gallery into several parts by `each_slice` option 
