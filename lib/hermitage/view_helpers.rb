@@ -17,8 +17,6 @@ module Hermitage
     # Config names are formed by the class name of the first element in array.
     #
     def render_gallery_for(objects, options = {})
-      raise(ArgumentError, 'First argument in render_gallery_for method can be string, symbol or array only.') unless objects.is_a? Array
-  
       # Choose config accoring to class name of objects in passed array
       config_name = objects.first.class.to_s.pluralize.underscore.to_sym if defined?(Rails) && !objects.empty?
       config = Hermitage.configs.include?(config_name) ? config_name : :default
@@ -40,8 +38,8 @@ module Hermitage
       lists.each do |list|
         # Array of items in current list
         items = list.collect do |item|
-          full_image_path = item.instance_eval(options[:attribute_full_size])
-          thumbnail_image_path = item.instance_eval(options[:attribute_thumbnail])
+          full_image_path = eval("item.#{options[:attribute_full_size]}")
+          thumbnail_image_path = eval("item.#{options[:attribute_thumbnail]}")
           image = image_tag(thumbnail_image_path, class: options[:image_class])
           link_to(image, full_image_path, rel: 'hermitage', class: options[:link_class])
         end
