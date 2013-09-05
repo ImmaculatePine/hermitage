@@ -3,9 +3,12 @@ require 'features_helper'
 
 describe 'viewer_customization', type: :feature, js: true do
 
+  let(:before_click) { nil }
+
   before(:each) do
     visit images_path
     evaluate_script(js)
+    before_click.call() if before_click
     page.first('a[rel=hermitage]').click
     page.should have_css('div#hermitage img.current')
     # There will be sleep(1) in tests where we should wait until fade in animation is ended
@@ -103,8 +106,47 @@ describe 'viewer_customization', type: :feature, js: true do
   end
 
   context 'close_button.font_size' do
-    let(:js) { 'hermitage.close_button.font_size = "10"' }
+    let(:js) { 'hermitage.close_button.font_size = 10' }
     it { css('#close_button', 'font-size').should == '10px' }
+  end
+
+  context 'window_padding_x' do
+    let(:js) { 'hermitage.window_padding_x = 100'}
+    let(:before_click) { Proc.new{ page.driver.resize(500, 1000) } }
+
+    it 'scales the image' do
+      width('.current').should == 176
+      height('.current').should == 176
+    end
+  end
+
+  context 'window_padding_y' do
+    let(:js) { 'hermitage.window_padding_y = 100'}
+    let(:before_click) { Proc.new{ page.driver.resize(1000, 400) } }
+
+    it 'scales the image' do
+      width('.current').should == 200
+      height('.current').should == 200
+    end
+  end
+
+  shared_examples 'image scaled to the minimum allowed size' do
+    it 'scales the image to the minimum allowed size' do
+      width('.current').should == 200
+      height('.current').should == 200
+    end
+  end
+
+  context 'minimum_scaled_width' do
+    let(:js) { 'hermitage.minimum_scaled_width = 200'}
+    let(:before_click) { Proc.new{ page.driver.resize(300, 1000) } }
+    it_behaves_like 'image scaled to the minimum allowed size'
+  end
+
+  context 'minimum_scaled_width' do
+    let(:js) { 'hermitage.minimum_scaled_height = 200'}
+    let(:before_click) { Proc.new{ page.driver.resize(1000, 250) } }
+    it_behaves_like 'image scaled to the minimum allowed size'
   end
 
 end
