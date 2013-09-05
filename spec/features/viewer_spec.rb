@@ -28,7 +28,7 @@ describe 'viewer', type: :feature, js: true do
   end
 
   it 'has close button' do
-    page.should have_css('div#hermitage div#close_button')
+    page.should have_css('div#hermitage div#close-button')
   end
 
   shared_examples 'close button' do
@@ -39,7 +39,7 @@ describe 'viewer', type: :feature, js: true do
   end
 
   describe 'click on the close button' do
-    before(:each) { page.find('#close_button').click }
+    before(:each) { page.find('#close-button').click }
     it_behaves_like 'close button'
   end
 

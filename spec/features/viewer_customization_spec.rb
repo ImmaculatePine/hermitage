@@ -14,8 +14,8 @@ describe 'viewer_customization', type: :feature, js: true do
     # There will be sleep(1) in tests where we should wait until fade in animation is ended
   end
 
-  context 'z_index' do
-    let(:js) { 'hermitage.z_index = 5'}
+  context 'zIndex' do
+    let(:js) { 'hermitage.zIndex = 5'}
     it { css('#hermitage', 'z-index').should == '5' }
   end
 
@@ -30,14 +30,14 @@ describe 'viewer_customization', type: :feature, js: true do
     it { css('#overlay', 'background-color').should == 'rgb(250, 250, 250)' }
   end
 
-  context 'navigation_button.enabled' do
-    let(:js) { 'hermitage.navigation_button.enabled = false' }
+  context 'navigationButton.enabled' do
+    let(:js) { 'hermitage.navigationButton.enabled = false' }
     it { should_not have_css('#navigation-left') }
     it { should_not have_css('#navigation-right') }
   end
 
-  context 'navigation_button.color' do
-    let(:js) { 'hermitage.navigation_button.color = "#000"'}
+  context 'navigationButton.color' do
+    let(:js) { 'hermitage.navigationButton.color = "#000"'}
 
     shared_examples 'navigation button' do
       it 'sets border color' do
@@ -59,14 +59,14 @@ describe 'viewer_customization', type: :feature, js: true do
     end
   end
 
-  context 'navigation_button.width' do
-    let(:js) { 'hermitage.navigation_button.width = 100' }
+  context 'navigationButton.width' do
+    let(:js) { 'hermitage.navigationButton.width = 100' }
     it { css('#navigation-left', 'width').should == '100px' }
     it { css('#navigation-right', 'width').should == '100px' }
   end
 
-  context 'navigation_button.border_radius' do
-    let(:js) { 'hermitage.navigation_button.border_radius = 5' }
+  context 'navigationButton.borderRadius' do
+    let(:js) { 'hermitage.navigationButton.borderRadius = 5' }
 
     it 'sets border radiuses for left button' do
       css('#navigation-left', 'border-top-left-radius').should == '5px'
@@ -83,35 +83,35 @@ describe 'viewer_customization', type: :feature, js: true do
     end
   end
   
-  context 'navigation_button.margin' do
-    let(:js) { 'hermitage.navigation_button.margin = 30' }
+  context 'navigationButton.margin' do
+    let(:js) { 'hermitage.navigationButton.margin = 30' }
     before(:each) { sleep(1) }
     it { css('#navigation-left', 'left').should == "#{left('.current') - 30 - width('#navigation-left')}px" }
     it { css('#navigation-right', 'left').should == "#{left('.current') + width('.current') + 30}px" }
   end
 
-  context 'close_button.enabled' do
-    let(:js) { 'hermitage.close_button.enabled = false' }
-    it { should_not have_css('#close_button') }
+  context 'closeButton.enabled' do
+    let(:js) { 'hermitage.closeButton.enabled = false' }
+    it { should_not have_css('#close-button') }
   end
   
-  context 'close_button.text' do
-    let(:js) { 'hermitage.close_button.text = "Close"' }
-    it { text('#close_button').should == 'Close' }
+  context 'closeButton.text' do
+    let(:js) { 'hermitage.closeButton.text = "Close"' }
+    it { text('#close-button').should == 'Close' }
   end
 
-  context 'close_button.color' do
-    let(:js) { 'hermitage.close_button.color = "#777"' }
-    it { css('#close_button', 'color').should == 'rgb(119, 119, 119)' }
+  context 'closeButton.color' do
+    let(:js) { 'hermitage.closeButton.color = "#777"' }
+    it { css('#close-button', 'color').should == 'rgb(119, 119, 119)' }
   end
 
-  context 'close_button.font_size' do
-    let(:js) { 'hermitage.close_button.font_size = 10' }
-    it { css('#close_button', 'font-size').should == '10px' }
+  context 'closeButton.fontSize' do
+    let(:js) { 'hermitage.closeButton.fontSize = 10' }
+    it { css('#close-button', 'font-size').should == '10px' }
   end
 
-  context 'window_padding_x' do
-    let(:js) { 'hermitage.window_padding_x = 100'}
+  context 'windowPadding.x' do
+    let(:js) { 'hermitage.windowPadding.x = 100'}
     let(:before_click) { Proc.new{ page.driver.resize(500, 1000) } }
 
     it 'scales the image' do
@@ -120,8 +120,8 @@ describe 'viewer_customization', type: :feature, js: true do
     end
   end
 
-  context 'window_padding_y' do
-    let(:js) { 'hermitage.window_padding_y = 100'}
+  context 'windowPadding.y' do
+    let(:js) { 'hermitage.windowPadding.y = 100'}
     let(:before_click) { Proc.new{ page.driver.resize(1000, 400) } }
 
     it 'scales the image' do
@@ -137,14 +137,14 @@ describe 'viewer_customization', type: :feature, js: true do
     end
   end
 
-  context 'minimum_scaled_width' do
-    let(:js) { 'hermitage.minimum_scaled_width = 200'}
+  context 'minimumSize.width' do
+    let(:js) { 'hermitage.minimumSize.width = 200'}
     let(:before_click) { Proc.new{ page.driver.resize(300, 1000) } }
     it_behaves_like 'image scaled to the minimum allowed size'
   end
 
-  context 'minimum_scaled_width' do
-    let(:js) { 'hermitage.minimum_scaled_height = 200'}
+  context 'minimumSize.width' do
+    let(:js) { 'hermitage.minimumSize.height = 200'}
     let(:before_click) { Proc.new{ page.driver.resize(1000, 250) } }
     it_behaves_like 'image scaled to the minimum allowed size'
   end

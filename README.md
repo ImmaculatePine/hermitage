@@ -40,7 +40,7 @@ The example from Quick Start section works well when you are using Paperclip gem
 
     class Image < ActiveRecord::Base
       attr_accessible :file
-      has_attached_file :file, styles: { thumbnail: "100x100>" }
+      has_attached_file :file, styles: { thumbnail: '100x100>' }
     end
 
 Then
@@ -146,7 +146,7 @@ and
 
     class Post < ActiveRecord::Base
       attr_accessible :attachment
-      has_attached_file :attachment, styles: { tiny: "200x200>" }
+      has_attached_file :attachment, styles: { tiny: '200x200>' }
     end
 
 Suppose that pictures should be rendered with Twitter Bootstrap style, but posts should be wrapped by simple blocks.
@@ -181,32 +181,32 @@ So, Hermitage looks for parameters with the following priority:
 
 ### Viewer Customization
 
-You can customize appearance of Hermitage image viewer. All you need is add to any of your .js or .coffee files lines like this:
+You can customize appearance of Hermitage image viewer. All you need is to add to any of your .js or .coffee files lines like this:
 
     hermitage.darkening.opacity = 0
-    hermitage.navigation_button.color = "#faeedd"
+    hermitage.navigationButton.color = '#faeedd'
 
 In the example above the darkening will be disabled and navigation buttons will change their color.
 
 You can customize the following parameters:
 
-* `z_index` - image viewer's z-index property
+* `zIndex` - image viewer's z-index property
 * `darkening.opacity` - opacity of darkening layer (0 if it should be disabled)
 * `darkening.color` - color of darkening layer
-* `navigation_button.enabled` - are there navigation buttons
-* `navigation_button.color` - color of navigation buttons
-* `navigation_button.width` - width of navigation buttons, px
-* `navigation_button.border_radius` - border radius of outer corners of navigation buttons, px
-* `navigation_button.margin` - distance between navigation buttons and the image, px
-* `close_button.enabled` - is there close button
-* `close_button.text` - close button's text
-* `close_button.color` - close button's color
-* `close_button.font_size` - close button's font size
-* `window_padding_x` - minimum distance between window borders and the image by x axis, px
-* `window_padding_y` - minimum distance between window borders and the image by y axis, px
-* `minimum_scaled_width` - minimum width of scaled image, px
-* `minimum_scaled_height` - minimum height of scaled image, px
-* `animation_duration` - duration of UI animations, ms
+* `navigationButton.enabled` - are there navigation buttons
+* `navigationButton.color` - color of navigation buttons
+* `navigationButton.width` - width of navigation buttons, px
+* `navigationButton.borderRadius` - border radius of outer corners of navigation buttons, px
+* `navigationButton.margin` - distance between navigation buttons and the image, px
+* `closeButton.enabled` - is there close button
+* `closeButton.text` - close button's text
+* `closeButton.color` - close button's color
+* `closeButton.fontSize` - close button's font size
+* `windowPadding.x` - minimum distance between window borders and the image by x axis, px
+* `windowPadding.y` - minimum distance between window borders and the image by y axis, px
+* `minimumSize.width` - minimum width of scaled image, px
+* `minimumSize.height` - minimum height of scaled image, px
+* `animationDuration` - duration of UI animations, ms
   
 ## Contributing
 
