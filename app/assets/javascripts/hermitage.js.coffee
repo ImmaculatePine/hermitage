@@ -74,8 +74,8 @@ root.images = []
 # Place element at the center of screen
 center = (element) ->
   element.css('position', 'fixed')
-  element.css('top', "#{Math.max(0, (($(window).height() - $(element).outerHeight()) / 2) + $(window).scrollTop())}px")
-  element.css('left', "#{Math.max(0, (($(window).width() - $(element).outerWidth()) / 2) + $(window).scrollLeft())}px")
+  element.css('top', "#{Math.max(0, ($(window).height() - $(element).outerHeight()) / 2)}px")
+  element.css('left', "#{Math.max(0, ($(window).width() - $(element).outerWidth()) / 2)}px")
   element
 
 #
