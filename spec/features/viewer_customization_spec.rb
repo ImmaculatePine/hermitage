@@ -36,8 +36,32 @@ describe 'viewer_customization', type: :feature, js: true do
     it { should_not have_css('#navigation-right') }
   end
 
+  context 'navigationButton.fontSize' do
+    let(:js) { 'hermitage.navigationButton.fontSize = 10'}
+    it { css('#navigation-left', 'font-size').should == '10px' }
+    it { css('#navigation-right', 'font-size').should == '10px' }
+  end
+
+  context 'navigationButton.fontFamily' do
+    let(:js) { 'hermitage.navigationButton.fontFamily = "monospace"'}
+    it { css('#navigation-left', 'font-family').should == 'monospace' }
+    it { css('#navigation-right', 'font-family').should == 'monospace' }
+  end
+
   context 'navigationButton.color' do
     let(:js) { 'hermitage.navigationButton.color = "#000"'}
+    it { css('#navigation-left', 'color').should == 'rgb(0, 0, 0)' }
+    it { css('#navigation-right', 'color').should == 'rgb(0, 0, 0)' }
+  end
+
+  context 'navigationButton.backgroundColor' do
+    let(:js) { 'hermitage.navigationButton.backgroundColor = "#000"'}
+    it { css('#navigation-left', 'background-color').should == 'rgb(0, 0, 0)' }
+    it { css('#navigation-right', 'background-color').should == 'rgb(0, 0, 0)' }
+  end
+
+  context 'navigationButton.borderColor' do
+    let(:js) { 'hermitage.navigationButton.borderColor = "#000"'}
 
     shared_examples 'navigation button' do
       it 'sets border color' do
@@ -108,6 +132,11 @@ describe 'viewer_customization', type: :feature, js: true do
   context 'closeButton.fontSize' do
     let(:js) { 'hermitage.closeButton.fontSize = 10' }
     it { css('#close-button', 'font-size').should == '10px' }
+  end
+
+  context 'closeButton.fontFamily' do
+    let(:js) { 'hermitage.closeButton.fontFamily = "monospace"'}
+    it { css('#close-button', 'font-family').should == 'monospace' }
   end
 
   context 'windowPadding.x' do

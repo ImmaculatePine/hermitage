@@ -194,20 +194,25 @@ You can customize the following parameters:
 * `darkening.opacity` - opacity of darkening layer (0 if it should be disabled)
 * `darkening.color` - color of darkening layer
 * `navigationButton.enabled` - are there navigation buttons
-* `navigationButton.color` - color of navigation buttons
 * `navigationButton.width` - width of navigation buttons, px
+* `navigationButton.fontSize` - font size of navigation buttons
+* `navigationButton.fontFamily` - font family of navigation buttons
+* `navigationButton.color` - font color of navigation buttons
+* `navigationButton.backgroundColor` - background color of navigation buttons
+* `navigationButton.borderColor` - border color of navigation buttons
 * `navigationButton.borderRadius` - border radius of outer corners of navigation buttons, px
 * `navigationButton.margin` - distance between navigation buttons and the image, px
 * `closeButton.enabled` - is there close button
 * `closeButton.text` - close button's text
 * `closeButton.color` - close button's color
 * `closeButton.fontSize` - close button's font size
+* `closeButton.fontFamily` - close button's font family
 * `windowPadding.x` - minimum distance between window borders and the image by x axis, px
 * `windowPadding.y` - minimum distance between window borders and the image by y axis, px
 * `minimumSize.width` - minimum width of scaled image, px
 * `minimumSize.height` - minimum height of scaled image, px
 * `animationDuration` - duration of UI animations, ms
-  
+
 ## Contributing
 
 1. Fork it

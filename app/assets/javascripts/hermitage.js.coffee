@@ -17,8 +17,12 @@ root.hermitage =
   # Navigation buttons' properties
   navigationButton:
     enabled: true
-    color: '#777'
     width: 50 # px
+    fontSize: 30 # px
+    fontFamily: 'Tahoma,Arial,Helvetica,sans-serif'
+    color: '#777'
+    backgroundColor: 'none'
+    borderColor: '#777'
     borderRadius: 7 # px
     margin: 10 # Distance between navigation buttons and image, px
 
@@ -28,6 +32,7 @@ root.hermitage =
     text: '×'
     color: '#FFF'
     fontSize: 30 # px
+    fontFamily: 'Tahoma,Arial,Helvetica,sans-serif'
   
   # Minimum distance between window borders and image, px
   windowPadding:
@@ -72,11 +77,19 @@ root.hermitage =
 #
 
 # Place element at the center of screen
-center = (element) ->
-  element.css('position', 'fixed')
-  element.css('top', "#{Math.max(0, ($(window).height() - $(element).outerHeight()) / 2)}px")
-  element.css('left', "#{Math.max(0, ($(window).width() - $(element).outerWidth()) / 2)}px")
-  element
+$.fn.center = ->
+  this.css('position', 'fixed')
+      .css('top', "#{Math.max(0, ($(window).height() - $(this).outerHeight()) / 2)}px")
+      .css('left', "#{Math.max(0, ($(window).width() - $(this).outerWidth()) / 2)}px")
+  this
+
+# Sets border-radius, -webkit-border-radius and -moz-border-radius CSS properties
+$.fn.borderRadius = (value, type = '') ->
+  property = "border-#{type}#{if !!type then '-' else ''}radius"
+  this.css(property, value)
+      .css("-webkit-#{property}", value)
+      .css("-moz-#{property}", value)
+  this
 
 #
 # Hermitage logic
@@ -88,16 +101,15 @@ createOverlay = ->
   $('#hermitage').append(overlay)
 
   overlay.css('position', 'fixed')
-  overlay.css('top', '0')
-  overlay.css('left', '0')
-  overlay.css('background', hermitage.darkening.color)
-  overlay.css('display', 'block')
-  overlay.css('opacity', hermitage.darkening.opacity)
-  overlay.css('filter', "alpha(opacity='#{hermitage.darkening.opacity * 100}')")
-  overlay.css('width', '100%')
-  overlay.css('height', '100%')
-
-  overlay.hide()
+         .css('top', '0')
+         .css('left', '0')
+         .css('background', hermitage.darkening.color)
+         .css('opacity', hermitage.darkening.opacity)
+         .css('filter', "alpha(opacity='#{hermitage.darkening.opacity * 100}')")
+         .css('width', '100%')
+         .css('height', '100%')
+         .hide()
+ 
   overlay.fadeIn()
 
   overlay.click(closeGallery)
@@ -110,24 +122,23 @@ createNavigationButton = ->
   $('#hermitage').append(button)
 
   button.css('position', 'fixed')
-  button.css('width', "#{hermitage.navigationButton.width}px")
-  button.css('display', 'block')
-  button.css('cursor', 'pointer')
+        .css('width', "#{hermitage.navigationButton.width}px")
+        .css('cursor', 'pointer')
+        .css('background-color', hermitage.navigationButton.backgroundColor)
 
-  button.css('border-width', '1px')
-  button.css('border-style', 'solid')
-  button.css('border-color', hermitage.navigationButton.color)
-  button.css('display', 'block')
-  button.css('border-radius', "#{hermitage.navigationButton.borderRadius}px")
-  button.css('-webkit-border-radius', "#{hermitage.navigationButton.borderRadius}px")
-  button.css('-moz-border-radius', "#{hermitage.navigationButton.borderRadius}px")
+        .css('border-width', '1px')
+        .css('border-style', 'solid')
+        .css('border-color', hermitage.navigationButton.borderColor)
 
-  button.css('color', hermitage.navigationButton.color)
-  button.css('text-align', 'center')
-  button.css('vertical-align', 'middle')
-  button.css('font', '30px Tahoma,Arial,Helvetica,sans-serif')
+        .borderRadius("#{hermitage.navigationButton.borderRadius}px")
 
-  button.hide()
+        .css('color', hermitage.navigationButton.color)
+        .css('text-align', 'center')
+        .css('vertical-align', 'middle')
+        .css('font-size', "#{hermitage.navigationButton.fontSize}px")
+        .css('font-family', hermitage.navigationButton.fontFamily)
+
+        .hide()
 
   button
 
@@ -135,13 +146,9 @@ createNavigationButton = ->
 createRightNavigationButton = ->
   button = createNavigationButton()
   button.attr('id', 'navigation-right')
-  button.css('border-top-left-radius', '0')
-  button.css('-webkit-border-top-left-radius', '0')
-  button.css('-moz-border-top-left-radius', '0')
-  button.css('border-bottom-left-radius', '0')
-  button.css('-webkit-border-bottom-left-radius', '0')
-  button.css('-moz-border-bottom-left-radius', '0')
-  button.append('>')
+        .borderRadius('0', 'top-left')
+        .borderRadius('0', 'bottom-left')
+        .text('>')
 
   button.click(showNextImage)
 
@@ -151,13 +158,9 @@ createRightNavigationButton = ->
 createLeftNavigationButton = ->
   button = createNavigationButton()
   button.attr('id', 'navigation-left')
-  button.css('border-top-right-radius', '0')
-  button.css('-webkit-border-top-right-radius', '0')
-  button.css('-moz-border-top-right-radius', '0')
-  button.css('border-bottom-right-radius', '0')
-  button.css('-webkit-border-bottom-right-radius', '0')
-  button.css('-moz-border-bottom-right-radius', '0')
-  button.append('<')
+        .borderRadius('0', 'top-right')
+        .borderRadius('0', 'bottom-right')
+        .text('<')
 
   button.click(showPreviousImage)
 
@@ -168,14 +171,14 @@ createCloseButton = ->
   button = $('<div>', {id: 'close-button'})
   $('#hermitage').append(button)
 
-  button.hide()
-
   button.text(hermitage.closeButton.text)
-  button.css('position', 'fixed')
-  button.css('color', hermitage.closeButton.color)
-  button.css('font-size', "#{hermitage.closeButton.fontSize}px")
-  button.css('white-space', 'nowrap')
-  button.css('cursor', 'pointer')
+        .css('position', 'fixed')
+        .css('color', hermitage.closeButton.color)
+        .css('font-size', "#{hermitage.closeButton.fontSize}px")
+        .css('font-family',hermitage.closeButton.fontFamily)
+        .css('white-space', 'nowrap')
+        .css('cursor', 'pointer')
+        .hide()
 
   button.click(closeGallery)
 
@@ -200,10 +203,10 @@ showImage = (index) ->
   # Create full size image at the center of screen
   img = $('<img />')
   img.attr('src', hermitage.images[index])
-  img.attr('class', 'current')
-  img.css('cursor', 'pointer')
-  img.css('max-width', 'none') # fix the conflict with Twitter Bootstrap
-  img.hide()
+     .attr('class', 'current')
+     .css('cursor', 'pointer')
+     .css('max-width', 'none') # fix the conflict with TWitter Bootstrap
+     .hide()
   
   $('#hermitage').append(img)
   
@@ -233,10 +236,10 @@ showImage = (index) ->
       scale = Math.min(maxWidth / this.width, maxHeight / this.height)
 
     img.width(this.width * scale)
-    img.height(this.height * scale)
-
-    center(img)
-    img.fadeIn(hermitage.animationDuration)
+       .height(this.height * scale)
+       .center()
+       .fadeIn(hermitage.animationDuration)
+    
     adjustNavigationButtons(img)
     adjustCloseButton(img)
 
@@ -274,15 +277,15 @@ closeGallery = ->
   $('#hermitage :not(#overlay)').fadeOut()
   $('#overlay').fadeOut hermitage.animationDuration, ->
     $('#hermitage').hide()
-    $('#hermitage').empty()
+                   .empty()
 
 
 # Moves navigation buttons to proper positions
 adjustNavigationButtons = (current) ->
   return unless hermitage.navigationButton.enabled
 
-  previous = $('#navigation-left')
-  next = $('#navigation-right')
+  previous = $('#hermitage #navigation-left')
+  next = $('#hermitage #navigation-right')
 
   newPrevious = 
     top: current.position().top
@@ -305,15 +308,15 @@ adjustNavigationButtons = (current) ->
 adjustCloseButton = (current) ->
   return unless hermitage.closeButton.enabled
 
-  button = $('#close-button')
+  button = $('#hermitage #close-button')
 
   top = current.position().top - button.outerHeight()
   left = current.position().left + current.outerWidth() - button.outerWidth()
 
   if button.css('display') is 'none'
     button.css('top', top)
-    button.css('left', left)
-    button.fadeIn(hermitage.animationDuration)
+          .css('left', left)
+          .fadeIn(hermitage.animationDuration)
 
   button.animate({ top: "#{top}px", left: "#{left}px" }, hermitage.animationDuration)
   
