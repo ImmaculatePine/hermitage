@@ -41,35 +41,63 @@ describe 'navigation', type: :feature, js: true do
     end
   end
 
+  context 'with loop' do
+    before(:each) do
+      visit images_path
+      page.first('a[href="/assets/1-full.png"]').click
+      page.should have_css('img.current') # Wait for loading before testing
+    end
 
-  before(:each) do
-    visit images_path
-    page.first('a[href="/assets/1-full.png"]').click
-    page.should have_css('img.current') # Wait for loading before testing
+    describe 'by clicking on image' do
+      describe 'at the right side' do
+        let(:click_action) { Proc.new { click_at_right('img.current') } }
+        it_behaves_like 'navigation to next'
+      end
+
+      describe 'at the left side' do
+        let(:click_action) { Proc.new { click_at_left('img.current') } }
+        it_behaves_like 'navigation to previous'
+      end
+    end
+
+    describe 'by clicking on navigation button' do
+      describe 'right' do
+        let(:click_action) { Proc.new { page.find('#navigation-right').click() } }
+        it_behaves_like 'navigation to next'
+      end
+
+      describe 'left' do
+        let(:click_action) { Proc.new { page.find('#navigation-left').click() } }
+        it_behaves_like 'navigation to previous'
+      end
+    end
   end
 
-  describe 'by clicking on image' do
-    describe 'at the right side' do
-      let(:click_action) { Proc.new { click_at_right('img.current') } }
-      it_behaves_like 'navigation to next'
+  context 'without loop' do
+    before(:each) do
+      visit images_path
+      evaluate_script('hermitage.looped = false')
+      page.first("a[href='/assets/#{image}-full.png']").click
+      page.should have_css('img.current')
     end
 
-    describe 'at the left side' do
-      let(:click_action) { Proc.new { click_at_left('img.current') } }
-      it_behaves_like 'navigation to previous'
+    describe 'first image' do
+      let(:image) { "0" }
+      it { page.should_not have_css('#navigation-left') }
+      it { page.should have_css('#navigation-right') }
+    end
+
+    describe 'middle image' do
+      let(:image) { "1" }
+      it { page.should have_css('#navigation-left') }
+      it { page.should have_css('#navigation-right') }
+    end
+
+    describe 'last image' do
+      let(:image) { "2" }
+      it { page.should have_css('#navigation-left') }
+      it { page.should_not have_css('#navigation-right') }
     end
   end
 
-  describe 'by clicking on navigation button' do
-    describe 'right' do
-      let(:click_action) { Proc.new { page.find('#navigation-right').click() } }
-      it_behaves_like 'navigation to next'
-    end
-
-    describe 'left' do
-      let(:click_action) { Proc.new { page.find('#navigation-left').click() } }
-      it_behaves_like 'navigation to previous'
-    end
-  end
-  
 end

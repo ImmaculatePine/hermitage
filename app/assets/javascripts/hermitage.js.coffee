@@ -6,6 +6,8 @@ root = exports ? this
 
 # Hermitage options
 root.hermitage =
+  looped: true
+
   # Image viewer z-index property
   zIndex: 10
 
@@ -210,9 +212,8 @@ openGallery = (image) ->
   createLeftNavigationButton()
   createCloseButton()
 
-  showImage(hermitage.images.indexOf($(image).attr('href')))
+  showImage(indexOfImage(image))
   
-
 # Shows image with specified index from images array
 showImage = (index) ->
   # Create full size image at the center of screen
@@ -261,7 +262,8 @@ showImage = (index) ->
 showNextImage = ->
   current = $('img.current')
   if current.length is 1
-    index = hermitage.images.indexOf(current.attr('src'))
+    index = indexOfImage(current)
+    return unless canShowNextAfter(index)
     hideCurrentImage()
     if index < hermitage.images.length - 1
       showImage(index + 1)
@@ -272,7 +274,8 @@ showNextImage = ->
 showPreviousImage = ->
   current = $('img.current')
   if current.length is 1
-    index = hermitage.images.indexOf(current.attr('src'))
+    index = indexOfImage(current)
+    return unless canShowPreviousBefore(index)
     hideCurrentImage()
     if index > 0
       showImage(index - 1)
@@ -301,6 +304,10 @@ adjustNavigationButtons = (current) ->
   previous = $('#hermitage #navigation-left')
   next = $('#hermitage #navigation-right')
 
+  currentIndex = indexOfImage(current)
+  previous.fadeOut() unless canShowPreviousBefore(currentIndex)
+  next.fadeOut() unless canShowNextAfter(currentIndex)
+
   newPrevious = 
     top: current.position().top
     left: current.position().left - previous.outerWidth() - hermitage.navigationButtons.margin
@@ -317,11 +324,20 @@ adjustNavigationButtons = (current) ->
       lineHeight: "#{dimensions.height}px"
       left: "#{dimensions.left}px"
       top: "#{dimensions.top}px"
-    button.animate(animation, hermitage.animationDuration)
-    button.fadeIn(hermitage.animationDuration) if button.css('display') is 'none'
 
+    if button.css('display') is 'none'
+      button.css(animation)
+    else
+      button.animate(animation, hermitage.animationDuration)
+  
   move previous, newPrevious
   move next, newNext
+
+  if canShowPreviousBefore(currentIndex)
+    previous.fadeIn(hermitage.animationDuration)
+
+  if canShowNextAfter(currentIndex)
+    next.fadeIn(hermitage.animationDuration)
 
 # Moves close button to proper position
 adjustCloseButton = (current) ->
@@ -332,13 +348,32 @@ adjustCloseButton = (current) ->
   top = current.position().top - button.outerHeight()
   left = current.position().left + current.outerWidth() - button.outerWidth()
 
-  if button.css('display') is 'none'
-    button.css('top', top)
-          .css('left', left)
-          .fadeIn(hermitage.animationDuration)
+  animation = 
+     top: "#{top}px"
+     left: "#{left}px"
 
-  button.animate({ top: "#{top}px", left: "#{left}px" }, hermitage.animationDuration)
-  
+  if button.css('display') is 'none'
+    button
+      .css(animation)
+      .fadeIn(hermitage.animationDuration)
+
+  button.animate(animation, hermitage.animationDuration)
+
+indexOfImage = (image) ->
+  href = if $(image).prop('tagName') is 'IMG' then $(image).attr('src') else $(image).attr('href')
+  hermitage.images.indexOf(href)
+
+canShowNextAfter = (index) ->
+  if index < hermitage.images.length - 1
+    true
+  else
+    hermitage.looped
+
+canShowPreviousBefore = (index) ->
+  if index > 0
+    true
+  else
+    hermitage.looped
 
 # Initialize gallery on page load
 $(document).ready(hermitage.init)

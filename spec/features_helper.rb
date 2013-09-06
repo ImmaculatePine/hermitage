@@ -37,6 +37,6 @@ def click_at_right(selector)
   click_at(selector, 0.75, 0.5)
 end
 
-def text(selector)
+def jquery_text(selector)
   evaluate_script("$('#{selector}').text()")
 end

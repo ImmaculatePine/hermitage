@@ -88,7 +88,7 @@ describe 'viewer_customization', type: :feature, js: true do
   
   context 'closeButton.text' do
     let(:js) { 'hermitage.closeButton.text = "Close"' }
-    it { text('#close-button').should == 'Close' }
+    it { jquery_text('#close-button').should == 'Close' }
   end
 
   context 'closeButton.styles' do
