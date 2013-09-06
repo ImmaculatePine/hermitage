@@ -11,28 +11,79 @@ root.hermitage =
 
   # Darkening properties
   darkening:
+    default:
+      attributes:
+        id: 'overlay'
+      styles:
+        position: 'fixed'
+        top: 0
+        left: 0
+        width: '100%'
+        height: '100%'
+        backgroundColor: '#000'
+        
     opacity: 0.75 # 0 if you don't want darkening
-    color: '#000'
+    styles: {}
 
   # Navigation buttons' properties
-  navigationButton:
+  navigationButtons:
+    default:
+      styles:
+        position: 'fixed'
+        width: '50px'
+        cursor: 'pointer'
+        border: '1px solid #777'
+        backgroundColor: 'none'
+        color: '#777'
+        fontSize: '30px'
+        fontFamily: 'Tahoma,Arial,Helvetica,sans-serif'
+        textAlign: 'center'
+        verticalAlign: 'middle'
+
     enabled: true
-    width: 50 # px
-    fontSize: 30 # px
-    fontFamily: 'Tahoma,Arial,Helvetica,sans-serif'
-    color: '#777'
-    backgroundColor: 'none'
-    borderColor: '#777'
     borderRadius: 7 # px
-    margin: 10 # Distance between navigation buttons and image, px
+    margin: 10 # px
+    styles: {}
+
+    next:
+      default:
+        attributes:
+          id: 'navigation-right'
+      styles: {}
+
+    previous:
+      default:
+        attributes:
+          id: 'navigation-left'
+      styles: {}
 
   # Close button properties
   closeButton:
+    default:
+      attributes:
+        id: 'close-button'
+      styles:
+        position: 'fixed'
+        color: '#FFF'
+        fontSize: '30px'
+        fontFamily: 'Tahoma,Arial,Helvetica,sans-serif'
+        whiteSpace: 'nowrap'
+        cursor: 'pointer'
+        
     enabled: true
     text: '×'
-    color: '#FFF'
-    fontSize: 30 # px
-    fontFamily: 'Tahoma,Arial,Helvetica,sans-serif'
+    styles: {}
+
+  # Current image properties
+  image:
+    default:
+      attributes:
+        class: 'current'
+      styles:
+        cursor: 'pointer'
+        maxWidth: 'none' # Fix the conflict with Twitter Bootstrap
+
+    styles: {}
   
   # Minimum distance between window borders and image, px
   windowPadding:
@@ -54,10 +105,11 @@ root.hermitage =
   init: ->
     # Create Hermitage layer if it doesn't exist
     if $('#hermitage').length is 0
-      layer = $('<div>', {id: 'hermitage'})
-      layer.css('position', 'fixed')
-      layer.hide()
-      $('body').append(layer)
+      $('<div>')
+        .attr('id', 'hermitage')
+        .css('position', 'fixed')
+        .hide()
+        .appendTo($('body'))
 
     # Clear old images array
     hermitage.images.length = 0
@@ -81,7 +133,6 @@ $.fn.center = ->
   this.css('position', 'fixed')
       .css('top', "#{Math.max(0, ($(window).height() - $(this).outerHeight()) / 2)}px")
       .css('left', "#{Math.max(0, ($(window).width() - $(this).outerWidth()) / 2)}px")
-  this
 
 # Sets border-radius, -webkit-border-radius and -moz-border-radius CSS properties
 $.fn.borderRadius = (value, type = '') ->
@@ -89,108 +140,72 @@ $.fn.borderRadius = (value, type = '') ->
   this.css(property, value)
       .css("-webkit-#{property}", value)
       .css("-moz-#{property}", value)
-  this
 
 #
 # Hermitage logic
 #
 
-# Creates overlay layer, shows it and sets its click handler
-createOverlay = ->
-  overlay = $('<div>', {id: 'overlay'})
-  $('#hermitage').append(overlay)
-
-  overlay.css('position', 'fixed')
-         .css('top', '0')
-         .css('left', '0')
-         .css('background', hermitage.darkening.color)
-         .css('opacity', hermitage.darkening.opacity)
-         .css('filter', "alpha(opacity='#{hermitage.darkening.opacity * 100}')")
-         .css('width', '100%')
-         .css('height', '100%')
-         .hide()
- 
-  overlay.fadeIn()
-
-  overlay.click(closeGallery)
-
-  overlay
+# Creates darkening overlay, shows it and sets its click handler
+createDarkening = ->
+  $('<div>')
+    .attr(hermitage.darkening.default.attributes)
+    .css(hermitage.darkening.default.styles)
+    .css('opacity', hermitage.darkening.opacity)
+    .css('filter', "alpha(opacity='#{hermitage.darkening.opacity * 100}')")
+    .css(hermitage.darkening.styles)
+    .appendTo($('#hermitage'))
+    .hide()
+    .fadeIn()
+    .click(closeGallery)
 
 # Creates base navigation button and returns it
 createNavigationButton = ->
-  button = $('<div>')
-  $('#hermitage').append(button)
-
-  button.css('position', 'fixed')
-        .css('width', "#{hermitage.navigationButton.width}px")
-        .css('cursor', 'pointer')
-        .css('background-color', hermitage.navigationButton.backgroundColor)
-
-        .css('border-width', '1px')
-        .css('border-style', 'solid')
-        .css('border-color', hermitage.navigationButton.borderColor)
-
-        .borderRadius("#{hermitage.navigationButton.borderRadius}px")
-
-        .css('color', hermitage.navigationButton.color)
-        .css('text-align', 'center')
-        .css('vertical-align', 'middle')
-        .css('font-size', "#{hermitage.navigationButton.fontSize}px")
-        .css('font-family', hermitage.navigationButton.fontFamily)
-
-        .hide()
-
-  button
+  $('<div>')
+    .css(hermitage.navigationButtons.default.styles)
+    .borderRadius("#{hermitage.navigationButtons.borderRadius}px")
+    .hide()
+    .appendTo($('#hermitage'))
+    .css(hermitage.navigationButtons.styles)
 
 # Creates right navigation button and returns it
 createRightNavigationButton = ->
-  button = createNavigationButton()
-  button.attr('id', 'navigation-right')
-        .borderRadius('0', 'top-left')
-        .borderRadius('0', 'bottom-left')
-        .text('>')
-
-  button.click(showNextImage)
-
-  button
+  createNavigationButton()
+    .attr(hermitage.navigationButtons.next.default.attributes)
+    .borderRadius('0', 'top-left')
+    .borderRadius('0', 'bottom-left')
+    .text('>')
+    .css(hermitage.navigationButtons.next.styles)
+    .click(showNextImage)
 
 # Create left navigation button and returns it
 createLeftNavigationButton = ->
-  button = createNavigationButton()
-  button.attr('id', 'navigation-left')
-        .borderRadius('0', 'top-right')
-        .borderRadius('0', 'bottom-right')
-        .text('<')
-
-  button.click(showPreviousImage)
-
-  button
+  createNavigationButton()
+    .attr(hermitage.navigationButtons.previous.default.attributes)
+    .borderRadius('0', 'top-right')
+    .borderRadius('0', 'bottom-right')
+    .text('<')
+    .css(hermitage.navigationButtons.previous.styles)
+    .click(showPreviousImage)
 
 # Creates close button
 createCloseButton = ->
-  button = $('<div>', {id: 'close-button'})
-  $('#hermitage').append(button)
-
-  button.text(hermitage.closeButton.text)
-        .css('position', 'fixed')
-        .css('color', hermitage.closeButton.color)
-        .css('font-size', "#{hermitage.closeButton.fontSize}px")
-        .css('font-family',hermitage.closeButton.fontFamily)
-        .css('white-space', 'nowrap')
-        .css('cursor', 'pointer')
-        .hide()
-
-  button.click(closeGallery)
-
-  button
+  $('<div>')
+    .attr(hermitage.closeButton.default.attributes)
+    .css(hermitage.closeButton.default.styles)
+    .text(hermitage.closeButton.text)
+    .css(hermitage.closeButton.styles)
+    .hide()
+    .appendTo($('#hermitage'))
+    .click(closeGallery)
 
 # Shows full size image of the chosen one
 openGallery = (image) ->
-  $('#hermitage').css('z-index', hermitage.zIndex)
-  $('#hermitage').empty()
-  $('#hermitage').show()
+  $('#hermitage')
+    .css('z-index', hermitage.zIndex)
+    .empty()
+    .show()
   
-  createOverlay()
+  createDarkening()
   createRightNavigationButton()
   createLeftNavigationButton()
   createCloseButton()
@@ -202,13 +217,12 @@ openGallery = (image) ->
 showImage = (index) ->
   # Create full size image at the center of screen
   img = $('<img />')
-  img.attr('src', hermitage.images[index])
-     .attr('class', 'current')
-     .css('cursor', 'pointer')
-     .css('max-width', 'none') # fix the conflict with TWitter Bootstrap
-     .hide()
-  
-  $('#hermitage').append(img)
+    .attr(hermitage.image.default.attributes)
+    .css(hermitage.image.default.styles)
+    .attr('src', hermitage.images[index])
+    .css(hermitage.image.styles)
+    .hide()
+    .appendTo($('#hermitage'))
   
   img.click (event) ->
     if event.pageX >= $(window).width() / 2
@@ -219,10 +233,8 @@ showImage = (index) ->
   # When image will be loaded set correct size,
   # center element and show it
   $('<img />').attr('src', hermitage.images[index]).load ->
-    maxWidth = $(window).width() - (hermitage.windowPadding.x + $('#navigation-left').outerWidth() + hermitage.navigationButton.margin) * 2
+    maxWidth = $(window).width() - (hermitage.windowPadding.x + $('#navigation-left').outerWidth() + hermitage.navigationButtons.margin) * 2
     maxHeight = $(window).height() - hermitage.windowPadding.y * 2
-
-    scale = 1.0
 
     if maxWidth <= hermitage.minimumSize.width or maxHeight <= hermitage.minimumSize.height
       if maxWidth < maxHeight
@@ -231,6 +243,8 @@ showImage = (index) ->
       else
         maxHeight = hermitage.minimumSize.height
         maxWidth = maxHeight * (this.width / this.height)
+
+    scale = 1.0
 
     if this.width > maxWidth or this.height > maxHeight
       scale = Math.min(maxWidth / this.width, maxHeight / this.height)
@@ -282,23 +296,28 @@ closeGallery = ->
 
 # Moves navigation buttons to proper positions
 adjustNavigationButtons = (current) ->
-  return unless hermitage.navigationButton.enabled
+  return unless hermitage.navigationButtons.enabled
 
   previous = $('#hermitage #navigation-left')
   next = $('#hermitage #navigation-right')
 
   newPrevious = 
     top: current.position().top
-    left: current.position().left - previous.outerWidth() - hermitage.navigationButton.margin
+    left: current.position().left - previous.outerWidth() - hermitage.navigationButtons.margin
     height: current.outerHeight()
   
   newNext = 
     top: current.position().top
-    left: current.position().left + current.outerWidth() + hermitage.navigationButton.margin
+    left: current.position().left + current.outerWidth() + hermitage.navigationButtons.margin
     height: current.outerHeight()
 
   move = (button, dimensions) ->
-    button.animate({ height: "#{dimensions.height}px", 'line-height': "#{dimensions.height}px", left: "#{dimensions.left}px", top: "#{dimensions.top}px"}, hermitage.animationDuration)    
+    animation =
+      height: "#{dimensions.height}px"
+      lineHeight: "#{dimensions.height}px"
+      left: "#{dimensions.left}px"
+      top: "#{dimensions.top}px"
+    button.animate(animation, hermitage.animationDuration)
     button.fadeIn(hermitage.animationDuration) if button.css('display') is 'none'
 
   move previous, newPrevious

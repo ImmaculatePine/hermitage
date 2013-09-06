@@ -184,29 +184,25 @@ So, Hermitage looks for parameters with the following priority:
 You can customize appearance of Hermitage image viewer. All you need is to add to any of your .js or .coffee files lines like this:
 
     hermitage.darkening.opacity = 0
-    hermitage.navigationButton.color = '#faeedd'
+    hermitage.navigationButtons.styles = { color: '#faeedd' }
 
-In the example above the darkening will be disabled and navigation buttons will change their color.
+In the example above the darkening will be disabled and both navigation buttons will change their color.
 
 You can customize the following parameters:
 
 * `zIndex` - image viewer's z-index property
 * `darkening.opacity` - opacity of darkening layer (0 if it should be disabled)
-* `darkening.color` - color of darkening layer
-* `navigationButton.enabled` - are there navigation buttons
-* `navigationButton.width` - width of navigation buttons, px
-* `navigationButton.fontSize` - font size of navigation buttons
-* `navigationButton.fontFamily` - font family of navigation buttons
-* `navigationButton.color` - font color of navigation buttons
-* `navigationButton.backgroundColor` - background color of navigation buttons
-* `navigationButton.borderColor` - border color of navigation buttons
-* `navigationButton.borderRadius` - border radius of outer corners of navigation buttons, px
-* `navigationButton.margin` - distance between navigation buttons and the image, px
+* `darkening.styles` - any custom CSS for darkening layer
+* `navigationButtons.enabled` - are there navigation buttons
+* `navigationButtons.borderRadius` - border radius of outer corners of navigation buttons, px
+* `navigationButtons.margin` - distance between navigation buttons and the image, px
+* `navigationButtons.styles` - any custom CSS for both navigation buttons
+* `navigationButtons.next.styles` - any custom CSS for next navigation button
+* `navigationButtons.previous.styles` - any custom CSS for previous navigation button
 * `closeButton.enabled` - is there close button
 * `closeButton.text` - close button's text
-* `closeButton.color` - close button's color
-* `closeButton.fontSize` - close button's font size
-* `closeButton.fontFamily` - close button's font family
+* `closeButton.styles` - any custom CSS for close button
+* `image.styles` - any custom CSS for current image
 * `windowPadding.x` - minimum distance between window borders and the image by x axis, px
 * `windowPadding.y` - minimum distance between window borders and the image by y axis, px
 * `minimumSize.width` - minimum width of scaled image, px
