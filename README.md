@@ -190,6 +190,7 @@ In the example above the darkening will be disabled and both navigation buttons 
 
 You can customize the following parameters:
 
+* `looped` - set it to false if after the last image the first should not be shown
 * `zIndex` - image viewer's z-index property
 * `darkening.opacity` - opacity of darkening layer (0 if it should be disabled)
 * `darkening.styles` - any custom CSS for darkening layer
