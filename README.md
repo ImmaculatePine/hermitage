@@ -191,12 +191,9 @@ In the example above the darkening will be disabled and both navigation buttons 
 You can customize the following parameters:
 
 * `looped` - set it to false if after the last image the first should not be shown
-* `zIndex` - image viewer's z-index property
 * `darkening.opacity` - opacity of darkening layer (0 if it should be disabled)
 * `darkening.styles` - any custom CSS for darkening layer
 * `navigationButtons.enabled` - are there navigation buttons
-* `navigationButtons.borderRadius` - border radius of outer corners of navigation buttons, px
-* `navigationButtons.margin` - distance between navigation buttons and the image, px
 * `navigationButtons.styles` - any custom CSS for both navigation buttons
 * `navigationButtons.next.styles` - any custom CSS for next navigation button
 * `navigationButtons.previous.styles` - any custom CSS for previous navigation button
@@ -204,8 +201,6 @@ You can customize the following parameters:
 * `closeButton.text` - close button's text
 * `closeButton.styles` - any custom CSS for close button
 * `image.styles` - any custom CSS for current image
-* `windowPadding.x` - minimum distance between window borders and the image by x axis, px
-* `windowPadding.y` - minimum distance between window borders and the image by y axis, px
 * `minimumSize.width` - minimum width of scaled image, px
 * `minimumSize.height` - minimum height of scaled image, px
 * `animationDuration` - duration of UI animations, ms

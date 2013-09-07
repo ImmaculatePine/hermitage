@@ -14,11 +14,6 @@ describe 'viewer_customization', type: :feature, js: true do
     # There will be sleep(1) in tests where we should wait until fade in animation is ended
   end
 
-  context 'zIndex' do
-    let(:js) { 'hermitage.zIndex = 5'}
-    it { css('#hermitage', 'z-index').should == '5' }
-  end
-
   context 'darkening.opacity' do
     let(:js) { 'hermitage.darkening.opacity = 0.5'}
     before(:each) { sleep(1) }
@@ -34,31 +29,6 @@ describe 'viewer_customization', type: :feature, js: true do
     let(:js) { 'hermitage.navigationButtons.enabled = false' }
     it { should_not have_css('#navigation-left') }
     it { should_not have_css('#navigation-right') }
-  end
-
-  context 'navigationButtons.borderRadius' do
-    let(:js) { 'hermitage.navigationButtons.borderRadius = 5' }
-
-    it 'sets border radiuses for left button' do
-      css('#navigation-left', 'border-top-left-radius').should == '5px'
-      css('#navigation-left', 'border-bottom-left-radius').should == '5px'
-      css('#navigation-left', 'border-top-right-radius').should == '0px'
-      css('#navigation-left', 'border-bottom-right-radius').should == '0px'
-    end
-    
-    it 'sets border radiuses for right button' do
-      css('#navigation-right', 'border-top-left-radius').should == '0px'
-      css('#navigation-right', 'border-bottom-left-radius').should == '0px'
-      css('#navigation-right', 'border-top-right-radius').should == '5px'
-      css('#navigation-right', 'border-bottom-right-radius').should == '5px'
-    end
-  end
-  
-  context 'navigationButtons.margin' do
-    let(:js) { 'hermitage.navigationButtons.margin = 30' }
-    before(:each) { sleep(1) }
-    it { css('#navigation-left', 'left').should == "#{left('.current') - 30 - width('#navigation-left')}px" }
-    it { css('#navigation-right', 'left').should == "#{left('.current') + width('.current') + 30}px" }
   end
 
   context 'navigationButtons.styles' do
@@ -106,26 +76,6 @@ describe 'viewer_customization', type: :feature, js: true do
     end
   end
 
-  context 'windowPadding.x' do
-    let(:js) { 'hermitage.windowPadding.x = 100'}
-    let(:before_click) { Proc.new{ page.driver.resize(500, 1000) } }
-
-    it 'scales the image' do
-      width('.current').should == 176
-      height('.current').should == 176
-    end
-  end
-
-  context 'windowPadding.y' do
-    let(:js) { 'hermitage.windowPadding.y = 100'}
-    let(:before_click) { Proc.new{ page.driver.resize(1000, 400) } }
-
-    it 'scales the image' do
-      width('.current').should == 200
-      height('.current').should == 200
-    end
-  end
-
   shared_examples 'image scaled to the minimum allowed size' do
     it 'scales the image to the minimum allowed size' do
       width('.current').should == 200
@@ -135,13 +85,13 @@ describe 'viewer_customization', type: :feature, js: true do
 
   context 'minimumSize.width' do
     let(:js) { 'hermitage.minimumSize.width = 200'}
-    let(:before_click) { Proc.new{ page.driver.resize(300, 1000) } }
+    let(:before_click) { Proc.new{ page.driver.resize(250, 1000) } }
     it_behaves_like 'image scaled to the minimum allowed size'
   end
 
   context 'minimumSize.width' do
     let(:js) { 'hermitage.minimumSize.height = 200'}
-    let(:before_click) { Proc.new{ page.driver.resize(1000, 250) } }
+    let(:before_click) { Proc.new{ page.driver.resize(1000, 150) } }
     it_behaves_like 'image scaled to the minimum allowed size'
   end
 
