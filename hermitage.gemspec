@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Hermitage::VERSION
   spec.authors       = ['Alexander Borovykh']
   spec.email         = ['immaculate.pine@gmail.com']
-  spec.description   = %q{Ruby library for generation of image galleries.}
-  spec.summary       = %q{Ruby library for generation of image galleries (thumbnails and original images viewer).}
+  spec.description   = %q{Ruby library for image galleries generation.}
+  spec.summary       = %q{Ruby library for image galleries generation (thumbnails and original images viewer).}
   spec.homepage      = 'https://github.com/ImmaculatePine/hermitage'
   spec.license       = 'MIT'
 

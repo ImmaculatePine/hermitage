@@ -1,3 +1,13 @@
+### 0.0.3 ###
+
+* *Attention*! In this version some options were renamed: attribute_full_size -> original, attribute_thumbnail -> thumbnail.
+* Added more viewer customization options
+* Ability to set any custom CSS for any viewer element
+* Ability to enable or disable looped navigation
+* More neat navigation buttons
+* Adjust viewer on window resize
+* Bottom panel added. Now you can set image descriptions by passing `title` option to `render_gallery_for` method or config.
+
 ### 0.0.2.1 ###
 
 * Fixed conflict with Twitter Bootstrap in Firefox and Opera.
