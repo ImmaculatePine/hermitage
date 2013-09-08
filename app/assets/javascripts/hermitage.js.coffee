@@ -77,7 +77,6 @@ root.hermitage =
         position: 'absolute'
         top: 0
         right: 0
-        
         color: '#FFF'
         fontSize: '30px'
         fontFamily: 'Tahoma,Arial,Helvetica,sans-serif'
@@ -98,6 +97,28 @@ root.hermitage =
         maxWidth: 'none' # Fix the conflict with Twitter Bootstrap
     styles: {}
   
+  # Bottom panel (for text or anything else)
+  bottomPanel:
+    default:
+      attributes:
+        class: 'bottom-panel'
+      styles:
+        position: 'absolute'
+        bottom: 0
+        height: '70px'
+    styles: {}
+
+    text:
+      default:
+        attributes:
+          class: 'text'
+        styles:
+          width: '100%'
+          height: '100%'
+          textAlign: 'center'
+          color: '#FAFAFA'
+      styles: {}
+
   # Minimum size of scaled image, px
   minimumSize:
     width: 100
@@ -109,8 +130,13 @@ root.hermitage =
   # Array of images of current gallery
   images: []
 
+  # Array of texts for current gallery
+  texts: []
 
+  # Timeout before adjustig elements after window resize
   resizeTimeout: 100
+
+  # Timer for resizing
   resizeTimer: undefined
 
   # Initializes the gallery on this page
@@ -123,12 +149,14 @@ root.hermitage =
         .hide()
         .appendTo($('body'))
 
-    # Clear old images array
+    # Clear old images and texts array
     hermitage.images.length = 0
+    hermitage.texts.length = 0
 
-    # Create new images array
+    # Create new images and texts array
     $.each $('a[rel="hermitage"]'), ->
       hermitage.images.push($(this).attr('href'))
+      hermitage.texts.push($(this).attr('title'))
 
     # Set on click handlers to all elements that
     # have 'hermitage' rel attribute
@@ -148,15 +176,15 @@ root.hermitage =
 #
 
 # Place element at the center of screen
-$.fn.center = (withAnimation = false, width = 0, height = 0) ->
+$.fn.center = (withAnimation = false, width = 0, height = 0, offsetX = 0, offsetY = 0) ->
   this.css('position', 'absolute')
 
   width = $(this).outerWidth() if width is 0
   height = $(this).outerWidth() if height is 0
 
   param =
-    top: "#{Math.max(0, ($(window).height() - height) / 2)}px"
-    left: "#{Math.max(0, ($(window).width() - width) / 2)}px"
+    top: "#{Math.max(0, ($(window).height() - height) / 2 + offsetY)}px"
+    left: "#{Math.max(0, ($(window).width() - width) / 2 + offsetX)}px"
 
   if withAnimation
     this.animate(param, { duration: hermitage.animationDuration, queue: false })
@@ -234,6 +262,20 @@ createCloseButton = ->
     .css(hermitage.closeButton.styles)
     .click(closeGallery)
 
+createBotomPanel = ->
+  bottomPanel = $('<div>')
+    .appendTo($('#hermitage'))
+    .hide()
+    .attr(hermitage.bottomPanel.default.attributes)
+    .css(hermitage.bottomPanel.default.styles)
+    .css(hermitage.bottomPanel.styles)
+
+  text = $('<div>')
+    .appendTo(bottomPanel)
+    .attr(hermitage.bottomPanel.text.default.attributes)
+    .css(hermitage.bottomPanel.text.default.styles)
+    .css(hermitage.bottomPanel.text.styles)
+
 # Shows full size image of the chosen one
 openGallery = (image) ->
   $('#hermitage')
@@ -245,6 +287,7 @@ openGallery = (image) ->
   createRightNavigationButton()
   createLeftNavigationButton()
   createCloseButton()
+  createBotomPanel()
 
   showImage(indexOfImage(image))
   
@@ -317,11 +360,24 @@ adjustImage = (withAnimation = false, image = undefined) ->
     image = $('#hermitage img.current')
     return unless image.length is 1
 
+  index = indexOfImage(image)
+
   # Wait until source image is loaded
-  $('<img />').attr('src', hermitage.images[indexOfImage(image)]).load ->
+  $('<img />').attr('src', hermitage.images[index]).load ->
     
+    # Offset for image position
+    offsetY = 0
+
     maxWidth = $(window).width() - $('#navigation-left').outerWidth() - $('#navigation-right').outerWidth()
     maxHeight = $(window).height()
+
+    text = hermitage.texts[index]
+
+    if text
+      offsetY = - $('#hermitage .bottom-panel').outerHeight() / 2
+      maxHeight -= $('#hermitage .bottom-panel').outerHeight()
+
+    $('#hermitage .bottom-panel .text').text(text or '')
 
     if maxWidth <= hermitage.minimumSize.width or maxHeight <= hermitage.minimumSize.height
       if maxWidth < maxHeight
@@ -338,11 +394,12 @@ adjustImage = (withAnimation = false, image = undefined) ->
 
     image
       .setSize(this.width * scale, this.height * scale, withAnimation)
-      .center(withAnimation, this.width * scale, this.height * scale)
-      image.fadeIn(hermitage.animationDuration)
+      .center(withAnimation, this.width * scale, this.height * scale, 0, offsetY)
+      .fadeIn(hermitage.animationDuration)
 
     adjustNavigationButtons(withAnimation, image)
     adjustCloseButton(withAnimation, image)
+    adjustBottomPanel(withAnimation)
 
 # Moves navigation buttons to proper positions
 adjustNavigationButtons = (withAnimation, current) ->
@@ -377,6 +434,22 @@ adjustCloseButton = (withAnimation, current) ->
   button = $('#hermitage #close-button')
   if button.css('display') is 'none'
     button.fadeIn(hermitage.animationDuration)
+
+adjustBottomPanel = (withAnimation) ->
+  panel = $('#hermitage .bottom-panel')
+  if panel.text() is ''
+    panel.fadeOut(hermitage.animationDuration)
+  else
+    params =
+      width: "#{$(window).width() - $('#navigation-left').outerWidth() - $('#navigation-right').outerWidth()}px"
+      left: "#{$('#navigation-left').position().left + $('#navigation-left').outerWidth()}px"
+
+    if withAnimation
+      panel.animate(params, { duration: hermitage.animationDuration, queue: false })
+    else
+      panel.css(params)
+
+    panel.fadeIn(hermitage.animationDuration)
 
 indexOfImage = (image) ->
   href = if $(image).prop('tagName') is 'IMG' then $(image).attr('src') else $(image).attr('href')

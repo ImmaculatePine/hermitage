@@ -109,6 +109,8 @@ It will render something like that:
         <a href="/path/to/full/image" class="thumbnail" rel="hermitage" title="This is photo of my cat.">
       ...
 
+If the link has title attribute there will be bottom panel with this text when you open the gallery.
+
 #### Slicing
 
 If you are using Twitter Bootstrap framework and your gallery is inside `.row-fluid` block the markup above will not look awesome.
@@ -214,6 +216,8 @@ You can customize the following parameters:
 * `closeButton.text` - close button's text
 * `closeButton.styles` - any custom CSS for close button
 * `image.styles` - any custom CSS for current image
+* `bottomPanel.styles` - any custom CSS for bottom panel
+* `bottomPanel.text.styles` - any custom CSS for text block of bottom panel
 * `minimumSize.width` - minimum width of scaled image, px
 * `minimumSize.height` - minimum height of scaled image, px
 * `animationDuration` - duration of UI animations, ms
