@@ -212,6 +212,8 @@ You can customize the following parameters:
 * `navigationButtons.styles` - any custom CSS for both navigation buttons
 * `navigationButtons.next.styles` - any custom CSS for next navigation button
 * `navigationButtons.previous.styles` - any custom CSS for previous navigation button
+* `navigationButtons.next.text` - text for next navigation button
+* `navigationButtons.previous.text` - text for previous navigation button
 * `closeButton.enabled` - is there close button
 * `closeButton.text` - close button's text
 * `closeButton.styles` - any custom CSS for close button

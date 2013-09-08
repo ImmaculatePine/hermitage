@@ -51,6 +51,16 @@ describe 'viewer_customization', type: :feature, js: true do
     it { css('#navigation-right', 'width').should == '50px' }
   end
 
+  context 'navigationButtons.next.text' do
+    let(:js) { 'hermitage.navigationButtons.next.text = ">"'}
+    it { jquery_text('#navigation-right').should == '>' }
+  end
+
+  context 'navigationButtons.previous.text' do
+    let(:js) { 'hermitage.navigationButtons.previous.text = "<"'}
+    it { jquery_text('#navigation-left').should == '<' }
+  end
+
   context 'closeButton.enabled' do
     let(:js) { 'hermitage.closeButton.enabled = false' }
     it { should_not have_css('#close-button') }

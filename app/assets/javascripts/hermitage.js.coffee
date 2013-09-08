@@ -59,6 +59,7 @@ root.hermitage =
         styles:
           right: 0
       styles: {}
+      text: '▶'
 
     previous:
       default:
@@ -67,6 +68,7 @@ root.hermitage =
         styles:
           left: 0
       styles: {}
+      text: '◀'
 
   # Close button properties
   closeButton:
@@ -239,7 +241,7 @@ createRightNavigationButton = ->
     .attr(hermitage.navigationButtons.next.default.attributes)
     .css(hermitage.navigationButtons.next.default.styles)
     .css(hermitage.navigationButtons.next.styles)
-    .text('▶')
+    .text(hermitage.navigationButtons.next.text)
     .click(showNextImage)
 
 # Create left navigation button and returns it
@@ -248,7 +250,7 @@ createLeftNavigationButton = ->
     .attr(hermitage.navigationButtons.previous.default.attributes)
     .css(hermitage.navigationButtons.previous.default.styles)
     .css(hermitage.navigationButtons.previous.styles)
-    .text('◀')
+    .text(hermitage.navigationButtons.previous.text)
     .click(showPreviousImage)
 
 # Creates close button
