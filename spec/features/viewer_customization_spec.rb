@@ -76,6 +76,16 @@ describe 'viewer_customization', type: :feature, js: true do
     end
   end
 
+  context 'bottomPanel.styles' do
+    let(:js) { 'hermitage.bottomPanel.styles = { backgroundColor: "#777" }' }
+    it { css('#hermitage .bottom-panel', 'background-color').should == 'rgb(119, 119, 119)' }
+  end
+
+  context 'bottomPanel.text.styles' do
+    let(:js) { 'hermitage.bottomPanel.text.styles = { textAlign: "left" }' }
+    it { css('#hermitage .bottom-panel .text', 'text-align').should == 'left' }
+  end
+
   shared_examples 'image scaled to the minimum allowed size' do
     it 'scales the image to the minimum allowed size' do
       width('.current').should == 200
