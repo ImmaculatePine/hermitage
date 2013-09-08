@@ -276,7 +276,7 @@ createBotomPanel = ->
     .css(hermitage.bottomPanel.text.default.styles)
     .css(hermitage.bottomPanel.text.styles)
 
-# Shows full size image of the chosen one
+# Shows original image of the chosen one
 openGallery = (image) ->
   $('#hermitage')
     .css('z-index', hermitage.zIndex)
@@ -293,7 +293,6 @@ openGallery = (image) ->
   
 # Shows image with specified index from images array
 showImage = (index) ->
-  # Create full size image
   img = $('<img />')
     .attr(hermitage.image.default.attributes)
     .css(hermitage.image.default.styles)

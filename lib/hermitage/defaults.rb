@@ -1,13 +1,13 @@
 module Hermitage
   module Defaults
-    # Model's attribute (or method) that returns the path to the full size image
-    ATTRIBUTE_FULL_SIZE = 'file.url'
+    # Model's attribute (or method) that returns the path to the original image
+    ORIGINAL = 'file.url'
 
     # Model's attribute (or method) that returns the path to the image's thumbnail
-    ATTRIBUTE_THUMBNAIL = 'file.url(:thumbnail)'
+    THUMBNAIL = 'file.url(:thumbnail)'
 
     # Model's attribute (or method) that returns title or description of image
-    ATTRIBUTE_TITLE = nil
+    TITLE = nil
 
     # Wrapper for the whole gallery
     LIST_TAG = :ul

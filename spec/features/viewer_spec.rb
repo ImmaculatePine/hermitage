@@ -15,7 +15,7 @@ describe 'viewer', type: :feature, js: true do
     page.should have_css('div#hermitage div#overlay') 
   end
 
-  it 'has full size image' do
+  it 'has original image' do
     page.should have_css("div#hermitage img[src='/assets/0-full.png']") 
   end
 

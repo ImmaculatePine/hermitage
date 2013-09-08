@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/ImmaculatePine/hermitage.png?branch=master)](https://travis-ci.org/ImmaculatePine/hermitage)
 
-Ruby library for generation of image galleries (thumbnails and full size images viewer).
+Ruby library for generation of image galleries (thumbnails and original images viewer).
 
 ## Requirements
 
@@ -60,13 +60,13 @@ You can pass options hash to `render_gallery_for` method if you want to customiz
 E.g. your `Photo` model has methods `image_full` and `image_thumb` that return path to full image and its thumbnail, respectively.
 Then you can write in your view file:
 
-    render_gallery_for @photos, attribute_full_size: 'image_full', attribute_thumbnail: 'image_thumb'
+    render_gallery_for @photos, original: 'image_full', thumbnail: 'image_thumb'
 
 Then Hermitage will use the specified methods to get paths to your images and thumbnails.
 
 If the only method returns both paths according to passed parameters you can specify it like this:
 
-    render_gallery_for @posts, attribute_full_size: 'attachment(:full)', attribute_thumbnail: 'attachment(:thumbnail)'
+    render_gallery_for @posts, original: 'attachment(:full)', thumbnail: 'attachment(:thumbnail)'
 
 #### Markup
 
@@ -80,7 +80,7 @@ Hermitage renders markup that will look nice with Twitter Bootstrap by default:
       </li>
     </ul>
 
-You can configure any element of this markup by overwriting `list_tag`, `item_tag`, `list_class`, `item_class`, `link_class`, `image_class` and `attribute_title` properties.
+You can configure any element of this markup by overwriting `list_tag`, `item_tag`, `list_class`, `item_class`, `link_class`, `image_class` and `title` properties.
 
 For example this line of code:
 
@@ -98,9 +98,9 @@ will render the following markup:
 
 #### Specify Image Title
 
-You can add `title` attribute to generated links by passing `attribute_title` option to `render_gallery_for` method:
+You can add `title` attribute to generated links by passing `title` option to `render_gallery_for` method:
 
-    render_gallery_for @images, attribute_title: 'description' # assuming that image.description returns some text
+    render_gallery_for @images, title: 'description' # assuming that image.description returns some text
 
 It will render something like that:
 
@@ -139,8 +139,8 @@ You can overwrite :default config. These changes will be applied to all the gall
 Uncoment the following lines in config/initializers/hermitage.rb file and make some changes here:
 
     Hermitage.configs[:default].merge!({
-      attribute_full_size: 'image.url(:medium)',
-      attribute_thumbnail: 'image.url(:small)'
+      original: 'image.url(:medium)',
+      thumbnail: 'image.url(:small)'
     })
 
 Now Hermitage will use `image.url` method with :medium or :small argument to get images for the gallery.
@@ -170,13 +170,13 @@ Then your config/initializers/hermitage.rb could looks like this:
     # Some rules for :default config if needed...
 
     Hermitage.configs[:pictures] = {
-      attribute_full_size: 'image_path',
-      attribute_thumbnail: 'image_path(:small)'
+      original: 'image_path',
+      thumbnail: 'image_path(:small)'
     }
 
     Hermitage.configs[:posts] = {
-      attribute_full_size: 'attachment',
-      attribute_thumbnail: 'attachment(:tiny)',
+      original: 'attachment',
+      thumbnail: 'attachment(:tiny)',
       list_tag: :div,
       item_tag: div,
       list_class: 'posts',

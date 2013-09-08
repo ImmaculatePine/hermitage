@@ -4,8 +4,8 @@
 # You can configure any of its options and they will be applied for every rendering.
 #
 # Hermitage.configs[:default].merge!({
-#   attribute_full_size: 'file.url',
-#   attribute_thumbnail: 'file.url(:thumbnail)',
+#   original: 'file.url',
+#   thumbnail: 'file.url(:thumbnail)',
 #   list_tag: :ul,
 #   item_tag: :li,
 #   list_class: 'thumbnails',

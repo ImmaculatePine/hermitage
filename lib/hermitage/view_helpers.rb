@@ -38,11 +38,11 @@ module Hermitage
       lists.each do |list|
         # Array of items in current list
         items = list.collect do |item|
-          full_image_path = eval("item.#{options[:attribute_full_size]}")
-          thumbnail_image_path = eval("item.#{options[:attribute_thumbnail]}")
-          title = options[:attribute_title] ? eval("item.#{options[:attribute_title]}") : nil
-          image = image_tag(thumbnail_image_path, class: options[:image_class])
-          link_to(image, full_image_path, rel: 'hermitage', class: options[:link_class], title: title)
+          original_path = eval("item.#{options[:original]}")
+          thumbnail_path = eval("item.#{options[:thumbnail]}")
+          title = options[:title] ? eval("item.#{options[:title]}") : nil
+          image = image_tag(thumbnail_path, class: options[:image_class])
+          link_to(image, original_path, rel: 'hermitage', class: options[:link_class], title: title)
         end
         
         # Convert these items into content tag string

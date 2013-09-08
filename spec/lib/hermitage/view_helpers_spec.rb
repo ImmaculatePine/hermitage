@@ -19,14 +19,14 @@ describe Hermitage::ViewHelpers, type: :helper do
 
     context 'with options' do
       
-      context 'attribute_full_size and attribute_thumbnail' do
-        subject { template.render_gallery_for images, attribute_full_size: 'photo', attribute_thumbnail: 'photo(:thumbnail)' }
+      context 'original and thumbnail' do
+        subject { template.render_gallery_for images, original: 'photo', thumbnail: 'photo(:thumbnail)' }
         let(:images) { Array.new(2) { |i| DummyPhoto.new(i.to_s) } }
         it { should == expected }
       end
 
       context 'title' do
-        subject { template.render_gallery_for images, attribute_title: 'description' }
+        subject { template.render_gallery_for images, title: 'description' }
         let(:expected) { '<ul class="thumbnails"><li class="span4"><a class="thumbnail" href="/assets/0-full.png" rel="hermitage" title="description of 0"><img alt="0 thumbnail" src="/assets/0-thumbnail.png" /></a></li><li class="span4"><a class="thumbnail" href="/assets/1-full.png" rel="hermitage" title="description of 1"><img alt="1 thumbnail" src="/assets/1-thumbnail.png" /></a></li></ul>' }
         it { should == expected }
       end

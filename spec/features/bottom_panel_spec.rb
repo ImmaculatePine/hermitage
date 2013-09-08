@@ -3,7 +3,7 @@ require 'features_helper'
 
 describe 'bottom_panel', type: :feature, js: true do
   before(:each) do 
-    Hermitage.configs[:default].merge!({ attribute_title: 'description' })
+    Hermitage.configs[:default].merge!({ title: 'description' })
     visit images_path
     page.first('a[rel="hermitage"]').click
     page.should have_css('img.current')
