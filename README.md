@@ -204,6 +204,7 @@ You can customize the following parameters:
 * `minimumSize.width` - minimum width of scaled image, px
 * `minimumSize.height` - minimum height of scaled image, px
 * `animationDuration` - duration of UI animations, ms
+* `resizeTimeout` - timeout before moving elements to the proper places after resizing, ms
 
 ## Contributing
 
