@@ -6,6 +6,9 @@ module Hermitage
     # Model's attribute (or method) that returns the path to the image's thumbnail
     ATTRIBUTE_THUMBNAIL = 'file.url(:thumbnail)'
 
+    # Model's attribute (or method) that returns title or description of image
+    ATTRIBUTE_TITLE = nil
+
     # Wrapper for the whole gallery
     LIST_TAG = :ul
 

@@ -20,7 +20,12 @@ end
 class DummyImage
   attr_accessor :file
   def initialize(name)
+    @name = name
     @file = DummyFile.new(name)
+  end
+
+  def description
+    "description of #{@name}"
   end
 end
 

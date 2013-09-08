@@ -6,6 +6,7 @@ describe Hermitage::Defaults do
       Hermitage::Defaults.to_hash().should == {
         attribute_full_size: 'file.url',
         attribute_thumbnail: 'file.url(:thumbnail)',
+        attribute_title: nil,
         list_tag: :ul,
         item_tag: :li,
         list_class: 'thumbnails',

@@ -40,8 +40,9 @@ module Hermitage
         items = list.collect do |item|
           full_image_path = eval("item.#{options[:attribute_full_size]}")
           thumbnail_image_path = eval("item.#{options[:attribute_thumbnail]}")
+          title = options[:attribute_title] ? eval("item.#{options[:attribute_title]}") : nil
           image = image_tag(thumbnail_image_path, class: options[:image_class])
-          link_to(image, full_image_path, rel: 'hermitage', class: options[:link_class])
+          link_to(image, full_image_path, rel: 'hermitage', class: options[:link_class], title: title)
         end
         
         # Convert these items into content tag string

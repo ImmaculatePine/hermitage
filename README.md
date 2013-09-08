@@ -80,7 +80,7 @@ Hermitage renders markup that will look nice with Twitter Bootstrap by default:
       </li>
     </ul>
 
-You can configure any element of this markup by overwriting `list_tag`, `item_tag`, `list_class`, `item_class`, `link_class` and `image_class` properties.
+You can configure any element of this markup by overwriting `list_tag`, `item_tag`, `list_class`, `item_class`, `link_class`, `image_class` and `attribute_title` properties.
 
 For example this line of code:
 
@@ -95,6 +95,19 @@ will render the following markup:
         </a>
       </p>
     </div>
+
+#### Specify Image Title
+
+You can add `title` attribute to generated links by passing `attribute_title` option to `render_gallery_for` method:
+
+    render_gallery_for @images, attribute_title: 'description' # assuming that image.description returns some text
+
+It will render something like that:
+
+    <div class="thumbnails">
+      ...
+        <a href="/path/to/full/image" class="thumbnail" rel="hermitage" title="This is photo of my cat.">
+      ...
 
 #### Slicing
 
