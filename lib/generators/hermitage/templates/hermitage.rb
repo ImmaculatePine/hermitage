@@ -6,6 +6,7 @@
 # Hermitage.configs[:default].merge!({
 #   original: 'file.url',
 #   thumbnail: 'file.url(:thumbnail)',
+#   title: nil,
 #   list_tag: :ul,
 #   item_tag: :li,
 #   list_class: 'thumbnails',
