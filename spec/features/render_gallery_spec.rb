@@ -13,7 +13,9 @@ describe 'render gallery', type: :feature, js: true do
   end
 
   it 'fills images array' do
-    evaluate_script('hermitage.images').should == ['/assets/0-full.png', '/assets/1-full.png', '/assets/2-full.png']
+    images = evaluate_script('hermitage.images')
+    expected = Array.new(3) { |i| { 'source' => "/assets/#{i}-full.png"} }
+    images.should == expected
   end
 
 end

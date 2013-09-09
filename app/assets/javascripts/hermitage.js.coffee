@@ -132,9 +132,6 @@ root.hermitage =
   # Array of images of current gallery
   images: []
 
-  # Array of texts for current gallery
-  texts: []
-
   # Timeout before adjustig elements after window resize
   resizeTimeout: 100
 
@@ -153,12 +150,10 @@ root.hermitage =
 
     # Clear old images and texts array
     hermitage.images.length = 0
-    hermitage.texts.length = 0
 
     # Create new images and texts array
     $.each $('a[rel="hermitage"]'), ->
-      hermitage.images.push($(this).attr('href'))
-      hermitage.texts.push($(this).attr('title'))
+      addImage($(this).attr('href'), $(this).attr('title'))
 
     # Set on click handlers to all elements that
     # have 'hermitage' rel attribute
@@ -172,6 +167,26 @@ root.hermitage =
       hermitage.resizeTimer = setTimeout \
         -> adjustImage(true),
         hermitage.resizeTimeout
+
+#
+# Working with images array
+#
+addImage = (source, text) ->
+  image =
+    source: source
+    text: text
+  hermitage.images.push(image)
+
+indexOfImage = (image) ->
+  source = if $(image).prop('tagName') is 'IMG' then $(image).attr('src') else $(image).attr('href')
+  imageObject = (img for img in hermitage.images when img.source is source)[0]
+  hermitage.images.indexOf(imageObject)
+
+sourceFor = (index) ->
+  hermitage.images[index].source
+
+textFor = (index) ->
+  hermitage.images[index].text
 
 #
 # Helpers
@@ -281,7 +296,6 @@ createBotomPanel = ->
 # Shows original image of the chosen one
 openGallery = (image) ->
   $('#hermitage')
-    .css('z-index', hermitage.zIndex)
     .empty()
     .show()
   
@@ -298,7 +312,7 @@ showImage = (index) ->
   img = $('<img />')
     .attr(hermitage.image.default.attributes)
     .css(hermitage.image.default.styles)
-    .attr('src', hermitage.images[index])
+    .attr('src', sourceFor(index))
     .css(hermitage.image.styles)
     .hide()
     .appendTo($('#hermitage'))
@@ -364,15 +378,14 @@ adjustImage = (withAnimation = false, image = undefined) ->
   index = indexOfImage(image)
 
   # Wait until source image is loaded
-  $('<img />').attr('src', hermitage.images[index]).load ->
-    
+  $('<img />').attr('src', sourceFor(index)).load ->
     # Offset for image position
     offsetY = 0
 
     maxWidth = $(window).width() - $('#navigation-left').outerWidth() - $('#navigation-right').outerWidth()
     maxHeight = $(window).height()
 
-    text = hermitage.texts[index]
+    text = textFor(index)
 
     if text
       offsetY = - $('#hermitage .bottom-panel').outerHeight() / 2
@@ -451,10 +464,6 @@ adjustBottomPanel = (withAnimation) ->
       panel.css(params)
 
     panel.fadeIn(hermitage.animationDuration)
-
-indexOfImage = (image) ->
-  href = if $(image).prop('tagName') is 'IMG' then $(image).attr('src') else $(image).attr('href')
-  hermitage.images.indexOf(href)
 
 canShowNextAfter = (index) ->
   if index < hermitage.images.length - 1
