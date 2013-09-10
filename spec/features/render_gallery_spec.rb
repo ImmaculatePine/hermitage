@@ -14,7 +14,12 @@ describe 'render gallery', type: :feature, js: true do
 
   it 'fills images array' do
     images = evaluate_script('hermitage.images')
-    expected = Array.new(3) { |i| { 'source' => "/assets/#{i}-full.png"} }
+    expected = Array.new(3) do |i|
+      {
+        'source' => "/assets/#{i}-full.png",
+        'loaded' => false
+      }
+    end
     images.should == expected
   end
 

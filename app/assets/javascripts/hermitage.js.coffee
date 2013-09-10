@@ -7,8 +7,9 @@ root = exports ? this
 # Hermitage options
 root.hermitage =
   looped: true
+  preloadNeighbours: true
 
-  # Image viewer z-index property
+  # Image viewer properties
   default:
     styles:
       zIndex: 10
@@ -175,6 +176,7 @@ addImage = (source, text) ->
   image =
     source: source
     text: text
+    loaded: false
   hermitage.images.push(image)
 
 indexOfImage = (image) ->
@@ -182,11 +184,9 @@ indexOfImage = (image) ->
   imageObject = (img for img in hermitage.images when img.source is source)[0]
   hermitage.images.indexOf(imageObject)
 
-sourceFor = (index) ->
-  hermitage.images[index].source
-
-textFor = (index) ->
-  hermitage.images[index].text
+imageAt = (index) -> hermitage.images[index]
+sourceFor = (index) -> imageAt(index).source
+textFor = (index) -> imageAt(index).text
 
 #
 # Helpers
@@ -324,6 +324,7 @@ showImage = (index) ->
       showPreviousImage()
 
   adjustImage(false, img)
+  preloadNeighboursFor(index)
 
 # Shows next image
 showNextImage = ->
@@ -332,10 +333,7 @@ showNextImage = ->
     index = indexOfImage(current)
     return unless canShowNextAfter(index)
     hideCurrentImage()
-    if index < hermitage.images.length - 1
-      showImage(index + 1)
-    else
-      showImage(0)
+    showImage nextIndexAfter index
 
 # Shows previous image
 showPreviousImage = ->
@@ -344,10 +342,7 @@ showPreviousImage = ->
     index = indexOfImage(current)
     return unless canShowPreviousBefore(index)
     hideCurrentImage()
-    if index > 0
-      showImage(index - 1)
-    else
-      showImage(hermitage.images.length - 1)
+    showImage previousIndexBefore index
 
 # Hides current image
 hideCurrentImage = ->
@@ -378,7 +373,9 @@ adjustImage = (withAnimation = false, image = undefined) ->
   index = indexOfImage(image)
 
   # Wait until source image is loaded
-  $('<img />').attr('src', sourceFor(index)).load ->
+  loadImage sourceFor(index), ->
+    imageAt(index).loaded = true
+
     # Offset for image position
     offsetY = 0
 
@@ -427,9 +424,7 @@ adjustNavigationButtons = (withAnimation, current) ->
   next.maximizeLineHeight(withAnimation)
   
   # Show or hide buttons
-
   currentIndex = indexOfImage(current)
-  
   duration = hermitage.animationDuration
   
   if canShowPreviousBefore(currentIndex)
@@ -476,6 +471,36 @@ canShowPreviousBefore = (index) ->
     true
   else
     hermitage.looped
+
+preloadNeighboursFor = (index) ->
+  return unless hermitage.preloadNeighbours
+
+  nextIndex = nextIndexAfter(index)
+  previousIndex = previousIndexBefore(index)
+
+  if canShowNextAfter(index) and not imageAt(nextIndex).loaded
+    loadImage sourceFor(nextIndex), ->
+      imageAt(nextIndex).loaded = true
+
+  if canShowPreviousBefore(index) and not imageAt(previousIndex).loaded
+    loadImage sourceFor(previousIndex), ->
+      imageAt(previousIndex).loaded = true
+
+loadImage = (source, complete) ->
+  $('<img />').attr('src', source).load(complete)
+
+nextIndexAfter = (index) ->
+  if index < hermitage.images.length - 1
+    index + 1
+  else
+    0
+
+previousIndexBefore = (index) ->
+  if index > 0
+    index - 1
+  else
+    hermitage.images.length - 1
+
 
 # Initialize gallery on page load
 $(document).ready(hermitage.init)
