@@ -207,6 +207,7 @@ You can customize the following parameters:
 
 * `looped` - set it to false if after the last image the first should not be shown
 * `preloadNeighbours` - determines if next and previous images should be preloaded
+* `slideshowEffect` - how to show/hide images (correct values are 'slide' and 'fade'). Default value is 'slide'
 * `darkening.opacity` - opacity of darkening layer (0 if it should be disabled)
 * `darkening.styles` - any custom CSS for darkening layer
 * `navigationButtons.enabled` - are there navigation buttons

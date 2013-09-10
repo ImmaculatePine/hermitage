@@ -8,6 +8,7 @@ root = exports ? this
 root.hermitage =
   looped: true
   preloadNeighbours: true
+  slideshowEffect: 'slide' # or 'fade'
 
   # Image viewer properties
   default:
@@ -191,9 +192,9 @@ textFor = (index) -> imageAt(index).text
 #
 # Helpers
 #
-$.fn.applyStyles = (params, withAnimation) ->
+$.fn.applyStyles = (params, withAnimation, complete = undefined) ->
   if withAnimation
-    this.animate(params, { duration: hermitage.animationDuration, queue: false } )
+    this.animate(params, { duration: hermitage.animationDuration, queue: false, complete: complete })
   else
     this.css(params)
 
@@ -202,7 +203,7 @@ $.fn.center = (withAnimation = false, width = 0, height = 0, offsetX = 0, offset
   this.css('position', 'absolute')
 
   width = $(this).outerWidth() if width is 0
-  height = $(this).outerWidth() if height is 0
+  height = $(this).outerHeight() if height is 0
 
   params =
     top: "#{Math.max(0, ($(window).height() - height) / 2 + offsetY)}px"
@@ -217,6 +218,24 @@ $.fn.setSize = (width, height, withAnimation = false) ->
 $.fn.maximizeLineHeight = (withAnimation = false) ->
   params = { lineHeight: "#{this.outerHeight()}px" }
   this.applyStyles(params, withAnimation)
+
+$.fn.showFromRight = (width = 0, height = 0, offsetX = 0, offsetY = 0) ->
+  this.css(left: "#{$(window).width()}px")
+  this.show()
+  this.center(true, width, height, offsetX, offsetY)
+
+$.fn.showFromLeft = (width = 0, height = 0, offsetX = 0, offsetY = 0) ->
+  this.css(left: "#{- $(this).outerWidth()}px")
+  this.show()
+  this.center(true, width, height, offsetX, offsetY)
+
+$.fn.hideToRight = (complete = undefined) ->
+  params = { left: "#{$(window).width()}px" }
+  this.applyStyles(params, true, complete)
+
+$.fn.hideToLeft = (complete = undefined) ->
+  params = { left: "#{- $(this).outerWidth()}px" }
+  this.applyStyles(params, true, complete)
 
 #
 # Hermitage logic
@@ -302,7 +321,7 @@ openGallery = (image) ->
   showImage(indexOfImage(image))
   
 # Shows image with specified index from images array
-showImage = (index) ->
+showImage = (index, direction = undefined) ->
   img = $('<img />')
     .attr(hermitage.image.default.attributes)
     .css(hermitage.image.default.styles)
@@ -317,7 +336,7 @@ showImage = (index) ->
     else
       showPreviousImage()
 
-  adjustImage(false, img)
+  adjustImage(false, img, direction)
   preloadNeighboursFor(index)
 
 # Shows next image
@@ -326,8 +345,12 @@ showNextImage = ->
   if current.length is 1
     index = indexOfImage(current)
     return unless canShowNextAfter(index)
-    hideCurrentImage()
-    showImage nextIndexAfter index
+    
+    direction = if hermitage.slideshowEffect is 'slide' then 'left' else undefined
+    hideCurrentImage(direction)
+
+    direction = if hermitage.slideshowEffect is 'slide' then 'right' else undefined
+    showImage nextIndexAfter(index), direction
 
 # Shows previous image
 showPreviousImage = ->
@@ -335,15 +358,30 @@ showPreviousImage = ->
   if current.length is 1
     index = indexOfImage(current)
     return unless canShowPreviousBefore(index)
-    hideCurrentImage()
-    showImage previousIndexBefore index
+    
+    direction = if hermitage.slideshowEffect is 'slide' then 'right' else undefined
+    hideCurrentImage(direction)
+
+    direction = if hermitage.slideshowEffect is 'slide' then 'left' else undefined
+    showImage previousIndexBefore(index), direction
 
 # Hides current image
-hideCurrentImage = ->
+# Arguments:
+# * direction - how to hide the image. It can apply options:
+#   * undefined - just fade out
+#   * 'right' - move to the right bound of screen
+#   * 'left' - move to the left bound of screen
+hideCurrentImage = (direction = undefined) ->
   current = $('img.current')
   if current.length is 1
-    current.fadeOut hermitage.animationDuration, ->
-      current.remove()
+    complete = -> current.remove()
+
+    if direction is 'right'
+      current.hideToRight(complete)
+    else if direction is 'left'
+      current.hideToLeft(complete)
+    else
+      current.fadeOut hermitage.animationDuration, complete
 
 # Starts fade out animation and clears Hermitage at the end of animation
 closeGallery = ->
@@ -358,7 +396,11 @@ closeGallery = ->
 # Attributes:
 # * `withAnimation` - boolean value determines if adjusting should be animated
 # * `image` - currently opened image. It is optional argument and can be evaluated by the method itself.
-adjustImage = (withAnimation = false, image = undefined) ->
+# * direction - how to show the image. It can apply options:
+#   * undefined - just fade in
+#   * 'right' - move from the right bound of screen
+#   * 'left' - move from the left bound of screen
+adjustImage = (withAnimation = false, image = undefined, direction = undefined) ->
 
   if image is undefined
     image = $('#hermitage img.current')
@@ -400,7 +442,13 @@ adjustImage = (withAnimation = false, image = undefined) ->
     image
       .setSize(this.width * scale, this.height * scale, withAnimation)
       .center(withAnimation, this.width * scale, this.height * scale, 0, offsetY)
-      .fadeIn(hermitage.animationDuration)
+    
+    if direction is 'right'
+      image.showFromRight(this.width * scale, this.height * scale, 0, offsetY)
+    else if direction is 'left'
+      image.showFromLeft(this.width * scale, this.height * scale, 0, offsetY)
+    else
+      image.fadeIn(hermitage.animationDuration)
 
     adjustNavigationButtons(withAnimation, image)
     adjustCloseButton(withAnimation, image)
