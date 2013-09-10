@@ -191,6 +191,11 @@ textFor = (index) -> imageAt(index).text
 #
 # Helpers
 #
+$.fn.applyStyles = (params, withAnimation) ->
+  if withAnimation
+    this.animate(params, { duration: hermitage.animationDuration, queue: false } )
+  else
+    this.css(params)
 
 # Place element at the center of screen
 $.fn.center = (withAnimation = false, width = 0, height = 0, offsetX = 0, offsetY = 0) ->
@@ -199,30 +204,19 @@ $.fn.center = (withAnimation = false, width = 0, height = 0, offsetX = 0, offset
   width = $(this).outerWidth() if width is 0
   height = $(this).outerWidth() if height is 0
 
-  param =
+  params =
     top: "#{Math.max(0, ($(window).height() - height) / 2 + offsetY)}px"
     left: "#{Math.max(0, ($(window).width() - width) / 2 + offsetX)}px"
 
-  if withAnimation
-    this.animate(param, { duration: hermitage.animationDuration, queue: false })
-  else
-    this.css(param)
+  this.applyStyles(params, withAnimation)
 
 $.fn.setSize = (width, height, withAnimation = false) ->
   params = { width: width, height: height}
-
-  if withAnimation
-    this.animate(params, { duration: hermitage.animationDuration, queue: false })
-  else
-    this.css(params)
+  this.applyStyles(params, withAnimation)
 
 $.fn.maximizeLineHeight = (withAnimation = false) ->
-  param = { lineHeight: "#{this.outerHeight()}px" }
-  
-  if withAnimation
-    this.animate(param, { duration: hermitage.animationDuration, queue: false })
-  else
-    this.css(param)
+  params = { lineHeight: "#{this.outerHeight()}px" }
+  this.applyStyles(params, withAnimation)
 
 #
 # Hermitage logic
