@@ -23,8 +23,7 @@ root.hermitage =
   # Darkening properties
   darkening:
     default:
-      attributes:
-        id: 'overlay'
+      attributes: { id: 'overlay' }
       styles:
         position: 'absolute'
         top: 0
@@ -32,13 +31,14 @@ root.hermitage =
         width: '100%'
         height: '100%'
         backgroundColor: '#000'
-        
-    opacity: 0.85 # 0 if you don't want darkening
     styles: {}
+    opacity: 0.85 # 0 if you don't want darkening
+
 
   # Navigation buttons' properties
   navigationButtons:
     default:
+      attributes: {}
       styles:
         position: 'absolute'
         width: '50px'
@@ -56,27 +56,22 @@ root.hermitage =
 
     next:
       default:
-        attributes:
-          id: 'navigation-right'
-        styles:
-          right: 0
+        attributes: { id: 'navigation-right' }
+        styles: { right: 0 }
       styles: {}
       text: '▶'
 
     previous:
       default:
-        attributes:
-          id: 'navigation-left'
-        styles:
-          left: 0
+        attributes: { id: 'navigation-left' }
+        styles: { left: 0 }
       styles: {}
       text: '◀'
 
   # Close button properties
   closeButton:
     default:
-      attributes:
-        id: 'close-button'
+      attributes: { id: 'close-button' }
       styles:
         position: 'absolute'
         top: 0
@@ -86,16 +81,15 @@ root.hermitage =
         fontFamily: 'Tahoma,Arial,Helvetica,sans-serif'
         whiteSpace: 'nowrap'
         cursor: 'pointer'
-        
+    styles: {}        
     enabled: true
     text: '×'
-    styles: {}
+
 
   # Current image properties
   image:
     default:
-      attributes:
-        class: 'current'
+      attributes: { class: 'current' }
       styles:
         cursor: 'pointer'
         maxWidth: 'none' # Fix the conflict with Twitter Bootstrap
@@ -104,8 +98,7 @@ root.hermitage =
   # Bottom panel (for text or anything else)
   bottomPanel:
     default:
-      attributes:
-        class: 'bottom-panel'
+      attributes: { class: 'bottom-panel' }
       styles:
         position: 'absolute'
         bottom: 0
@@ -114,8 +107,7 @@ root.hermitage =
 
     text:
       default:
-        attributes:
-          class: 'text'
+        attributes: { class: 'text' }
         styles:
           width: '100%'
           height: '100%'
@@ -241,14 +233,18 @@ $.fn.hideToLeft = (complete = undefined) ->
 # Hermitage logic
 #
 
+# Creates base element with attributes and styles from params
+createElement = (tag, params) ->
+  tag
+    .attr(params.default.attributes)
+    .css(params.default.styles)
+    .css(params.styles)
+
 # Creates darkening overlay, shows it and sets its click handler
 createDarkening = ->
-  $('<div>')
-    .attr(hermitage.darkening.default.attributes)
-    .css(hermitage.darkening.default.styles)
+  createElement($('<div>'), hermitage.darkening)
     .css('opacity', hermitage.darkening.opacity)
     .css('filter', "alpha(opacity='#{hermitage.darkening.opacity * 100}')")
-    .css(hermitage.darkening.styles)
     .appendTo($('#hermitage'))
     .hide()
     .fadeIn()
@@ -256,55 +252,38 @@ createDarkening = ->
 
 # Creates base navigation button and returns it
 createNavigationButton = ->
-  $('<div>')
+  createElement($('<div>'), hermitage.navigationButtons)
     .appendTo($('#hermitage'))
     .hide()
-    .css(hermitage.navigationButtons.default.styles)
     .maximizeLineHeight()
-    .css(hermitage.navigationButtons.styles)
 
 # Creates right navigation button and returns it
 createRightNavigationButton = ->
-  createNavigationButton()
-    .attr(hermitage.navigationButtons.next.default.attributes)
-    .css(hermitage.navigationButtons.next.default.styles)
-    .css(hermitage.navigationButtons.next.styles)
+  createElement(createNavigationButton(), hermitage.navigationButtons.next)
     .text(hermitage.navigationButtons.next.text)
     .click(showNextImage)
 
 # Create left navigation button and returns it
 createLeftNavigationButton = ->
-  createNavigationButton()
-    .attr(hermitage.navigationButtons.previous.default.attributes)
-    .css(hermitage.navigationButtons.previous.default.styles)
-    .css(hermitage.navigationButtons.previous.styles)
+  createElement(createNavigationButton(), hermitage.navigationButtons.previous)
     .text(hermitage.navigationButtons.previous.text)
     .click(showPreviousImage)
 
 # Creates close button
 createCloseButton = ->
-  $('<div>')
+  createElement($('<div>'), hermitage.closeButton)
     .appendTo($('#hermitage'))
     .hide()
-    .attr(hermitage.closeButton.default.attributes)
-    .css(hermitage.closeButton.default.styles)
     .text(hermitage.closeButton.text)
-    .css(hermitage.closeButton.styles)
     .click(closeGallery)
 
 createBotomPanel = ->
-  bottomPanel = $('<div>')
+  bottomPanel = createElement($('<div>'), hermitage.bottomPanel)
     .appendTo($('#hermitage'))
     .hide()
-    .attr(hermitage.bottomPanel.default.attributes)
-    .css(hermitage.bottomPanel.default.styles)
-    .css(hermitage.bottomPanel.styles)
 
-  text = $('<div>')
+  createElement($('<div>'), hermitage.bottomPanel.text)
     .appendTo(bottomPanel)
-    .attr(hermitage.bottomPanel.text.default.attributes)
-    .css(hermitage.bottomPanel.text.default.styles)
-    .css(hermitage.bottomPanel.text.styles)
 
 # Shows original image of the chosen one
 openGallery = (image) ->
@@ -322,11 +301,8 @@ openGallery = (image) ->
   
 # Shows image with specified index from images array
 showImage = (index, direction = undefined) ->
-  img = $('<img />')
-    .attr(hermitage.image.default.attributes)
-    .css(hermitage.image.default.styles)
+  img = createElement($('<img />'), hermitage.image)
     .attr('src', sourceFor(index))
-    .css(hermitage.image.styles)
     .hide()
     .appendTo($('#hermitage'))
   
