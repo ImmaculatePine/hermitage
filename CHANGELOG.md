@@ -1,3 +1,9 @@
+### 0.0.4 ###
+
+* Ability to preload neighbour images
+* Slide effect added and is used by default
+* Nice DSL syntax added for configuration
+
 ### 0.0.3 ###
 
 * *Attention*! In this version some options were renamed: attribute_full_size -> original, attribute_thumbnail -> thumbnail.
