@@ -1,3 +1,7 @@
+### 0.0.4.1 ###
+
+* RailsRenderCore is not a child of ActionView::Base anymore
+
 ### 0.0.4 ###
 
 * Ability to preload neighbour images

@@ -1,11 +1,12 @@
 module Hermitage
   
   # This class performs all the rendering logic for Rails apps
-  class RailsRenderCore < ActionView::Base
+  class RailsRenderCore
 
     def initialize(objects, options = {})
       @objects = objects
       @options = Configurator.options_for(objects, options)
+      @template = ActionView::Base.new
     end
 
     # Renders gallery markup
@@ -41,14 +42,14 @@ module Hermitage
       original_path = eval("item.#{@options[:original]}")
       thumbnail_path = eval("item.#{@options[:thumbnail]}")
       title = @options[:title] ? eval("item.#{@options[:title]}") : nil
-      image = image_tag(thumbnail_path, class: @options[:image_class])
-      link_to(image, original_path, rel: 'hermitage', class: @options[:link_class], title: title)
+      image = @template.image_tag(thumbnail_path, class: @options[:image_class])
+      @template.link_to(image, original_path, rel: 'hermitage', class: @options[:link_class], title: title)
     end
 
     # Renders items into content tag
     def render_content_tag_for(items)
-      content_tag(@options[:list_tag], class: @options[:list_class]) do
-        items.collect { |item| concat(content_tag(@options[:item_tag], item, class: @options[:item_class])) }
+      @template.content_tag(@options[:list_tag], class: @options[:list_class]) do
+        items.collect { |item| @template.concat(@template.content_tag(@options[:item_tag], item, class: @options[:item_class])) }
       end
     end
 
