@@ -17,6 +17,15 @@ module Hermitage
       @config = Hermitage.configs[config_name]
       self.instance_eval(&block) if block_given?
     end
+
+    # Returns full options hash for specified objects and options.
+    # It chooses config accoring to the class name of objects in passed array
+    # and merges default options with the chosen config and with passed options hash.
+    def self.options_for(objects, options = {})
+      config_name = objects.first.class.to_s.pluralize.underscore.to_sym if defined?(Rails) && !objects.empty?
+      config = Hermitage.configs[config_name] || Hermitage.configs[:default]
+      Hermitage.configs[:default].merge(config).merge(options)
+    end
   end
 
 end

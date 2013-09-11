@@ -14,16 +14,11 @@ module Hermitage
     #   render_gallery_for album.photos # album.photos is array of Photo instances
     #
     # it will render the objects contained in array and will use :images (or :photos) as config name.
-    # Config names are formed by the class name of the first element in array.
+    # Config names are formed by the class name of the first element in array by Configurator.
     #
     def render_gallery_for(objects, options = {})
-      # Choose config accoring to class name of objects in passed array
-      config_name = objects.first.class.to_s.pluralize.underscore.to_sym if defined?(Rails) && !objects.empty?
-      config = Hermitage.configs.include?(config_name) ? config_name : :default
-      
-      # Merge default options with the chosen config and with passed options
-      options = Hermitage.configs[:default].merge(Hermitage.configs[config]).merge(options)
-      
+      options = Configurator.options_for(objects, options)
+
       # Create array of all list tags
       lists = unless options[:each_slice]
         [objects]
