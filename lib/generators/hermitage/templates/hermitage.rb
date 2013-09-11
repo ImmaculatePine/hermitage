@@ -3,18 +3,18 @@
 # Default config is used as base options hash for every gallery.
 # You can configure any of its options and they will be applied for every rendering.
 #
-# Hermitage.configs[:default].merge!({
-#   original: 'file.url',
-#   thumbnail: 'file.url(:thumbnail)',
-#   title: nil,
-#   list_tag: :ul,
-#   item_tag: :li,
-#   list_class: 'thumbnails',
-#   item_class: 'span4',
-#   link_class: 'thumbnail',
-#   image_class: nil,
-#   each_slice: nil
-# })
+# Hermitage.configure :default do
+#   original 'file.url'
+#   thumbnail 'file.url(:thumbnail)'
+#   title nil
+#   list_tag :ul
+#   item_tag :li
+#   list_class 'thumbnails'
+#   item_class 'span4'
+#   link_class 'thumbnail'
+#   image_class nil
+#   each_slice nil
+# end
 
 # Also you can create your own configs that will be merged with default config to overwrite default options.
 #
@@ -26,6 +26,6 @@
 #
 # All available options are listed in default config above.
 #
-# Hermitage.configs[:images] = {
-
-# }
+# Hermitage.configure :images do
+#
+# end

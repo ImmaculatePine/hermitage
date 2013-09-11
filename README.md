@@ -130,7 +130,7 @@ When you call `render_gallery_for` method Hermitage looks for config with name f
 In the example above Hermitage tries to find :images config because first argument of `render_gallery_for` method was array of Image instances.
 If there is no proper config :default config is used.
 
-Hermitage configs are described in config/initializers/hermitage.rb file.
+Hermitage configs are described in config/initializers/hermitage.rb file. For configuration you can use DSL syntax described below.
 
 #### Overwriting Defaults
 
@@ -138,10 +138,10 @@ You can overwrite :default config. These changes will be applied to all the gall
 
 Uncoment the following lines in config/initializers/hermitage.rb file and make some changes here:
 
-    Hermitage.configs[:default].merge!({
-      original: 'image.url(:medium)',
-      thumbnail: 'image.url(:small)'
-    })
+    Hermitage.configure :default do
+      original 'image.url(:medium)'
+      thumbnail 'image.url(:small)'
+    end
 
 Now Hermitage will use `image.url` method with :medium or :small argument to get images for the gallery.
 
@@ -169,19 +169,19 @@ Then your config/initializers/hermitage.rb could looks like this:
 
     # Some rules for :default config if needed...
 
-    Hermitage.configs[:pictures] = {
-      original: 'image_path',
-      thumbnail: 'image_path(:small)'
-    }
+    Hermitage.configure :pictures do
+      original 'image_path'
+      thumbnail 'image_path(:small)'
+    end
 
-    Hermitage.configs[:posts] = {
-      original: 'attachment',
-      thumbnail: 'attachment(:tiny)',
-      list_tag: :div,
-      item_tag: div,
-      list_class: 'posts',
-      item_class: 'post'
-    }
+    Hermitage.configure :posts do
+      original 'attachment'
+      thumbnail 'attachment(:tiny)'
+      list_tag :div
+      item_tag :div
+      list_class 'posts'
+      item_class 'post'
+    end
 
 Now when you write `render_gallery_for @pictures` or `render_gallery_for @posts` Hermitage will automatically choose the proper config.
 

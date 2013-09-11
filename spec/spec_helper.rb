@@ -24,3 +24,7 @@ RSpec.configure do |config|
 end
 
 Capybara.javascript_driver = :poltergeist
+
+def reset_configs
+  Hermitage.configs = { default: Hermitage::Defaults.to_hash() }
+end
