@@ -1,6 +1,7 @@
 # Hermitage
 
 [![Build Status](https://travis-ci.org/ImmaculatePine/hermitage.png?branch=master)](https://travis-ci.org/ImmaculatePine/hermitage)
+[![Code Climate](https://codeclimate.com/github/ImmaculatePine/hermitage.png)](https://codeclimate.com/github/ImmaculatePine/hermitage)
 
 Ruby library for generation of image galleries (thumbnails and original images viewer).
 
