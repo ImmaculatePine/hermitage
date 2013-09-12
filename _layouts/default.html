@@ -13,11 +13,10 @@
         {% stylesheet bootstrap-responsive %}
         {% stylesheet bootstrap %}
 
-
         {% if page.custom_js %}{{ page.custom_js | javascript }}{% endif %}
 
         <!-- syntax highlighting CSS -->
-        <link rel="stylesheet" href="/css/syntax.css">
+        <link rel="stylesheet" href="{{ site.baseurl }}/css/syntax.css">
 
     </head>
     <body>
@@ -30,14 +29,14 @@
             </div>
             <div class="span10">
               <ul class="nav nav-pills">
-                <li{% if page.url == '/index.html' %} class="active"{% endif %}>
-                  <a href="/">Overview</a>
+                <li{% if page.url contains 'index.html' %} class="active"{% endif %}>
+                  <a href="{{ site.baseurl }}/">Overview</a>
                 </li>
                 <li>
                   <a href="https://github.com/ImmaculatePine/hermitage#usage">Documentation</a>
                 </li>
                 <li{% if page.url contains '/demo' %} class="active"{% endif %}>
-                  <a href="/demo/default.html">Demo</a>
+                  <a href="{{ site.baseurl }}/demo/default.html">Demo</a>
                 </li>
               </ul>
             </div>

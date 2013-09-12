@@ -1,3 +1,6 @@
 name: Hermitage
 markdown: redcarpet
 pygments: true
+baseurl: /hermitage
+assets:
+  baseurl: /hermitage/assets/
