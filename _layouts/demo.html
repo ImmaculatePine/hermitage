@@ -7,45 +7,48 @@ title: Hermitage Demo
 
 <div class="row">
 
-  <div class="span2">
-    <ul class="nav nav-tabs nav-stacked">
-      <li{% if page.url contains 'default' %} class="active"{% endif %}>
-        <a href="{{ site.baseurl }}/demo/default.html">Default</a>
-      </li>
-      <li{% if page.url contains 'darkening' %} class="active"{% endif %}>
-        <a href="{{ site.baseurl }}/demo/darkening.html">Darkening</a>
-      </li>
+  <div class="span3">
+    <ul class="nav nav-list">
+      {% include demo_link.html link="default" text="Default" %}
+      {% include demo_link.html link="loop" text="Loop" %}
+      {% include demo_link.html link="preload_neighbours" text="Neighbours preload" %}
+      <li class="nav-header">Darkening</li>
+      {% include demo_link.html link="darkening_opacity" text="Opacity" %}
+      {% include demo_link.html link="darkening_style" text="Style" %}
+      <li class="nav-header">Slideshow effects</li>
+      <li>Slide (default)</li>
+      {% include demo_link.html link="fade" text="Fade" %}
     </ul>
 
     <p class="muted">More customization options later</p>
   </div>
 
-  <div class="span10">
+  <div class="span9">
     <div>
       {{ content }}
     </div>
 
 
     <ul class="thumbnails">
-      <li class="span5">
+      <li class="span3">
         <a href="{% asset_path 0.png %}" class="thumbnail" rel="hermitage">
           {% image thumbnails/0.png %}
         </a>
       </li>
 
-      <li class="span5">
+      <li class="span3">
         <a href="{% asset_path 1.png %}" class="thumbnail" rel="hermitage">
           {% image thumbnails/1.png %}
         </a>
       </li>
 
-      <li class="span5">
+      <li class="span3">
         <a href="{% asset_path 2.png %}" class="thumbnail" rel="hermitage">
           {% image thumbnails/2.png %}
         </a>
       </li>
 
-      <li class="span5">
+      <li class="span3">
         <a href="{% asset_path 3.png %}" class="thumbnail" rel="hermitage">
           {% image thumbnails/3.png %}
         </a>

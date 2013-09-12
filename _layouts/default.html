@@ -13,7 +13,7 @@
         {% stylesheet bootstrap-responsive %}
         {% stylesheet bootstrap %}
 
-        {% if page.custom_js %}{{ page.custom_js | javascript }}{% endif %}
+        {% if page.custom_js %}{{ page.custom_js | prepend:'demo/' | javascript }}{% endif %}
 
         <!-- syntax highlighting CSS -->
         <link rel="stylesheet" href="{{ site.baseurl }}/css/syntax.css">
