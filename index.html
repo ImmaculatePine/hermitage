@@ -1,21 +1,32 @@
 ---
 layout: default
-title: Hermitage
+title: Hermitage Overview
 ---
 
-<div id="home">
-  <h1>Demo</h1>
+<h2>Overview</h2>
 
-    <a href="{% asset_path 0.png %}" rel="hermitage">
-      {% image thumbnails/0.png %}
-    </a>
+<p>Hermitage is a Ruby gem for generation of image galleries (thumbnails and original images viewer).</p>
 
-    <a href="{% asset_path 1.png %}" rel="hermitage">
-      {% image thumbnails/1.png %}
-    </a>
+<h3>Requirements</h3>
 
-    <a href="{% asset_path 2.png %}" rel="hermitage">
-      {% image thumbnails/2.png %}
-    </a>
-  
-</div>
+<p>Hermitage requires Ruby on Rails version >= 3.1 with support of jQuery and CoffeeScript (jquery-rails and coffee-rails gems, respectively).</p>
+
+<h3>Quick Start</h3>
+
+Gemfile
+{% highlight ruby %}
+gem 'hermitage'
+{% endhighlight %}
+
+Terminal
+{% highlight bash %}
+$ bundle
+$ rails generate hermitage:install
+{% endhighlight %}
+
+View
+{% highlight ruby %}
+render_gallery_for @images # or any other array of objects with image attachments
+{% endhighlight %}
+
+<p>It is enough in theory.</p>

@@ -13,34 +13,49 @@
         {% stylesheet bootstrap-responsive %}
         {% stylesheet bootstrap %}
 
+
+        {% if page.custom_js %}{{ page.custom_js | javascript }}{% endif %}
+
         <!-- syntax highlighting CSS -->
         <link rel="stylesheet" href="/css/syntax.css">
-
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="/css/main.css">
 
     </head>
     <body>
 
-        <div class="site">
-          <div class="header">
-            <h1 class="title"><a href="/">{{ site.name }}</a></h1>
-            <a class="extra" href="/">home</a>
+        <div class="container">
+
+          <div class="row">
+            <div class="span4">
+              <h1>Hermitage</h2>
+            </div>
+            <div class="span10">
+              <ul class="nav nav-pills">
+                <li{% if page.url == '/index.html' %} class="active"{% endif %}>
+                  <a href="/">Overview</a>
+                </li>
+                <li>
+                  <a href="https://github.com/ImmaculatePine/hermitage#usage">Documentation</a>
+                </li>
+                <li{% if page.url contains '/demo' %} class="active"{% endif %}>
+                  <a href="/demo/default.html">Demo</a>
+                </li>
+              </ul>
+            </div>
           </div>
 
-          {{ content }}
+          <div class="row">
+            {{ content }}
+          </div>
 
-          <div class="footer">
-            <div class="contact">
-              <p>
+          <hr />
+          <div class="row">
+            <div class="span6">
                 Alexander Borovykh<br />
-                immaculate.pine@gmail.com
-              </p>
+                <a href="mailto:immaculate.pine@gmail.com">immaculate.pine@gmail.com</a>
             </div>
-            <div class="contact">
-              <p>
-                <a href="https://github.com/ImmaculatePine">github.com/ImmaculatePine</a><br />
-              </p>
+            <div class="span6">
+                <a href="https://github.com/ImmaculatePine">{% image octocat.png %}</a>
+                <a href="https://github.com/ImmaculatePine">github.com/ImmaculatePine</a>
             </div>
           </div>
         </div>
