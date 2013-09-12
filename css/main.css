@@ -1,4 +1,4 @@
-.title
+h1.title
 {
   font-family: 'Rouge Script', cursive;
   font-size: 75px;
@@ -15,9 +15,23 @@
 
 .lead
 {
-  margin: 30px;
   text-align: center;
+}
+
+.moto.lead
+{
+  margin: 30px;
   font-size: 30px;
+}
+
+.requirements
+{
+  text-align: center;
+}
+
+.requirements p.title
+{
+  font-size: 25px;
 }
 
 .footer-right
