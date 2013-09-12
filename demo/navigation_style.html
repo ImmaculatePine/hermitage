@@ -1,0 +1,25 @@
+---
+layout: demo
+custom_js: navigation_style
+---
+
+Customize styles of both navigation buttons:
+{% highlight javascript %}
+hermitage.navigationButtons.styles = { width: '150px', backgroundColor: '#1a1a1c' }
+{% endhighlight %}
+
+Or only 'Next' button:
+{% highlight javascript %}
+hermitage.navigationButtons.next.styles = { fontStyle: 'italic' }
+{% endhighlight %}
+
+And some more styles for 'Previous':
+{% highlight javascript %}
+hermitage.navigationButtons.previous.styles = { fontSize: '16px' }
+{% endhighlight %}
+
+Change the texts:
+{% highlight javascript %}
+hermitage.navigationButtons.next.text = 'Next'
+hermitage.navigationButtons.previous.text = 'Prev'
+{% endhighlight %}
