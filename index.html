@@ -1,13 +1,21 @@
 ---
 layout: default
-title: Your New Jekyll Site
+title: Hermitage
 ---
 
 <div id="home">
-  <h1>Blog Posts</h1>
-  <ul class="posts">
-    {% for post in site.posts %}
-      <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a></li>
-    {% endfor %}
-  </ul>
+  <h1>Demo</h1>
+
+    <a href="{% asset_path 0.png %}" rel="hermitage">
+      {% image thumbnails/0.png %}
+    </a>
+
+    <a href="{% asset_path 1.png %}" rel="hermitage">
+      {% image thumbnails/1.png %}
+    </a>
+
+    <a href="{% asset_path 2.png %}" rel="hermitage">
+      {% image thumbnails/2.png %}
+    </a>
+  
 </div>
