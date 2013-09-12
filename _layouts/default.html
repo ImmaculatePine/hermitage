@@ -29,15 +29,10 @@
             </div>
             <div class="span10">
               <ul class="nav nav-pills">
-                <li{% if page.url contains 'index.html' %} class="active"{% endif %}>
-                  <a href="{{ site.baseurl }}/">Overview</a>
-                </li>
-                <li>
-                  <a href="https://github.com/ImmaculatePine/hermitage#usage">Documentation</a>
-                </li>
-                <li{% if page.url contains '/demo' %} class="active"{% endif %}>
-                  <a href="{{ site.baseurl }}/demo/default.html">Demo</a>
-                </li>
+                {% include nav_link.html link='' text='Overview' active_on='index.html' %}
+                {% include nav_link.html link='demo/default.html' text='Demo' active_on='/demo' %}
+                <li><a href="https://github.com/ImmaculatePine/hermitage#usage">Documentation</a></li>
+                <li><a href="https://github.com/ImmaculatePine/hermitage">Source</a></li>
               </ul>
             </div>
           </div>

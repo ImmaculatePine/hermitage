@@ -1,0 +1,1 @@
+hermitage.closeButton.enabled = false

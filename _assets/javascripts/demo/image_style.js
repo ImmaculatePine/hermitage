@@ -1,0 +1,1 @@
+hermitage.image.styles = { border: '3px solid #F7F7F7' }

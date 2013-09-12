@@ -1,0 +1,1 @@
+hermitage.bottomPanel.text.styles = { fontSize: '20px', color: '#FAFAFA' }

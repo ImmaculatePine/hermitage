@@ -1,0 +1,35 @@
+---
+layout: demo
+custom_js: bottom_panel_text
+gallery_image_title: true
+---
+
+<p>You can set description for images. All you need is to set <code>title</code> attribute for links:</p>
+
+{% highlight html %}
+<a href="/path/to/thumbnail" title="Description here">
+  <img src="/path/to/original/image" />
+</a>
+{% endhighlight %}
+
+<p>It is possible to do with Hermitage gem in different ways. The most simple way is just to pass <code>title</code> option to <code>render_gallery_for</code> method:</p>
+
+{% highlight ruby %}
+render_gallery_for @images, title: 'description'
+{% endhighlight %}
+
+<p>where <code>description</code> is method of Image instance that returns its description.</p>
+
+<p>Another way is to set this option in <code>config/initializers/hermitage.rb</code> config:</p>
+
+{% highlight ruby %}
+Hermitage.configure :images do
+  title 'description'
+end
+{% endhighlight %}
+
+<p>Now you can customize CSS styles of this text:</p>
+
+{% highlight javascript %}
+hermitage.bottomPanel.text.styles = { fontSize: '20px', color: '#FAFAFA' }
+{% endhighlight %}

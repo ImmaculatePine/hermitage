@@ -1,0 +1,1 @@
+hermitage.bottomPanel.styles = { backgroundColor: '#171717', border: '1px solid #FAFAFA', borderBottom: 'none' }

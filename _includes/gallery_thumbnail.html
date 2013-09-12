@@ -1,5 +1,5 @@
 <li class="span3">
-  <a href="{{ include.image | asset_path }}" class="thumbnail" rel="hermitage">
+  <a href="{{ include.image | asset_path }}" class="thumbnail" rel="hermitage"{% if page.gallery_image_title %} title="Description of {{ include.image }}."{% endif %}>
     {{ include.image |prepend: 'thumbnails/' | image }}
   </a>
 </li>

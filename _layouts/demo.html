@@ -11,6 +11,7 @@ title: Hermitage Demo
     <ul class="nav nav-list">
       {% include demo_link.html link="default" text="Default" %}
       {% include demo_link.html link="preload_neighbours" text="Neighbours preload" %}
+      {% include demo_link.html link="animation_duration" text="Animation duration" %}
       <li class="nav-header">Darkening</li>
       {% include demo_link.html link="darkening_opacity" text="Opacity" %}
       {% include demo_link.html link="darkening_style" text="Style" %}
@@ -21,16 +22,24 @@ title: Hermitage Demo
       {% include demo_link.html link="navigation_disable" text="Disable" %}
       {% include demo_link.html link="loop" text="Loop" %}
       {% include demo_link.html link="navigation_style" text="Style" %}
+      <li class="nav-header">Close button</li>
+      {% include demo_link.html link="close_button_disable" text="Disable" %}
+      {% include demo_link.html link="close_button_style" text="Style" %}
+      <li class="nav-header">Image</li>
+      {% include demo_link.html link="image_style" text="Style" %}
+      <li class="nav-header">Bottom panel</li>
+      {% include demo_link.html link="bottom_panel_text" text="Text" %}
+      {% include demo_link.html link="bottom_panel_style" text="Style" %}
+      <li class="nav-header">Resize</li>
+      {% include demo_link.html link="minimum_size" text="Minimum size" %}
+      {% include demo_link.html link="resize_timeout" text="Timeout" %}
     </ul>
-
-    <p class="muted">More customization options later</p>
   </div>
 
   <div class="span9">
     <div>
       {{ content }}
     </div>
-
 
     <ul class="thumbnails">
       {% include gallery_thumbnail.html image="0.png" %}
