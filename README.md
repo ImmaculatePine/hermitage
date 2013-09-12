@@ -5,6 +5,8 @@
 
 Ruby library for generation of image galleries (thumbnails and original images viewer).
 
+There is a [demo](http://immaculatepine.github.io/hermitage/demo/default.html) with customization examples at project's [homepage](http://immaculatepine.github.io/hermitage/).
+
 ## Requirements
 
 Hermitage requires Ruby on Rails version >= 3.1 with support of jQuery and CoffeeScript (jquery-rails and coffee-rails gems, respectively).

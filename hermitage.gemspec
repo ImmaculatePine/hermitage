@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['immaculate.pine@gmail.com']
   spec.description   = %q{Ruby library for image galleries generation.}
   spec.summary       = %q{Ruby library for image galleries generation (thumbnails and original images viewer).}
-  spec.homepage      = 'https://github.com/ImmaculatePine/hermitage'
+  spec.homepage      = 'http://immaculatepine.github.io/hermitage/'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files`.split($/)
