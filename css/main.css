@@ -1,3 +1,25 @@
+.title
+{
+  font-family: 'Rouge Script', cursive;
+  font-size: 75px;
+  text-align: center;
+  margin: 35px 0;
+}
+
+.nav-pills
+{
+    margin: 0 auto;
+    padding: 0;
+    width: 400px;
+}
+
+.lead
+{
+  margin: 30px;
+  text-align: center;
+  font-size: 30px;
+}
+
 .footer-right
 {
   text-align: right;

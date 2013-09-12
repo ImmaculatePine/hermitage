@@ -17,25 +17,20 @@
 
         <link rel="stylesheet" href="{{ site.baseurl }}/css/syntax.css">
         <link rel="stylesheet" href="{{ site.baseurl }}/css/main.css">
+        <link href='http://fonts.googleapis.com/css?family=Rouge+Script' rel='stylesheet' type='text/css'>
 
     </head>
     <body>
 
         <div class="container">
+          <h1 class="title">Hermitage</h2>
 
-          <div class="row">
-            <div class="span4">
-              <h1>Hermitage</h2>
-            </div>
-            <div class="span10">
-              <ul class="nav nav-pills">
-                {% include nav_link.html link='' text='Overview' active_on='index.html' %}
-                {% include nav_link.html link='demo/default.html' text='Demo' active_on='/demo' %}
-                <li><a href="https://github.com/ImmaculatePine/hermitage#usage">Documentation</a></li>
-                <li><a href="https://github.com/ImmaculatePine/hermitage">Source</a></li>
-              </ul>
-            </div>
-          </div>
+          <ul class="nav nav-pills navigation">
+            {% include nav_link.html link='' text='Overview' active_on='index.html' %}
+            {% include nav_link.html link='demo/default.html' text='Demo' active_on='/demo' %}
+            <li><a href="https://github.com/ImmaculatePine/hermitage#usage">Documentation</a></li>
+            <li><a href="https://github.com/ImmaculatePine/hermitage">Source</a></li>
+          </ul>
 
           <div>
             {{ content }}
