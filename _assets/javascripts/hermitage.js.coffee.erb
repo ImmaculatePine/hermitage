@@ -115,6 +115,15 @@ root.hermitage =
           color: '#FAFAFA'
       styles: {}
 
+  loaderTimer: undefined
+  loader:
+    default:
+      attributes: { class: 'loader' }
+      styles: {}
+    styles: {}
+    image: '<%= asset_path 'hermitage-loader.gif' %>'
+    timeout: 100
+
   # Minimum size of scaled image, px
   minimumSize:
     width: 100
@@ -285,6 +294,25 @@ createBotomPanel = ->
   createElement($('<div>'), hermitage.bottomPanel.text)
     .appendTo(bottomPanel)
 
+createLoader = ->
+  loadImage hermitage.loader.image, ->
+    createElement($('<img>'), hermitage.loader)
+      .attr('src', hermitage.loader.image)
+      .appendTo($('#hermitage'))
+      .center()
+
+clearLoaderTimer = -> clearTimeout(hermitage.loaderTimer) if hermitage.loaderTimer
+
+showLoader = ->
+  clearLoaderTimer()
+  hermitage.loaderTimer = setTimeout \
+    -> $('#hermitage .loader').show(),
+    hermitage.loader.timeout
+
+hideLoader = ->
+  clearLoaderTimer()
+  $('#hermitage .loader').hide()
+
 # Shows original image of the chosen one
 openGallery = (image) ->
   $('#hermitage')
@@ -296,11 +324,14 @@ openGallery = (image) ->
   createLeftNavigationButton()
   createCloseButton()
   createBotomPanel()
+  createLoader()
 
   showImage(indexOfImage(image))
   
 # Shows image with specified index from images array
 showImage = (index, direction = undefined) ->
+  showLoader()
+
   img = createElement($('<img />'), hermitage.image)
     .attr('src', sourceFor(index))
     .hide()
@@ -366,7 +397,6 @@ closeGallery = ->
     $('#hermitage').hide()
                    .empty()
 
-
 # Moves image to correct position and sets correct size.
 # Then it calls adjusting methods for navigation and close buttons.
 # Attributes:
@@ -377,7 +407,6 @@ closeGallery = ->
 #   * 'right' - move from the right bound of screen
 #   * 'left' - move from the left bound of screen
 adjustImage = (withAnimation = false, image = undefined, direction = undefined) ->
-
   if image is undefined
     image = $('#hermitage img.current')
     return unless image.length is 1
@@ -426,9 +455,12 @@ adjustImage = (withAnimation = false, image = undefined, direction = undefined) 
     else
       image.fadeIn(hermitage.animationDuration)
 
+    hideLoader()
+
     adjustNavigationButtons(withAnimation, image)
     adjustCloseButton(withAnimation, image)
     adjustBottomPanel(withAnimation)
+    $('#hermitage .loader').center()
 
 # Moves navigation buttons to proper positions
 adjustNavigationButtons = (withAnimation, current) ->
@@ -479,12 +511,16 @@ adjustBottomPanel = (withAnimation) ->
     panel.fadeIn(hermitage.animationDuration)
 
 canShowNextAfter = (index) ->
+  return false if hermitage.images.length < 2
+
   if index < hermitage.images.length - 1
     true
   else
     hermitage.looped
 
 canShowPreviousBefore = (index) ->
+  return false if hermitage.images.length < 2
+
   if index > 0
     true
   else
@@ -522,4 +558,4 @@ previousIndexBefore = (index) ->
 
 # Initialize gallery on page load
 $(document).ready(hermitage.init)
-$(document).on('page:load', hermitage.init)
+$(document).on('page:change', hermitage.init)

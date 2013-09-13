@@ -1,0 +1,16 @@
+---
+layout: demo
+custom_js: loader_image
+---
+
+<p>You can customize the loading image:</p>
+
+.js.erb file:
+{% highlight javascript %}
+hermitage.loader.image = '<%= asset_path 'custom-loader.gif' %>'
+{% endhighlight %}
+
+or .js file:
+{% highlight javascript %}
+hermitage.loader.image = 'custom-loader.gif'
+{% endhighlight %}
