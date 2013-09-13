@@ -558,4 +558,4 @@ previousIndexBefore = (index) ->
 
 # Initialize gallery on page load
 $(document).ready(hermitage.init)
-$(document).on('page:load', hermitage.init)
+$(document).on('page:change', hermitage.init)
