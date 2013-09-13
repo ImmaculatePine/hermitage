@@ -5,7 +5,9 @@
 
 Ruby library for generation of image galleries (thumbnails and original images viewer).
 
-There is a [demo](http://immaculatepine.github.io/hermitage/demo/default.html) with customization examples at project's [homepage](http://immaculatepine.github.io/hermitage/).
+## Demo
+
+There is a [demo](http://immaculatepine.github.io/hermitage/demo/default/) with customization examples at project's [homepage](http://immaculatepine.github.io/hermitage/).
 
 ## Requirements
 
