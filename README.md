@@ -71,6 +71,10 @@ If the only method returns both paths according to passed parameters you can spe
 
     render_gallery_for @posts, original: 'attachment(:full)', thumbnail: 'attachment(:thumbnail)'
 
+Also you can specify those values by lambdas:
+
+    render_gallery_for @posts, original: -> post { post.attachment(:full) }, thumbnail: -> post { post.attachment(:thumbnail) }
+
 #### Markup
 
 Hermitage renders markup that will look nice with Twitter Bootstrap by default:
@@ -142,8 +146,8 @@ You can overwrite :default config. These changes will be applied to all the gall
 Uncoment the following lines in config/initializers/hermitage.rb file and make some changes here:
 
     Hermitage.configure :default do
-      original 'image.url(:medium)'
-      thumbnail 'image.url(:small)'
+      original -> item { item.image.url(:medium) }
+      thumbnail -> item { image.url(:small) }
     end
 
 Now Hermitage will use `image.url` method with :medium or :small argument to get images for the gallery.
@@ -172,11 +176,13 @@ Then your config/initializers/hermitage.rb could looks like this:
 
     # Some rules for :default config if needed...
 
+    # Setup by lambdas...
     Hermitage.configure :pictures do
-      original 'image_path'
-      thumbnail 'image_path(:small)'
+      original -> item { item.image_path }
+      thumbnail -> item { item.image_path(:small) }
     end
 
+    # ...or by strings
     Hermitage.configure :posts do
       original 'attachment'
       thumbnail 'attachment(:tiny)'

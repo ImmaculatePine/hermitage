@@ -37,11 +37,21 @@ module Hermitage
       end
     end
 
+    # Returns value of item's attribute
+    def value_for(item, option)
+      attribute = @options[option]
+      if attribute.is_a? Proc
+        attribute.call(item)
+      else
+        eval("item.#{attribute}")
+      end
+    end
+
     # Renders link to the specific image in a gallery
     def render_link_for(item)
-      original_path = eval("item.#{@options[:original]}")
-      thumbnail_path = eval("item.#{@options[:thumbnail]}")
-      title = @options[:title] ? eval("item.#{@options[:title]}") : nil
+      original_path = value_for(item, :original)
+      thumbnail_path = value_for(item, :thumbnail)
+      title = @options[:title] ? value_for(item, :title) : nil
       image = @template.image_tag(thumbnail_path, class: @options[:image_class])
       @template.link_to(image, original_path, rel: 'hermitage', class: @options[:link_class], title: title)
     end
