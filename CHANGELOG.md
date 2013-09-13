@@ -1,3 +1,10 @@
+### 0.0.5 ###
+
+* Loading animation added
+* Original, thumbnail and title options can be lambdas
+* Bug with looped gallery with the only one image fixed
+* Wrong behavior with Turbolinks when user clicks back in browser fixed
+
 ### 0.0.4.1 ###
 
 * RailsRenderCore is not a child of ActionView::Base anymore
