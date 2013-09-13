@@ -5,3 +5,5 @@ baseurl: /hermitage
 permalink: pretty
 assets:
   baseurl: /hermitage/assets/
+  compress:
+    js: uglifier

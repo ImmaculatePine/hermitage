@@ -51,6 +51,9 @@ GEM
       libv8 (~> 3.16.14.0)
       ref
     tilt (1.4.1)
+    uglifier (2.2.1)
+      execjs (>= 0.3.0)
+      multi_json (~> 1.0, >= 1.0.2)
     yajl-ruby (1.1.0)
 
 PLATFORMS
@@ -60,3 +63,4 @@ DEPENDENCIES
   coffee-script
   jekyll-assets
   therubyracer
+  uglifier
