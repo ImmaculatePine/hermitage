@@ -299,6 +299,7 @@ createLoader = ->
     createElement($('<img>'), hermitage.loader)
       .attr('src', hermitage.loader.image)
       .appendTo($('#hermitage'))
+      .hide()
       .center()
 
 clearLoaderTimer = -> clearTimeout(hermitage.loaderTimer) if hermitage.loaderTimer
