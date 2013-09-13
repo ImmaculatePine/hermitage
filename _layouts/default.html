@@ -6,18 +6,20 @@
         <title>{{ page.title }}</title>
         <meta name="viewport" content="width=device-width">
 
-        {% javascript jquery %}
-        {% javascript bootstrap %}
-        {% javascript hermitage %}
-
         {% stylesheet bootstrap-responsive %}
         {% stylesheet bootstrap %}
-
-        {% if page.custom_js %}{{ page.custom_js | prepend:'demo/' | javascript }}{% endif %}
 
         <link rel="stylesheet" href="{{ site.baseurl }}/css/syntax.css">
         <link rel="stylesheet" href="{{ site.baseurl }}/css/main.css">
         <link href='http://fonts.googleapis.com/css?family=Rouge+Script' rel='stylesheet' type='text/css'>
+
+        {% javascript jquery %}
+        {% javascript bootstrap %}
+        {% javascript hermitage %}
+
+        {% if page.custom_js %}{{ page.custom_js | prepend:'demo/' | javascript }}{% endif %}
+
+        {% include google_analytics.html %}
 
     </head>
     <body>
