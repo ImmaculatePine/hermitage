@@ -225,6 +225,9 @@ You can customize the following parameters:
 * `image.styles` - any custom CSS for current image
 * `bottomPanel.styles` - any custom CSS for bottom panel
 * `bottomPanel.text.styles` - any custom CSS for text block of bottom panel
+* `loader.image` - custom image for loader
+* `loader.timeout` - timeout before loader animation should appear
+* `loader.styles` - custom styles for loader
 * `minimumSize.width` - minimum width of scaled image, px
 * `minimumSize.height` - minimum height of scaled image, px
 * `animationDuration` - duration of UI animations, ms
