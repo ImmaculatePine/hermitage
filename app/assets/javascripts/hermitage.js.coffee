@@ -511,12 +511,16 @@ adjustBottomPanel = (withAnimation) ->
     panel.fadeIn(hermitage.animationDuration)
 
 canShowNextAfter = (index) ->
+  return false if hermitage.images.length < 2
+
   if index < hermitage.images.length - 1
     true
   else
     hermitage.looped
 
 canShowPreviousBefore = (index) ->
+  return false if hermitage.images.length < 2
+
   if index > 0
     true
   else
