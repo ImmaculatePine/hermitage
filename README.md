@@ -11,7 +11,7 @@ There is a [demo](http://immaculatepine.github.io/hermitage/demo/default/) with 
 
 ## Requirements
 
-Hermitage requires Ruby on Rails version >= 3.1 with support of jQuery and CoffeeScript (jquery-rails and coffee-rails gems, respectively).
+Hermitage requires Ruby on Rails version >= 3.2 with support of jQuery and CoffeeScript (jquery-rails and coffee-rails gems, respectively).
 
 ## Installation
 
