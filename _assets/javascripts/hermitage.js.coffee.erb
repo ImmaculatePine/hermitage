@@ -207,8 +207,8 @@ $.fn.center = (withAnimation = false, width = 0, height = 0, offsetX = 0, offset
   height = $(this).outerHeight() if height is 0
 
   params =
-    top: "#{Math.max(0, ($(window).height() - height) / 2 + offsetY)}px"
-    left: "#{Math.max(0, ($(window).width() - width) / 2 + offsetX)}px"
+    top: "#{Math.max(0, ($('#overlay').outerHeight() - height) / 2 + offsetY)}px"
+    left: "#{Math.max(0, ($('#overlay').outerWidth() - width) / 2 + offsetX)}px"
 
   this.applyStyles(params, withAnimation)
 
@@ -221,7 +221,7 @@ $.fn.maximizeLineHeight = (withAnimation = false) ->
   this.applyStyles(params, withAnimation)
 
 $.fn.showFromRight = (width = 0, height = 0, offsetX = 0, offsetY = 0) ->
-  this.css(left: "#{$(window).width()}px")
+  this.css(left: "#{$('#overlay').width()}px")
   this.show()
   this.center(true, width, height, offsetX, offsetY)
 
@@ -231,7 +231,7 @@ $.fn.showFromLeft = (width = 0, height = 0, offsetX = 0, offsetY = 0) ->
   this.center(true, width, height, offsetX, offsetY)
 
 $.fn.hideToRight = (complete = undefined) ->
-  params = { left: "#{$(window).width()}px" }
+  params = { left: "#{$('#overlay').width()}px" }
   this.applyStyles(params, true, complete)
 
 $.fn.hideToLeft = (complete = undefined) ->
