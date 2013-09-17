@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Hermitage Demo</title>
+        <meta name="viewport" content="width=device-width">
+
+        <link rel="stylesheet" href="/hermitage/assets/bootstrap-responsive-4465811775a8ba61dc8fad8f3359cf3e.css">
+        <link rel="stylesheet" href="/hermitage/assets/bootstrap-1a328cc792a3cb4484f1b06fe7b0b326.css">
+
+        <link rel="stylesheet" href="/hermitage/css/syntax.css">
+        <link rel="stylesheet" href="/hermitage/css/main.css">
+        <link href='http://fonts.googleapis.com/css?family=Rouge+Script' rel='stylesheet' type='text/css'>
+
+        <script src="/hermitage/assets/jquery-b35fd5b3a9c25f044cf098acb62a9ba8.js"></script>
+        <script src="/hermitage/assets/bootstrap-d094ac66b56cb94cd1a7036540f4c761.js"></script>
+        <script src="/hermitage/assets/hermitage-4aceed09118af0470ed78a8ae58560f8.js"></script>
+
+        <script src="/hermitage/assets/demo/image_style-43d77a65af14d9372ad8b27c7790caf0.js"></script>
+
+        <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-19606069-5']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+    </head>
+    <body>
+
+        <div class="container">
+          <h1 class="title">Hermitage</h2>
+
+          <ul class="nav nav-pills navigation">
+            <li>
+  <a href="/hermitage/">Overview</a>
+</li>
+            <li class="active">
+  <a href="/hermitage/demo/default">Demo</a>
+</li>
+            <li><a href="https://github.com/ImmaculatePine/hermitage#usage">Documentation</a></li>
+            <li><a href="https://github.com/ImmaculatePine/hermitage">Source</a></li>
+          </ul>
+
+          <div>
+            <h2>Demo</h2>
+
+<div class="row">
+
+  <div class="span3">
+    <ul class="nav nav-list">
+      <li>
+  <a href="/hermitage/demo/default">Default</a>
+</li>
+      <li>
+  <a href="/hermitage/demo/preload_neighbours">Neighbours preload</a>
+</li>
+      <li>
+  <a href="/hermitage/demo/animation_duration">Animation duration</a>
+</li>
+      <li class="nav-header">Darkening</li>
+      <li>
+  <a href="/hermitage/demo/darkening_opacity">Opacity</a>
+</li>
+      <li>
+  <a href="/hermitage/demo/darkening_style">Style</a>
+</li>
+      <li class="nav-header">Slideshow effects</li>
+      <li>Slide (default)</li>
+      <li>
+  <a href="/hermitage/demo/fade">Fade</a>
+</li>
+      <li class="nav-header">Navigation</li>
+      <li>
+  <a href="/hermitage/demo/navigation_disable">Disable</a>
+</li>
+      <li>
+  <a href="/hermitage/demo/loop">Loop</a>
+</li>
+      <li>
+  <a href="/hermitage/demo/navigation_style">Style</a>
+</li>
+      <li class="nav-header">Close button</li>
+      <li>
+  <a href="/hermitage/demo/close_button_disable">Disable</a>
+</li>
+      <li>
+  <a href="/hermitage/demo/close_button_style">Style</a>
+</li>
+      <li class="nav-header">Image</li>
+      <li class="active">
+  <a href="/hermitage/demo/image_style">Style</a>
+</li>
+      <li class="nav-header">Bottom panel</li>
+      <li>
+  <a href="/hermitage/demo/bottom_panel_text">Text</a>
+</li>
+      <li>
+  <a href="/hermitage/demo/bottom_panel_style">Style</a>
+</li>
+      <li class="nav-header">Loader</li>
+      <li>
+  <a href="/hermitage/demo/loader_image">Image</a>
+</li>
+      <li>
+  <a href="/hermitage/demo/loader_timeout">Timeout</a>
+</li>
+      <li>
+  <a href="/hermitage/demo/loader_style">Style</a>
+</li>
+      <li class="nav-header">Resize</li>
+      <li>
+  <a href="/hermitage/demo/minimum_size">Minimum size</a>
+</li>
+      <li>
+  <a href="/hermitage/demo/resize_timeout">Timeout</a>
+</li>
+    </ul>
+  </div>
+
+  <div class="span9">
+    <div>
+      <p>Customize appearance of opened image:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="nx">hermitage</span><span class="p">.</span><span class="nx">image</span><span class="p">.</span><span class="nx">styles</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">border</span><span class="o">:</span> <span class="s1">&#39;3px solid #F7F7F7&#39;</span> <span class="p">}</span>
+</code></pre></div>
+    </div>
+
+    <ul class="thumbnails">
+      <li class="span2">
+  <a href="/hermitage/assets/0-83a95e3e3760d09803ab97ea6dd14969.png" class="thumbnail" rel="hermitage">
+    <img src="/hermitage/assets/thumbnails/0-d0f19813923e2a1b1dcd926cf1eba96a.png">
+  </a>
+</li>
+      <li class="span2">
+  <a href="/hermitage/assets/1-1f7180fa4078d4da238f0191bd303738.png" class="thumbnail" rel="hermitage">
+    <img src="/hermitage/assets/thumbnails/1-22983ef602192aec114c5f3bf7a2eebe.png">
+  </a>
+</li>
+      <li class="span2">
+  <a href="/hermitage/assets/2-b39dcf17b8acbd10cdb24ba5736dd638.png" class="thumbnail" rel="hermitage">
+    <img src="/hermitage/assets/thumbnails/2-0f2e8d1a8349bfef4c8a25522577dd86.png">
+  </a>
+</li>
+      <li class="span2">
+  <a href="/hermitage/assets/3-c2ed90829b1d8488d690e199c76fe2b7.png" class="thumbnail" rel="hermitage">
+    <img src="/hermitage/assets/thumbnails/3-075fdc5aee2650a4b3b72b23a6604786.png">
+  </a>
+</li>
+      <li class="span2">
+  <a href="/hermitage/assets/4-02a173ca21c8a9440c4540660461ccb9.png" class="thumbnail" rel="hermitage">
+    <img src="/hermitage/assets/thumbnails/4-7434c9699e43f494361dbae8c5171ca5.png">
+  </a>
+</li>
+      <li class="span2">
+  <a href="/hermitage/assets/5-79f90e50bf13f8b0b030c4c3d81d54ec.png" class="thumbnail" rel="hermitage">
+    <img src="/hermitage/assets/thumbnails/5-423a46e54ca0fbe44fd8754d941c323d.png">
+  </a>
+</li>
+      <li class="span2">
+  <a href="/hermitage/assets/6-942aac276fedaa40f95eb393edf384fd.png" class="thumbnail" rel="hermitage">
+    <img src="/hermitage/assets/thumbnails/6-bec94ccda53d4d830c69b376bc594a41.png">
+  </a>
+</li>
+      <li class="span2">
+  <a href="/hermitage/assets/7-9aa9dc9c691e70480b9c89f3e7a26c3f.png" class="thumbnail" rel="hermitage">
+    <img src="/hermitage/assets/thumbnails/7-9b13ddae707ce6a9dd492cbf62ecd135.png">
+  </a>
+</li>
+    </ul>
+
+    <div class="cats-copyright muted">
+      Awesome cats by
+      <a href="http://habrahabr.ru/users/centaurus/" target="_blank">this guy</a>
+    </div>
+
+  </div>
+
+</div>
+          </div>
+
+          <hr />
+          <div class="row footer">
+            <div class="span6 footer-left">
+                By Alexander Borovykh<br />
+                <a href="mailto:immaculate.pine@gmail.com">immaculate.pine@gmail.com</a>
+            </div>
+            <div class="span6 footer-right">
+                <a href="https://github.com/ImmaculatePine" target="_blank"><img src="/hermitage/assets/github-9b3f3db3191e74abeb62bb7d34621749.png"></a>
+                <a href="http://www.linkedin.com/pub/alexander-borovykh/74/618/191" target="_blank"><img src="/hermitage/assets/linkedin-10bf310d6c2cdd85cac46e59bdf165ed.png"></a>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>

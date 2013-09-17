@@ -1,0 +1,1 @@
+hermitage.resizeTimeout=500;

@@ -1,0 +1,1 @@
+hermitage.loader.timeout=1e3;

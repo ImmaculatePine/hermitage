@@ -1,0 +1,1 @@
+hermitage.navigationButtons.enabled=!1;

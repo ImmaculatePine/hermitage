@@ -1,0 +1,1 @@
+hermitage.darkening.opacity=.9;

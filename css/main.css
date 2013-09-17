@@ -1,0 +1,45 @@
+h1.title
+{
+  font-family: 'Rouge Script', cursive;
+  font-size: 75px;
+  text-align: center;
+  margin: 35px 0;
+}
+
+.nav-pills
+{
+    margin: 0 auto;
+    padding: 0;
+    width: 400px;
+}
+
+.lead
+{
+  text-align: center;
+}
+
+.moto.lead
+{
+  margin: 30px;
+  font-size: 30px;
+}
+
+.requirements
+{
+  text-align: center;
+}
+
+.requirements p.title
+{
+  font-size: 25px;
+}
+
+.footer-right
+{
+  text-align: right;
+}
+
+.cats-copyright
+{
+  text-align: center;
+}

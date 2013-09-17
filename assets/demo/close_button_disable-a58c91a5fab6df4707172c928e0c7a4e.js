@@ -1,0 +1,1 @@
+hermitage.closeButton.enabled=!1;

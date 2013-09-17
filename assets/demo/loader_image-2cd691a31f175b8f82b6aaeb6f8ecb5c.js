@@ -1,0 +1,1 @@
+hermitage.loader.image="/hermitage/assets/custom-loader-840f2f21c422e6b56b8d7dc47aa2a0bb.gif";
