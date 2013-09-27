@@ -1,3 +1,7 @@
+### 0.0.6 ###
+
+* Fixed centering of image viewer in iOS Safari.
+
 ### 0.0.5 ###
 
 * Loading animation added
