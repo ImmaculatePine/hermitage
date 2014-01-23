@@ -171,6 +171,9 @@ root.hermitage =
         -> adjustImage(true),
         hermitage.resizeTimeout
 
+    # Initialize Key Bindings
+    createKeyBindings()
+
 #
 # Working with images array
 #
@@ -313,6 +316,13 @@ showLoader = ->
 hideLoader = ->
   clearLoaderTimer()
   $('#hermitage .loader').hide()
+
+createKeyBindings = ->
+  $(document).keyup (e) ->
+    switch e.keyCode
+      when 27 then closeGallery()
+      when 37 then showPreviousImage()
+      when 39 then showNextImage()
 
 # Shows original image of the chosen one
 openGallery = (image) ->
