@@ -27,6 +27,20 @@ module Hermitage
     # and your gallery is inside `.row-fluid` block.
     EACH_SLICE = nil
 
+    # Each gallery item can have its own checkbox.
+    # We can manipulate with photos through javascript.
+    WITH_CHECKBOXES = false
+    CHECKBOX_NAME = :photo_check
+    CHECKBOX_VALUE_ATTRIBUTE = :id
+
+    # You can show visible title under the photo
+    WITH_PHOTO_TITLE = false
+
+    # Each photo can belong to a folder.
+    WITH_FOLDER_LINKS = false
+    FOLDER_ASSOCIATION_NAME = :folder
+    FOLDER_LINK_CLASS = :heading
+
     # Returns hash of default options
     def self.to_hash
       hash = {}

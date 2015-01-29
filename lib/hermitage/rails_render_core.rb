@@ -20,7 +20,7 @@ module Hermitage
       # Render each list into `tag` variable
       lists.each do |list|
         items = list.collect { |item| render_link_for(item) }
-        tag << render_content_tag_for(items)
+        tag << render_content_tag_for(items, list)
       end
 
       tag.html_safe
@@ -57,12 +57,32 @@ module Hermitage
     end
 
     # Renders items into content tag
-    def render_content_tag_for(items)
+    def render_content_tag_for(items, list_of_models)
       @template.content_tag(@options[:list_tag], class: @options[:list_class]) do
-        items.collect { |item| @template.concat(@template.content_tag(@options[:item_tag], item, class: @options[:item_class])) }
+        items.each_with_index.map do |item, index|
+          t = @template.content_tag(@options[:item_tag], class: @options[:item_class]) do
+            ret = ''.html_safe
+            ret << render_checkbox(list_of_models[index]) if @options[:with_checkboxes]
+            ret << item
+            ret << render_folder_link(value_for(list_of_models[index], @options[:folder_association_name])) if @options[:with_folder_links]
+            ret << render_photo_title(list_of_models[index]) if @options[:with_photo_title]
+            ret
+          end
+          @template.concat(t)
+        end
       end
     end
 
-  end
+    def render_folder_link(folder)
+      link_to(value_for(photo, :title), url_for(folder), class: @options[:folder_link_class])
+    end
 
+    def render_checkbox(model)
+      check_box_tag(@options[:checkbox_name], value_for(model, @options[:checkbox_value_attribute])).html_safe
+    end
+
+    def render_photo_title(photo)
+      "<p class='#{@options[:title_class]}'>#{value_for photo, :title}</p>".html_safe
+    end
+  end
 end

@@ -120,6 +120,41 @@ It will render something like that:
 
 If the link has title attribute there will be bottom panel with this text when you open the gallery.
 
+#### Additional information
+
+You can add some additional information to the thumbnails: 
+
+##### Title
+  
+Just add these lines to config initializer:
+  
+    Hermitage.configure :default do
+      with_photo_title true
+    end
+  
+##### Checkbox
+
+Sometimes you want to let user manipulate with photos. 
+You can add checkboxes to your thumbnails just by adding following lines to config initializer:
+
+    Hermitage.configure :default do
+      with_checkboxes true
+      checkbox_name :photo_check
+      checkbox_value_attribute :id
+    end
+  
+##### Folder
+
+Sometimes you have photos nested in folders and want to display link to associated folder 
+You can add this link to your thumbnails just by adding following lines to config initializer:
+
+    Hermitage.configure :default do
+      with_folder_links true
+      folder_association_name :folder
+      folder_link_class :heading
+    end
+
+
 #### Slicing
 
 If you are using Twitter Bootstrap framework and your gallery is inside `.row-fluid` block the markup above will not look awesome.
