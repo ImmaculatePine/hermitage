@@ -1,3 +1,8 @@
+### 0.0.7 ###
+
+* Key bindings added (thanks danielpuglisi)
+* Viewer z-index fixed (thanks paulslaby and lizhubertz)
+
 ### 0.0.6 ###
 
 * Fixed centering of image viewer in iOS Safari.
