@@ -16,7 +16,7 @@ describe 'render gallery', type: :feature, js: true do
     images = evaluate_script('hermitage.images')
     expected = Array.new(3) do |i|
       {
-        'source' => "/assets/#{i}-full.png",
+        'source' => "/images/#{i}-full.png",
         'loaded' => false
       }
     end

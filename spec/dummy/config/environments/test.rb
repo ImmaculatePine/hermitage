@@ -20,6 +20,13 @@ Dummy::Application.configure do
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
 
+  # Fix problem with image_path in Rails 3.2
+  if Rails::VERSION::MAJOR == 3
+    config.assets.enabled = true
+    config.assets.initialize_on_precompile = false
+    config.action_controller.assets_dir = "#{File.dirname(File.dirname(__FILE__))}/public"
+  end
+
   # Raise exceptions instead of rendering exception templates.
   config.action_dispatch.show_exceptions = false
 

@@ -8,16 +8,16 @@ describe 'navigation', type: :feature, js: true do
 
     it 'shows next image and shows the first image after end of the gallery' do
       # Wait until 2-full.png image will be shown
-      page.should have_no_css('img[src="/assets/1-full.png"]')
-      page.should have_css('img[src="/assets/2-full.png"]')
+      page.should have_no_css('img[src="/images/1-full.png"]')
+      page.should have_css('img[src="/images/2-full.png"]')
       page.all('img.current').length.should == 1
 
       # Then click
       click_action.call()
 
       # Now there is only 0-full.png image on the screen
-      page.should have_no_css('img[src="/assets/2-full.png"]')
-      page.should have_css('img[src="/assets/0-full.png"]')
+      page.should have_no_css('img[src="/images/2-full.png"]')
+      page.should have_css('img[src="/images/0-full.png"]')
       page.all('img.current').length.should == 1
     end
   end
@@ -27,16 +27,16 @@ describe 'navigation', type: :feature, js: true do
 
     it 'shows previous image and shows the last image after first' do
       # Wait until 0-full.png image will be shown
-      page.should have_no_css('img[src="/assets/1-full.png"]')
-      page.should have_css('img[src="/assets/0-full.png"]')
+      page.should have_no_css('img[src="/images/1-full.png"]')
+      page.should have_css('img[src="/images/0-full.png"]')
       page.all('img.current').length.should == 1
 
       # Then click
       click_action.call()
 
       # Now there is only 2-full.png image on the screen
-      page.should have_no_css('img[src="/assets/0-full.png"]')
-      page.should have_css('img[src="/assets/2-full.png"]')
+      page.should have_no_css('img[src="/images/0-full.png"]')
+      page.should have_css('img[src="/images/2-full.png"]')
       page.all('img.current').length.should == 1
     end
   end
@@ -44,7 +44,7 @@ describe 'navigation', type: :feature, js: true do
   context 'with loop' do
     before(:each) do
       visit images_path
-      page.first('a[href="/assets/1-full.png"]').click
+      page.first('a[href="/images/1-full.png"]').click
       page.should have_css('img.current') # Wait for loading before testing
     end
 
@@ -77,7 +77,7 @@ describe 'navigation', type: :feature, js: true do
     before(:each) do
       visit images_path
       evaluate_script('hermitage.looped = false')
-      page.first("a[href='/assets/#{image}-full.png']").click
+      page.first("a[href='/images/#{image}-full.png']").click
       page.should have_css('img.current')
     end
 
