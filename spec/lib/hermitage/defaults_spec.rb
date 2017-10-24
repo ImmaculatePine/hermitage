@@ -13,7 +13,14 @@ describe Hermitage::Defaults do
         item_class: 'span4',
         link_class: 'thumbnail',
         image_class: nil,
-        each_slice: nil
+        each_slice: nil,
+        with_checkboxes: false,
+        with_photo_title: false,
+        with_folder_links: false,
+        checkbox_name: :photo_check,
+        checkbox_value_attribute: :id,
+        folder_association_name: :folder,
+        folder_link_class: :heading
       }
     end
   end
