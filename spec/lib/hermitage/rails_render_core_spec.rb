@@ -28,7 +28,9 @@ describe Hermitage::RailsRenderCore do
     let(:object) { objects[0] }
     let(:result) { subject.send(:render_link_for, object) }
     it 'renders <a> tag with <img> tag inside' do
-      result.should == "<a class=\"thumbnail\" href=\"#{object.file.url}\" rel=\"hermitage\"><img alt=\"Path thumbnail\" src=\"#{object.file.url(:thumbnail)}\" /></a>"
+      result.should have_same_html_as(
+        fixture_for('render_link_for.html')
+      )
     end
   end
 
@@ -38,7 +40,7 @@ describe Hermitage::RailsRenderCore do
 
     shared_examples 'value_for' do
       it 'returns path to original image' do
-        result.should == '/assets/path-full.png'
+        result.should == '/images/path-full.png'
       end
     end
 

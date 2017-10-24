@@ -2,7 +2,6 @@ require 'spec_helper'
 require 'dummy/app/models/dummy'
 
 describe Hermitage::ViewHelpers, type: :helper do
-
   # Reset Hermitage configs because they should not be shared among specs
   after(:each) { reset_configs }
   
@@ -10,72 +9,76 @@ describe Hermitage::ViewHelpers, type: :helper do
 
   describe '#render_gallery_for' do
     let(:images) { Array.new(2) { |i| DummyImage.new(i.to_s) } }
-    let(:expected) { '<ul class="thumbnails"><li class="span4"><a class="thumbnail" href="/assets/0-full.png" rel="hermitage"><img alt="0 thumbnail" src="/assets/0-thumbnail.png" /></a></li><li class="span4"><a class="thumbnail" href="/assets/1-full.png" rel="hermitage"><img alt="1 thumbnail" src="/assets/1-thumbnail.png" /></a></li></ul>' }
     
     context 'no options' do
+      let(:expected) { fixture_for('view_helpers/render_gallery_for/default.html') }
       subject { template.render_gallery_for images }
-      it { should == expected }
+      it { should have_same_html_as expected }
     end
 
     context 'with options' do
-      
       context 'original and thumbnail' do
         let(:images) { Array.new(2) { |i| DummyPhoto.new(i.to_s) } }
+        let(:expected) { fixture_for('view_helpers/render_gallery_for/default.html') }
 
         context 'by string' do
           subject { template.render_gallery_for images, original: 'photo', thumbnail: 'photo(:thumbnail)' }
-          it { should == expected }
+          it { should have_same_html_as expected }
         end
 
         context 'by proc' do
           subject { template.render_gallery_for images, original: -> item { item.photo }, thumbnail: -> item { item.photo(:thumbnail) } }
-          it { should == expected }
+          it { should have_same_html_as expected }
         end
       end
 
       context 'title' do
-        let(:expected) { '<ul class="thumbnails"><li class="span4"><a class="thumbnail" href="/assets/0-full.png" rel="hermitage" title="description of 0"><img alt="0 thumbnail" src="/assets/0-thumbnail.png" /></a></li><li class="span4"><a class="thumbnail" href="/assets/1-full.png" rel="hermitage" title="description of 1"><img alt="1 thumbnail" src="/assets/1-thumbnail.png" /></a></li></ul>' }
+        let(:expected) { fixture_for('view_helpers/render_gallery_for/with_title.html') }
 
         context 'by string' do
           subject { template.render_gallery_for images, title: 'description' }
-          it { should == expected }
+          it { should have_same_html_as expected }
         end
 
         context 'by proc' do
           subject { template.render_gallery_for images, title: -> item { item.description } }
-          it { should == expected }
+          it { should have_same_html_as expected }
         end
       end
 
       context 'list_tag and item_tag' do
         subject { template.render_gallery_for images, list_tag: :div, item_tag: :div }
-        let(:expected) { '<div class="thumbnails"><div class="span4"><a class="thumbnail" href="/assets/0-full.png" rel="hermitage"><img alt="0 thumbnail" src="/assets/0-thumbnail.png" /></a></div><div class="span4"><a class="thumbnail" href="/assets/1-full.png" rel="hermitage"><img alt="1 thumbnail" src="/assets/1-thumbnail.png" /></a></div></div>' }
-        it { should == expected }
+        let(:expected) { fixture_for('view_helpers/render_gallery_for/custom_tags.html') }
+        it { should have_same_html_as expected }
       end
 
       context 'list_class, item_class, link_class and image_class' do
         subject { template.render_gallery_for images, list_class: nil, item_class: nil, link_class: 'thumb link', image_class: 'thumb' }
-        let(:expected) { '<ul><li><a class="thumb link" href="/assets/0-full.png" rel="hermitage"><img alt="0 thumbnail" class="thumb" src="/assets/0-thumbnail.png" /></a></li><li><a class="thumb link" href="/assets/1-full.png" rel="hermitage"><img alt="1 thumbnail" class="thumb" src="/assets/1-thumbnail.png" /></a></li></ul>' }
-        it { should == expected }
+        let(:expected) { fixture_for('view_helpers/render_gallery_for/custom_classes.html') }
+        it { should have_same_html_as expected }
       end
 
       context 'each_slice' do
         subject { template.render_gallery_for images, each_slice: 1 }
-        let(:expected) { '<ul class="thumbnails"><li class="span4"><a class="thumbnail" href="/assets/0-full.png" rel="hermitage"><img alt="0 thumbnail" src="/assets/0-thumbnail.png" /></a></li></ul><ul class="thumbnails"><li class="span4"><a class="thumbnail" href="/assets/1-full.png" rel="hermitage"><img alt="1 thumbnail" src="/assets/1-thumbnail.png" /></a></li></ul>' }
-        it { should == expected }
+        let(:expected) { fixture_for('view_helpers/render_gallery_for/each_slice.html') }
+        it { should have_same_html_as expected }
       end
     end
 
-    context 'with configs' do
+    context 'with config' do
+      before(:each) do
+        Hermitage.configure :dummy_images do
+          list_class 'images-thumbnails'
+        end
+      end
 
-      before(:each) { Hermitage.configure :dummy_images do list_class 'images-thumbnails' end }
-
-      let(:expected) { '<ul class="images-thumbnails"><li class="span4"><a class="thumbnail" href="/assets/0-full.png" rel="hermitage"><img alt="0 thumbnail" src="/assets/0-thumbnail.png" /></a></li><li class="span4"><a class="thumbnail" href="/assets/1-full.png" rel="hermitage"><img alt="1 thumbnail" src="/assets/1-thumbnail.png" /></a></li></ul>' }
-      subject { template.render_gallery_for images }
-      it { should == expected }
+      context 'with default config' do
+        let(:expected) { fixture_for('view_helpers/render_gallery_for/with_config/default.html') }
+        subject { template.render_gallery_for images }
+        it { should have_same_html_as expected }
+      end
 
       context 'with overwritten defaults' do
-
         before(:each) do
           Hermitage.configure :default do
             list_class 'default-thumbnails'
@@ -83,17 +86,16 @@ describe Hermitage::ViewHelpers, type: :helper do
           end
         end
 
-        let(:expected) { '<ul class="images-thumbnails"><li class="span3"><a class="thumbnail" href="/assets/0-full.png" rel="hermitage"><img alt="0 thumbnail" src="/assets/0-thumbnail.png" /></a></li><li class="span3"><a class="thumbnail" href="/assets/1-full.png" rel="hermitage"><img alt="1 thumbnail" src="/assets/1-thumbnail.png" /></a></li></ul>' }
-        it { should == expected }
+        subject { template.render_gallery_for images }
+        let(:expected) { fixture_for('view_helpers/render_gallery_for/with_config/with_overwritten_defaults.html') }
+        it { should have_same_html_as expected }
 
         context 'and with options' do
           subject { template.render_gallery_for images, list_class: 'custom-thumbnails' }
-          let(:expected) { '<ul class="custom-thumbnails"><li class="span3"><a class="thumbnail" href="/assets/0-full.png" rel="hermitage"><img alt="0 thumbnail" src="/assets/0-thumbnail.png" /></a></li><li class="span3"><a class="thumbnail" href="/assets/1-full.png" rel="hermitage"><img alt="1 thumbnail" src="/assets/1-thumbnail.png" /></a></li></ul>' }
-          it { should == expected }
+          let(:expected) { fixture_for('view_helpers/render_gallery_for/with_config/with_overwritten_defaults_and_options.html') }
+          it { should have_same_html_as expected }
         end
-
       end
     end
-
   end
 end

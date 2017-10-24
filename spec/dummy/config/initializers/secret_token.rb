@@ -9,4 +9,10 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-Dummy::Application.config.secret_key_base = 'd2d3232af47646a177cad22b48684c2023fe8239d55e3d18e80a4e1f0f33147223f23fae54ee923266b5f64856510df46e710353970308ffb1bfcbccf8936ee7'
+SECRET_TOKEN = 'd2d3232af47646a177cad22b48684c2023fe8239d55e3d18e80a4e1f0f33147223f23fae54ee923266b5f64856510df46e710353970308ffb1bfcbccf8936ee7'
+
+if Rails::VERSION::MAJOR == 3
+  Dummy::Application.config.secret_token = SECRET_TOKEN
+else
+  Dummy::Application.config.secret_key_base = SECRET_TOKEN
+end

@@ -3,8 +3,8 @@ require 'spec_helper'
 describe 'preload_neighbours', type: :feature, js: true do
 
   def clickAtImage(index)
-    page.first("a[href='/assets/#{index}-full.png']").click
-    sleep(1) # We want wait some time while animations and images preloading
+    page.first("a[href='/images/#{index}-full.png']").click
+    sleep(1) # We want wait some time while animations and images are preloading
   end
 
   def images

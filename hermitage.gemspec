@@ -18,16 +18,21 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'rails', '>= 3.2'
+  spec.add_dependency 'rails', '>= 3.2', '< 5.0'
   spec.add_dependency 'jquery-rails'
   spec.add_dependency 'coffee-rails'
 
-  spec.add_development_dependency 'bundler', '~> 1.3'
+  spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'rake'
-  spec.add_development_dependency 'rspec-rails', '~> 2.99.0'
-  spec.add_development_dependency 'capybara', '~> 2.4.4'
+  spec.add_development_dependency 'rspec-rails', '~> 3.6'
+  spec.add_development_dependency 'rspec-its'
+  spec.add_development_dependency 'capybara', '~> 2.15'
   spec.add_development_dependency 'sqlite3'
   spec.add_development_dependency 'therubyracer'
-  spec.add_development_dependency 'poltergeist', '~> 1.5.1'
-  spec.add_development_dependency 'genspec', '~> 0.2.8'
+  spec.add_development_dependency 'poltergeist', '~> 1.16'
+  spec.add_development_dependency 'genspec'
+  spec.add_development_dependency 'appraisal'
+  spec.add_development_dependency 'nokogiri'
+  spec.add_development_dependency 'lorax'
+  spec.add_development_dependency 'pry-byebug'
 end

@@ -16,7 +16,7 @@ describe 'viewer', type: :feature, js: true do
   end
 
   it 'has original image' do
-    page.should have_css("div#hermitage img[src='/assets/0-full.png']") 
+    page.should have_css("div#hermitage img[src='/images/0-full.png']")
   end
 
   it 'has left navigation button' do
