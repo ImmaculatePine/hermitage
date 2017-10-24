@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Hermitage
   module Generators
     class InstallGenerator < ::Rails::Generators::Base
@@ -11,7 +13,6 @@ module Hermitage
       def insert_require_into_application_js
         inject_into_file 'app/assets/javascripts/application.js', "\n//= require hermitage", after: %r{^//= require +['"]?jquery['"]?$}
       end
-      
     end
   end
 end

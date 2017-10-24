@@ -1,10 +1,11 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'features_helper'
 
 describe 'navigation', type: :feature, js: true do
-
   shared_examples 'navigation to next' do
-    before(:each) { click_action.call() }
+    before(:each) { click_action.call }
 
     it 'shows next image and shows the first image after end of the gallery' do
       # Wait until 2-full.png image will be shown
@@ -13,7 +14,7 @@ describe 'navigation', type: :feature, js: true do
       page.all('img.current').length.should == 1
 
       # Then click
-      click_action.call()
+      click_action.call
 
       # Now there is only 0-full.png image on the screen
       page.should have_no_css('img[src="/images/2-full.png"]')
@@ -23,7 +24,7 @@ describe 'navigation', type: :feature, js: true do
   end
 
   shared_examples 'navigation to previous' do
-    before(:each) { click_action.call() }
+    before(:each) { click_action.call }
 
     it 'shows previous image and shows the last image after first' do
       # Wait until 0-full.png image will be shown
@@ -32,7 +33,7 @@ describe 'navigation', type: :feature, js: true do
       page.all('img.current').length.should == 1
 
       # Then click
-      click_action.call()
+      click_action.call
 
       # Now there is only 2-full.png image on the screen
       page.should have_no_css('img[src="/images/0-full.png"]')
@@ -50,24 +51,24 @@ describe 'navigation', type: :feature, js: true do
 
     describe 'by clicking on image' do
       describe 'at the right side' do
-        let(:click_action) { Proc.new { click_at_right('img.current') } }
+        let(:click_action) { proc { click_at_right('img.current') } }
         it_behaves_like 'navigation to next'
       end
 
       describe 'at the left side' do
-        let(:click_action) { Proc.new { click_at_left('img.current') } }
+        let(:click_action) { proc { click_at_left('img.current') } }
         it_behaves_like 'navigation to previous'
       end
     end
 
     describe 'by clicking on navigation button' do
       describe 'right' do
-        let(:click_action) { Proc.new { page.find('#navigation-right').click() } }
+        let(:click_action) { proc { page.find('#navigation-right').click } }
         it_behaves_like 'navigation to next'
       end
 
       describe 'left' do
-        let(:click_action) { Proc.new { page.find('#navigation-left').click() } }
+        let(:click_action) { proc { page.find('#navigation-left').click } }
         it_behaves_like 'navigation to previous'
       end
     end
@@ -82,22 +83,21 @@ describe 'navigation', type: :feature, js: true do
     end
 
     describe 'first image' do
-      let(:image) { "0" }
+      let(:image) { '0' }
       it { page.should_not have_css('#navigation-left') }
       it { page.should have_css('#navigation-right') }
     end
 
     describe 'middle image' do
-      let(:image) { "1" }
+      let(:image) { '1' }
       it { page.should have_css('#navigation-left') }
       it { page.should have_css('#navigation-right') }
     end
 
     describe 'last image' do
-      let(:image) { "2" }
+      let(:image) { '2' }
       it { page.should have_css('#navigation-left') }
       it { page.should_not have_css('#navigation-right') }
     end
   end
-
 end

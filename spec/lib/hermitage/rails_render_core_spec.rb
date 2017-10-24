@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'dummy/app/models/dummy'
 
 describe Hermitage::RailsRenderCore do
-
   let(:objects) { Array.new(3, DummyImage.new('path')) }
   let(:options) { {} }
   subject { Hermitage::RailsRenderCore.new(objects, options) }
@@ -10,13 +11,13 @@ describe Hermitage::RailsRenderCore do
   describe '#slice_objects' do
     let(:result) { subject.send(:slice_objects) }
 
-    context 'no :each_slice option' do 
+    context 'no :each_slice option' do
       it 'wraps objects in array' do
         result.should == [objects]
       end
     end
 
-    context 'specified :each_slice option' do 
+    context 'specified :each_slice option' do
       let(:options) { { each_slice: 2 } }
       it 'slices objects into separate arrays' do
         result.should == [[objects[0], objects[1]], [objects[2]]]
@@ -49,9 +50,8 @@ describe Hermitage::RailsRenderCore do
     end
 
     context ':original option is a Proc' do
-      let(:options) { { original: -> item { item.file.url } } }
+      let(:options) { { original: ->(item) { item.file.url } } }
       it_behaves_like 'value_for'
     end
   end
-
 end

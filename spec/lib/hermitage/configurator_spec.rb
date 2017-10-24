@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Hermitage::Configurator do
@@ -6,7 +8,7 @@ describe Hermitage::Configurator do
   describe '.new' do
     it 'can create new config' do
       Hermitage::Configurator.new(:new_config)
-      Hermitage.configs.keys.should == [:default, :new_config]
+      Hermitage.configs.keys.should == %i[default new_config]
     end
 
     it 'can change existing config' do
@@ -35,8 +37,8 @@ describe Hermitage::Configurator do
       end
       Image = Class.new
       objects = [Image.new]
-      result = Hermitage::Configurator.options_for(objects, { title: 'title' })
-      result.should == Hermitage::Defaults.to_hash.merge({ list_class: 'image-list', title: 'title' })
+      result = Hermitage::Configurator.options_for(objects, title: 'title')
+      result.should == Hermitage::Defaults.to_hash.merge(list_class: 'image-list', title: 'title')
     end
   end
 end

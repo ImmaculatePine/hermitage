@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module FixturesHelper
   def fixture_for(path)
     File.read("#{Dir.pwd}/spec/fixtures/#{prefix}/#{path}")

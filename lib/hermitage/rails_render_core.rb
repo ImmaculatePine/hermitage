@@ -1,8 +1,8 @@
+# frozen_string_literal: true
+
 module Hermitage
-  
   # This class performs all the rendering logic for Rails apps
   class RailsRenderCore
-
     def initialize(objects, options = {})
       @objects = objects
       @options = Configurator.options_for(objects, options)
@@ -12,7 +12,7 @@ module Hermitage
     # Renders gallery markup
     def render
       # Initialize the resulting tag
-      tag = ''
+      tag_parts = []
 
       # Slice objects into separate lists
       lists = slice_objects
@@ -20,20 +20,20 @@ module Hermitage
       # Render each list into `tag` variable
       lists.each do |list|
         items = list.collect { |item| render_link_for(item) }
-        tag << render_content_tag_for(items)
+        tag_parts << render_content_tag_for(items)
       end
 
-      tag.html_safe
+      tag_parts.join.html_safe
     end
 
     private
 
     # Slices objects into separate lists if it's necessary
     def slice_objects
-      unless @options[:each_slice]
-        [@objects]
-      else
+      if @options[:each_slice]
         @objects.each_slice(@options[:each_slice]).to_a
+      else
+        [@objects]
       end
     end
 
@@ -62,7 +62,5 @@ module Hermitage
         items.collect { |item| @template.concat(@template.content_tag(@options[:item_tag], item, class: @options[:item_class])) }
       end
     end
-
   end
-
 end

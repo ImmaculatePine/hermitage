@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #
 # There are helper methods for features specs
 #

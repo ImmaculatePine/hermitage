@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Configuration file for hermitage gem
 
 # Default config is used as base options hash for every gallery.

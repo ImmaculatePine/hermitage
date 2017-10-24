@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Hermitage::Defaults do
   describe '#to_hash' do
     it "returns hash with symbolized constants' names as keys" do
-      Hermitage::Defaults.to_hash().should == {
+      Hermitage::Defaults.to_hash.should == {
         original: 'file.url',
         thumbnail: 'file.url(:thumbnail)',
         title: nil,

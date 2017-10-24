@@ -1,11 +1,12 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'features_helper'
 
 describe 'scale', type: :feature, js: true do
-
   before(:each) do
     visit images_path
-    page.driver.resize(window_width, window_height) 
+    page.driver.resize(window_width, window_height)
     page.first('a[rel=hermitage]').click
     page.should have_css('img.current')
   end
@@ -41,7 +42,6 @@ describe 'scale', type: :feature, js: true do
   end
 
   context 'window is smaller than minimum allowed size' do
-
     shared_examples 'minimum allowed size' do
       it 'scales the image to the minimal allowed size' do
         width('.current').should == 100
@@ -67,5 +67,4 @@ describe 'scale', type: :feature, js: true do
       it_behaves_like 'minimum allowed size'
     end
   end
-
 end

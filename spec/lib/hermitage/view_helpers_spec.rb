@@ -1,15 +1,17 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'dummy/app/models/dummy'
 
 describe Hermitage::ViewHelpers, type: :helper do
   # Reset Hermitage configs because they should not be shared among specs
   after(:each) { reset_configs }
-  
+
   let(:template) { ActionView::Base.new }
 
   describe '#render_gallery_for' do
     let(:images) { Array.new(2) { |i| DummyImage.new(i.to_s) } }
-    
+
     context 'no options' do
       let(:expected) { fixture_for('view_helpers/render_gallery_for/default.html') }
       subject { template.render_gallery_for images }
@@ -27,7 +29,7 @@ describe Hermitage::ViewHelpers, type: :helper do
         end
 
         context 'by proc' do
-          subject { template.render_gallery_for images, original: -> item { item.photo }, thumbnail: -> item { item.photo(:thumbnail) } }
+          subject { template.render_gallery_for images, original: ->(item) { item.photo }, thumbnail: ->(item) { item.photo(:thumbnail) } }
           it { should have_same_html_as expected }
         end
       end
@@ -41,7 +43,7 @@ describe Hermitage::ViewHelpers, type: :helper do
         end
 
         context 'by proc' do
-          subject { template.render_gallery_for images, title: -> item { item.description } }
+          subject { template.render_gallery_for images, title: ->(item) { item.description } }
           it { should have_same_html_as expected }
         end
       end

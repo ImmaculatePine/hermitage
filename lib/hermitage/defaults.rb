@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Hermitage
   module Defaults
     # Model's attribute (or method) that returns the path to the original image

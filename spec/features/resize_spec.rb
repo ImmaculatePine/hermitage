@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'features_helper'
 
 describe 'resize', type: :feature, js: true do
-  before(:each) do 
+  before(:each) do
     visit images_path
     page.first('a[rel="hermitage"]').click
     page.should have_css('img.current')
@@ -24,7 +26,7 @@ describe 'resize', type: :feature, js: true do
     it 'adjusts navigation buttons' do
       css('#navigation-left', 'line-height').should == expected_line_height
       css('#navigation-right', 'line-height').should == expected_line_height
-    end    
+    end
   end
 
   describe 'make window smaller' do

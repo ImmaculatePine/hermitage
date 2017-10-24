@@ -1,13 +1,15 @@
+# frozen_string_literal: true
+
 class DummyBase
   def initialize(name)
     @name = name
   end
 
   protected
-  
+
   # This method MAGICALLY returns name of image according to given options
   def magic(options = nil)
-    options == nil ? "/images/#{@name}-full.png" : "/images/#{@name}-#{options}.png"
+    options.nil? ? "/images/#{@name}-full.png" : "/images/#{@name}-#{options}.png"
   end
 end
 
