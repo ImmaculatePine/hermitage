@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'render gallery', type: :feature, js: true do
-
   before(:each) { visit images_path }
 
   it 'renders unordered list of links that contain images' do
@@ -22,5 +23,4 @@ describe 'render gallery', type: :feature, js: true do
     end
     images.should == expected
   end
-
 end

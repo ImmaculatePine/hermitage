@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'viewer', type: :feature, js: true do
-
   before(:each) do
     visit images_path
     page.first('a[rel=hermitage]').click
@@ -12,7 +13,7 @@ describe 'viewer', type: :feature, js: true do
   end
 
   it 'has shadow overlay' do
-    page.should have_css('div#hermitage div#overlay') 
+    page.should have_css('div#hermitage div#overlay')
   end
 
   it 'has original image' do
@@ -20,11 +21,11 @@ describe 'viewer', type: :feature, js: true do
   end
 
   it 'has left navigation button' do
-    page.should have_css("div#hermitage div#navigation-left")
+    page.should have_css('div#hermitage div#navigation-left')
   end
 
   it 'has right navigation button' do
-    page.should have_css("div#hermitage div#navigation-right")
+    page.should have_css('div#hermitage div#navigation-right')
   end
 
   it 'has close button' do
@@ -48,5 +49,4 @@ describe 'viewer', type: :feature, js: true do
     before(:each) { evaluate_script "$('#overlay').click()" }
     it_behaves_like 'close button'
   end
-
 end

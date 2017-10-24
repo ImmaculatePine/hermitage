@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'dummy'
 
 class ImagesController < ActionController::Base

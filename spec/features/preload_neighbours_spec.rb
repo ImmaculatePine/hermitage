@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'preload_neighbours', type: :feature, js: true do
-
   def clickAtImage(index)
     page.first("a[href='/images/#{index}-full.png']").click
     sleep(1) # We want wait some time while animations and images are preloading
@@ -13,7 +14,7 @@ describe 'preload_neighbours', type: :feature, js: true do
 
   shared_examples 'preloader' do
     it 'preloads proper images' do
-      loaded = images().collect { |image| image['loaded'] }
+      loaded = images.collect { |image| image['loaded'] }
       loaded.should == expected
     end
   end
@@ -72,5 +73,4 @@ describe 'preload_neighbours', type: :feature, js: true do
     let(:expected) { [false, true, false] }
     it_behaves_like 'preloader'
   end
-
 end

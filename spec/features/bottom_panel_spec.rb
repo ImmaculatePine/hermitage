@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'features_helper'
 
 describe 'bottom_panel', type: :feature, js: true do
-  before(:each) do 
+  before(:each) do
     Hermitage.configure :default do title 'description' end
     visit images_path
     page.first('a[rel="hermitage"]').click
@@ -24,5 +26,4 @@ describe 'bottom_panel', type: :feature, js: true do
   it 'affects upon image size and position' do
     top('.current').should == 221 # if window height is 768px
   end
-
 end

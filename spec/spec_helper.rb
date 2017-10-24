@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 # Configure Rails Envinronment
-ENV["RAILS_ENV"] = "test"
-require File.expand_path("../dummy/config/environment.rb",  __FILE__)
+ENV['RAILS_ENV'] = 'test'
+require File.expand_path('../dummy/config/environment.rb', __FILE__)
 
 require 'rspec/rails'
 require 'rspec/its'
@@ -8,7 +10,7 @@ require 'capybara/poltergeist'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
-Dir['spec/support/**/*.rb'].each {|f| require_relative "../#{f}" }
+Dir['spec/support/**/*.rb'].each { |f| require_relative "../#{f}" }
 
 RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
@@ -25,5 +27,5 @@ end
 Capybara.javascript_driver = :poltergeist
 
 def reset_configs
-  Hermitage.configs = { default: Hermitage::Defaults.to_hash() }
+  Hermitage.configs = { default: Hermitage::Defaults.to_hash }
 end

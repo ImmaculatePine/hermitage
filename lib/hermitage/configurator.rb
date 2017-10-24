@@ -1,10 +1,10 @@
+# frozen_string_literal: true
+
 module Hermitage
-
   class Configurator
-
     Defaults.constants.each do |c|
       define_method c.downcase do |value|
-        @config.merge!({ c.downcase.to_sym => value })
+        @config.merge!(c.downcase.to_sym => value)
       end
     end
 
@@ -15,7 +15,7 @@ module Hermitage
     def initialize(config_name, &block)
       Hermitage.configs[config_name] ||= {}
       @config = Hermitage.configs[config_name]
-      self.instance_eval(&block) if block_given?
+      instance_eval(&block) if block_given?
     end
 
     # Returns full options hash for specified objects and options.
@@ -27,5 +27,4 @@ module Hermitage
       Hermitage.configs[:default].merge(config).merge(options)
     end
   end
-
 end
