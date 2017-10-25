@@ -35,7 +35,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rspec-its'
   spec.add_development_dependency 'rspec-rails', '~> 3.6'
-  spec.add_development_dependency 'rubocop', '~> 0.51'
   spec.add_development_dependency 'sqlite3'
   spec.add_development_dependency 'therubyracer'
 end
