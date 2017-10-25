@@ -1,0 +1,16 @@
+Metrics/BlockLength:
+  Exclude:
+    - hermitage.gemspec
+    - spec/**/*
+
+Metrics/LineLength:
+  Max: 120
+  Exclude:
+    - spec/dummy/config/initializers/secret_token.rb
+
+Style/Documentation:
+  Enabled: false
+
+# @todo Fix it ASAP
+Security/Eval:
+  Enabled: false

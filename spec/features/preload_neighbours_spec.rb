@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe 'preload_neighbours', type: :feature, js: true do
-  def clickAtImage(index)
+  def click_at_image(index)
     page.first("a[href='/images/#{index}-full.png']").click
     sleep(1) # We want wait some time while animations and images are preloading
   end
@@ -26,17 +26,17 @@ describe 'preload_neighbours', type: :feature, js: true do
       let(:expected) { Array.new(3, true) }
 
       context '1st image' do
-        before(:each) { clickAtImage(0) }
+        before(:each) { click_at_image(0) }
         it_behaves_like 'preloader'
       end
 
       context 'middle image' do
-        before(:each) { clickAtImage(1) }
+        before(:each) { click_at_image(1) }
         it_behaves_like 'preloader'
       end
 
       context 'last image' do
-        before(:each) { clickAtImage(2) }
+        before(:each) { click_at_image(2) }
         it_behaves_like 'preloader'
       end
     end
@@ -45,19 +45,19 @@ describe 'preload_neighbours', type: :feature, js: true do
       before(:each) { evaluate_script('hermitage.looped = false') }
 
       context '1st image' do
-        before(:each) { clickAtImage(0) }
+        before(:each) { click_at_image(0) }
         let(:expected) { [true, true, false] }
         it_behaves_like 'preloader'
       end
 
       context 'middle image' do
-        before(:each) { clickAtImage(1) }
+        before(:each) { click_at_image(1) }
         let(:expected) { [true, true, true] }
         it_behaves_like 'preloader'
       end
 
       context 'last image' do
-        before(:each) { clickAtImage(2) }
+        before(:each) { click_at_image(2) }
         let(:expected) { [false, true, true] }
         it_behaves_like 'preloader'
       end
@@ -67,7 +67,7 @@ describe 'preload_neighbours', type: :feature, js: true do
   context 'preload disabled' do
     before(:each) do
       evaluate_script('hermitage.preloadNeighbours = false')
-      clickAtImage(1)
+      click_at_image(1)
     end
 
     let(:expected) { [false, true, false] }

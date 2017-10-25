@@ -29,7 +29,10 @@ describe Hermitage::ViewHelpers, type: :helper do
         end
 
         context 'by proc' do
-          subject { template.render_gallery_for images, original: ->(item) { item.photo }, thumbnail: ->(item) { item.photo(:thumbnail) } }
+          subject do
+            template.render_gallery_for images, original: ->(item) { item.photo },
+                                                thumbnail: ->(item) { item.photo(:thumbnail) }
+          end
           it { should have_same_html_as expected }
         end
       end
@@ -55,7 +58,12 @@ describe Hermitage::ViewHelpers, type: :helper do
       end
 
       context 'list_class, item_class, link_class and image_class' do
-        subject { template.render_gallery_for images, list_class: nil, item_class: nil, link_class: 'thumb link', image_class: 'thumb' }
+        subject do
+          template.render_gallery_for images, list_class: nil,
+                                              item_class: nil,
+                                              link_class: 'thumb link',
+                                              image_class: 'thumb'
+        end
         let(:expected) { fixture_for('view_helpers/render_gallery_for/custom_classes.html') }
         it { should have_same_html_as expected }
       end
@@ -94,7 +102,9 @@ describe Hermitage::ViewHelpers, type: :helper do
 
         context 'and with options' do
           subject { template.render_gallery_for images, list_class: 'custom-thumbnails' }
-          let(:expected) { fixture_for('view_helpers/render_gallery_for/with_config/with_overwritten_defaults_and_options.html') }
+          let(:expected) do
+            fixture_for('view_helpers/render_gallery_for/with_config/with_overwritten_defaults_and_options.html')
+          end
           it { should have_same_html_as expected }
         end
       end

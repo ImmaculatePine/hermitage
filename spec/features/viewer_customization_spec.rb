@@ -69,21 +69,21 @@ describe 'viewer_customization', type: :feature, js: true do
 
   context 'closeButton.text' do
     let(:js) { 'hermitage.closeButton.text = "Close"' }
-    it { jquery_text('#close-button').should == 'Close' }
+    it { jquery_text('#close-button').should eq('Close') }
   end
 
   context 'closeButton.styles' do
     let(:js) { 'hermitage.closeButton.styles = { color: "#777" }' }
-    it { css('#close-button', 'color').should == 'rgb(119, 119, 119)' }
+    it { css('#close-button', 'color').should eq('rgb(119, 119, 119)') }
   end
 
   context 'image.styles' do
     let(:js) { 'hermitage.image.styles = { border: "5px solid #000" }' }
     it 'sets all borders width to 5px' do
-      css('.current', 'border-top-width').should == '5px'
-      css('.current', 'border-right-width').should == '5px'
-      css('.current', 'border-bottom-width').should == '5px'
-      css('.current', 'border-left-width').should == '5px'
+      css('.current', 'border-top-width').should eq('5px')
+      css('.current', 'border-right-width').should eq('5px')
+      css('.current', 'border-bottom-width').should eq('5px')
+      css('.current', 'border-left-width').should eq('5px')
     end
   end
 
@@ -99,8 +99,8 @@ describe 'viewer_customization', type: :feature, js: true do
 
   shared_examples 'image scaled to the minimum allowed size' do
     it 'scales the image to the minimum allowed size' do
-      width('.current').should == 200
-      height('.current').should == 200
+      width('.current').should eq(200)
+      height('.current').should eq(200)
     end
   end
 

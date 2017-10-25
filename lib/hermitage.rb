@@ -13,6 +13,6 @@ module Hermitage
   self.configs = { default: Hermitage::Defaults.to_hash }
 
   def self.configure(config_name, &block)
-    configurator = Configurator.new(config_name, &block)
+    Configurator.new(config_name, &block)
   end
 end

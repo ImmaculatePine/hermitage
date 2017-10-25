@@ -11,7 +11,7 @@ describe 'navigation', type: :feature, js: true do
       # Wait until 2-full.png image will be shown
       page.should have_no_css('img[src="/images/1-full.png"]')
       page.should have_css('img[src="/images/2-full.png"]')
-      page.all('img.current').length.should == 1
+      page.all('img.current').length.should eq(1)
 
       # Then click
       click_action.call
@@ -19,7 +19,7 @@ describe 'navigation', type: :feature, js: true do
       # Now there is only 0-full.png image on the screen
       page.should have_no_css('img[src="/images/2-full.png"]')
       page.should have_css('img[src="/images/0-full.png"]')
-      page.all('img.current').length.should == 1
+      page.all('img.current').length.should eq(1)
     end
   end
 
@@ -30,7 +30,7 @@ describe 'navigation', type: :feature, js: true do
       # Wait until 0-full.png image will be shown
       page.should have_no_css('img[src="/images/1-full.png"]')
       page.should have_css('img[src="/images/0-full.png"]')
-      page.all('img.current').length.should == 1
+      page.all('img.current').length.should eq(1)
 
       # Then click
       click_action.call
@@ -38,7 +38,7 @@ describe 'navigation', type: :feature, js: true do
       # Now there is only 2-full.png image on the screen
       page.should have_no_css('img[src="/images/0-full.png"]')
       page.should have_css('img[src="/images/2-full.png"]')
-      page.all('img.current').length.should == 1
+      page.all('img.current').length.should eq(1)
     end
   end
 

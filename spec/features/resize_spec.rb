@@ -17,15 +17,15 @@ describe 'resize', type: :feature, js: true do
     end
 
     it 'adjusts image' do
-      width('.current').should == expected_width
-      height('.current').should == expected_height
-      top('.current').should == expected_top
-      left('.current').should == expected_left
+      width('.current').should eq(expected_width)
+      height('.current').should eq(expected_height)
+      top('.current').should eq(expected_top)
+      left('.current').should eq(expected_left)
     end
 
     it 'adjusts navigation buttons' do
-      css('#navigation-left', 'line-height').should == expected_line_height
-      css('#navigation-right', 'line-height').should == expected_line_height
+      css('#navigation-left', 'line-height').should eq(expected_line_height)
+      css('#navigation-right', 'line-height').should eq(expected_line_height)
     end
   end
 

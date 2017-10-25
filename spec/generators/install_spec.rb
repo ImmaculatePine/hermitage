@@ -14,6 +14,10 @@ describe 'hermitage:install' do
   end
 
   it 'should inject a require into application.js file' do
-    subject.should inject_into_file('app/assets/javascripts/application.js', "\n//= require hermitage", after: %r{^//= require +['"]?jquery['"]?$})
+    subject.should inject_into_file(
+      'app/assets/javascripts/application.js',
+      "\n//= require hermitage",
+      after: %r{^//= require +['"]?jquery['"]?$}
+    )
   end
 end
