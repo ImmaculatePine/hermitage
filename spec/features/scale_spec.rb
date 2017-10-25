@@ -16,8 +16,8 @@ describe 'scale', type: :feature, js: true do
     let(:window_height) { 1000 }
 
     it 'scales the image' do
-      width('.current').should == 200
-      height('.current').should == 200
+      width('.current').should eq(200)
+      height('.current').should eq(200)
     end
   end
 
@@ -26,8 +26,8 @@ describe 'scale', type: :feature, js: true do
     let(:window_height) { 200 }
 
     it 'scales the image' do
-      width('.current').should == 200
-      height('.current').should == 200
+      width('.current').should eq(200)
+      height('.current').should eq(200)
     end
   end
 
@@ -36,16 +36,16 @@ describe 'scale', type: :feature, js: true do
     let(:window_height) { 300 }
 
     it 'scales the image to the minimum scale coefficient' do
-      width('.current').should == 150
-      height('.current').should == 150
+      width('.current').should eq(150)
+      height('.current').should eq(150)
     end
   end
 
   context 'window is smaller than minimum allowed size' do
     shared_examples 'minimum allowed size' do
       it 'scales the image to the minimal allowed size' do
-        width('.current').should == 100
-        height('.current').should == 100
+        width('.current').should eq(100)
+        height('.current').should eq(100)
       end
     end
 

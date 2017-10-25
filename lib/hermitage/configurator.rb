@@ -9,7 +9,7 @@ module Hermitage
     end
 
     def respond_to?(method_name)
-      Defaults.constants.include? method_name.upcase.to_sym || super
+      Defaults.constants.include?(method_name.upcase.to_sym) || super
     end
 
     def initialize(config_name, &block)
@@ -23,8 +23,12 @@ module Hermitage
     # and merges default options with the chosen config and with passed options hash.
     def self.options_for(objects, options = {})
       config_name = objects.first.class.to_s.pluralize.underscore.to_sym if defined?(Rails) && !objects.empty?
-      config = Hermitage.configs[config_name] || Hermitage.configs[:default]
-      Hermitage.configs[:default].merge(config).merge(options)
+      config = Hermitage.configs[config_name] || default_config
+      default_config.merge(config).merge(options)
+    end
+
+    def self.default_config
+      Hermitage.configs[:default]
     end
   end
 end

@@ -53,13 +53,17 @@ module Hermitage
       thumbnail_path = value_for(item, :thumbnail)
       title = @options[:title] ? value_for(item, :title) : nil
       image = @template.image_tag(thumbnail_path, class: @options[:image_class])
-      @template.link_to(image, original_path, rel: 'hermitage', class: @options[:link_class], title: title)
+      @template.link_to(image, original_path, rel: 'hermitage',
+                                              class: @options[:link_class],
+                                              title: title)
     end
 
     # Renders items into content tag
     def render_content_tag_for(items)
       @template.content_tag(@options[:list_tag], class: @options[:list_class]) do
-        items.collect { |item| @template.concat(@template.content_tag(@options[:item_tag], item, class: @options[:item_class])) }
+        items.collect do |item|
+          @template.concat(@template.content_tag(@options[:item_tag], item, class: @options[:item_class]))
+        end
       end
     end
   end
