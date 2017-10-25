@@ -9,7 +9,7 @@ describe 'viewer_customization', type: :feature, js: true do
   before(:each) do
     visit images_path
     evaluate_script(js)
-    before_click&.call
+    before_click.call if before_click.is_a?(Proc)
     page.first('a[rel=hermitage]').click
     page.should have_css('div#hermitage img.current')
     # There will be sleep(1) in tests where we should wait until fade in animation is ended
